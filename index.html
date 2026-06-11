@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Calendario Enfrentamientos - Mundial 2026</title>
+    <style>
+        :root {
+            --primary: #0a2540;
+            --secondary: #0070f3;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --jona: #ff4a5a;
+            --david: #2ed573;
+            --raul: #1e90ff;
+            --sergio: #ffa502;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            margin: 0;
+            padding: 15px;
+            padding-top: env(safe-area-inset-top, 15px); /* Soporte para el notch del iPhone */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent; /* Evita el cuadro gris al tocar en iOS */
+        }
+
+        h1 {
+            color: var(--primary);
+            margin: 10px 0 5px 0;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 1.6rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background-color: #e0e0e0;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            flex: 1;
+            max-width: 250px;
+            -webkit-appearance: none; /* Reset nativo para iOS */
+            touch-action: manipulation; /* Mejora la respuesta táctil */
+        }
+
+        .tab-btn.active {
+            background-color: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,112,243,0.3);
+        }
+
+        .contenedor-vistas {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .vista { display: none; }
+        .vista.active { display: block; -webkit-animation: fadeIn 0.3s ease-in-out; animation: fadeIn 0.3s ease-in-out; }
+
+        /* Estilos de los Partidos */
+        .fecha-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            margin: 25px 0 10px 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .grid-partidos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+        }
+
+        .partido-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+        }
+
+        .p-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 5px;
+        }
+
+        .p-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+        }
+
+        .img-bandera {
+            width: 36px;
+            height: 24px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            margin-bottom: 5px;
+        }
+
+        .t-nombre { font-weight: bold; font-size: 0.95rem; }
+        
+        .t-dueño {
+            font-size: 0.75rem;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .d-Jona { background-color: var(--jona); color: white; }
+        .d-David { background-color: var(--david); color: #111; }
+        .d-Raúl { background-color: var(--raul); color: white; }
+        .d-Sergio { background-color: var(--sergio); color: white; }
+
+        .vs {
+            font-weight: bold;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Estilos vista por persona */
+        .persona-seccion {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid;
+        }
+        
+        #sec-Jona { border-color: var(--jona); }
+        #sec-David { border-color: var(--david); }
+        #sec-Raúl { border-color: var(--raul); }
+        #sec-Sergio { border-color: var(--sergio); }
+
+        .persona-seccion h2 { margin-top: 0; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+
+        .lista-partidos-persona {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+        }
+
+        .p-mini {
+            background: #f9f9f9;
+            border: 1px solid #eaeaea;
+            padding: 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .p-mini-fecha {
+            font-size: 0.75rem;
+            color: #0070f3;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .p-mini-equipos {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @-webkit-keyframes fadeIn {
+            from { opacity: 0; -webkit-transform: translateY(5px); }
+            to { opacity: 1; -webkit-transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Partidos de la Quiniela</h1>
+    <div class="subtitle">Horarios ajustados para Culiacán (MST)</div>
+
+    <div class="tabs">
+        <button class="tab-btn active" id="btn-general" onclick="cambiarVista(event, 'general')">📅 Calendario General</button>
+        <button class="tab-btn" id="btn-persona" onclick="cambiarVista(event, 'persona')">👤 Ver por Persona</button>
+    </div>
+
+    <div class="contenedor-vistas">
+        <div id="vista-general" class="vista active">
+            </div>
+
+        <div id="vista-persona" class="vista">
+            <div class="persona-seccion" id="sec-Jona"><h2>Jona (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-Jona"></div></div>
+            <div class="persona-seccion" id="sec-David"><h2>David (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-David"></div></div>
+            <div class="persona-seccion" id="sec-Raúl"><h2>Raúl (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-Raúl"></div></div>
+            <div class="persona-seccion" id="sec-Sergio"><h2>Sergio (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-Sergio"></div></div>
+        </div>
+    </div>
+
+    <script>
+        // Mapeo seguro de datos
+        const equiposDatos = {
+            "Uruguay": {d: "Jona", c: "uy", g: "H"}, "Túnez": {d: "Jona", c: "tn", g: "F"}, "Jordania": {d: "Jona", c: "jo", g: "J"},
+            "Australia": {d: "Jona", c: "au", g: "D"}, "Inglaterra": {d: "Jona", c: "gb-eng", g: "L"}, "Marruecos": {d: "Jona", c: "ma", g: "C"},
+            "México": {d: "Jona", c: "mx", g: "A"}, "Nueva Zelanda": {d: "Jona", c: "nz", g: "G"}, "Alemania": {d: "Jona", c: "de", g: "E"},
+            "RD Congo": {d: "Jona", c: "cd", g: "K"}, "Noruega": {d: "Jona", c: "no", g: "I"}, "Canadá": {d: "Jona", c: "ca", g: "B"},
+
+            "Cabo Verde": {d: "David", c: "cv", g: "H"}, "Japón": {d: "David", c: "jp", g: "F"}, "Austria": {d: "David", c: "at", g: "J"},
+            "USA": {d: "David", c: "us", g: "D"}, "Panamá": {d: "David", c: "pa", g: "L"}, "Haití": {d: "David", c: "ht", g: "C"},
+            "República Checa": {d: "David", c: "cz", g: "A"}, "Irán": {d: "David", c: "ir", g: "G"}, "Costa de Marfil": {d: "David", c: "ci", g: "E"},
+            "Portugal": {d: "David", c: "pt", g: "K"}, "Francia": {d: "David", c: "fr", g: "I"}, "Bosnia": {d: "David", c: "ba", g: "B"},
+
+            "España": {d: "Raúl", c: "es", g: "H"}, "Suecia": {d: "Raúl", c: "se", g: "F"}, "Argelia": {d: "Raúl", c: "dz", g: "J"},
+            "Turquía": {d: "Raúl", c: "tr", g: "D"}, "Ghana": {d: "Raúl", c: "gh", g: "L"}, "Brasil": {d: "Raúl", c: "br", g: "C"},
+            "Sudáfrica": {d: "Raúl", c: "za", g: "A"}, "Egipto": {d: "Raúl", c: "eg", g: "G"}, "Curazao": {d: "Raúl", c: "cw", g: "E"},
+            "Colombia": {d: "Raúl", c: "co", g: "K"}, "Senegal": {d: "Raúl", c: "sn", g: "I"}, "Suiza": {d: "Raúl", c: "ch", g: "B"},
+
+            "Arabia S.": {d: "Sergio", c: "sa", g: "H"}, "Países Bajos": {d: "Sergio", c: "nl", g: "F"}, "Argentina": {d: "Sergio", c: "ar", g: "J"},
+            "Paraguay": {d: "Sergio", c: "py", g: "D"}, "Croacia": {d: "Sergio", c: "hr", g: "L"}, "Escocia": {d: "Sergio", c: "gb-sct", g: "C"},
+            "Corea del Sur": {d: "Sergio", c: "kr", g: "A"}, "Bélgica": {d: "Sergio", c: "be", g: "G"}, "Ecuador": {d: "Sergio", c: "ec", g: "E"},
+            "Uzbekistán": {d: "Sergio", c: "uz", g: "K"}, "Irak": {d: "Sergio", c: "iq", g: "I"}, "Qatar": {d: "Sergio", c: "qa", g: "B"}
+        };
+
+        const rawSchedule = [
+            "11-Jun 15:00|México|Sudáfrica", "11-Jun 22:00|Corea del Sur|República Checa",
+            "12-Jun 15:00|Canadá|Bosnia", "12-Jun 21:00|USA|Paraguay",
+            "13-Jun 21:00|Haití|Escocia", "13-Jun 00:00|Australia|Turquía", "13-Jun 18:00|Brasil|Marruecos", "13-Jun 15:00|Qatar|Suiza",
+            "14-Jun 19:00|Costa de Marfil|Ecuador", "14-Jun 13:00|Alemania|Curazao", "14-Jun 16:00|Países Bajos|Japón", "14-Jun 22:00|Suecia|Túnez",
+            "15-Jun 18:00|Arabia S.|Uruguay", "15-Jun 12:00|España|Cabo Verde", "15-Jun 21:00|Irán|Nueva Zelanda", "15-Jun 15:00|Bélgica|Egipto",
+            "16-Jun 15:00|Francia|Senegal", "16-Jun 18:00|Irak|Noruega", "16-Jun 21:00|Argentina|Argelia", "16-Jun 00:00|Austria|Jordania",
+            "17-Jun 19:00|Ghana|Panamá", "17-Jun 16:00|Inglaterra|Croacia", "17-Jun 13:00|Portugal|RD Congo", "17-Jun 22:00|Uzbekistán|Colombia",
+            "18-Jun 12:00|República Checa|Sudáfrica", "18-Jun 15:00|Suiza|Bosnia", "18-Jun 18:00|Canadá|Qatar", "18-Jun 21:00|México|Corea del Sur",
+            "19-Jun 21:00|Brasil|Haití", "19-Jun 18:00|Escocia|Marruecos", "19-Jun 23:00|Turquía|Paraguay", "19-Jun 15:00|USA|Australia",
+            "20-Jun 16:00|Alemania|Costa de Marfil", "20-Jun 20:00|Ecuador|Curazao", "20-Jun 13:00|Países Bajos|Suecia", "20-Jun 00:00|Túnez|Japón",
+            "21-Jun 18:00|Uruguay|Cabo Verde", "21-Jun 12:00|España|Arabia S.", "21-Jun 15:00|Bélgica|Irán", "21-Jun 21:00|Nueva Zelanda|Egipto",
+            "22-Jun 20:00|Noruega|Senegal", "22-Jun 17:00|Francia|Irak", "22-Jun 13:00|Argentina|Austria", "22-Jun 23:00|Jordania|Argelia",
+            "23-Jun 16:00|Inglaterra|Ghana", "23-Jun 19:00|Panamá|Croacia", "23-Jun 13:00|Portugal|Uzbekistán", "23-Jun 22:00|Colombia|RD Congo",
+            "24-Jun 18:00|Escocia|Brasil", "24-Jun 18:00|Marruecos|Haití", "24-Jun 15:00|Suiza|Canadá", "24-Jun 15:00|Bosnia|Qatar", "24-Jun 21:00|República Checa|México", "24-Jun 21:00|Sudáfrica|Corea del Sur",
+            "25-Jun 16:00|Curazao|Costa de Marfil", "25-Jun 16:00|Ecuador|Alemania", "25-Jun 19:00|Japón|Suecia", "25-Jun 19:00|Túnez|Países Bajos", "25-Jun 22:00|Turquía|USA", "25-Jun 22:00|Paraguay|Australia",
+            "26-Jun 15:00|Noruega|Francia", "26-Jun 15:00|Senegal|Irak", "26-Jun 23:00|Egipto|Irán", "26-Jun 23:00|Nueva Zelanda|Bélgica", "26-Jun 20:00|Cabo Verde|Arabia S.", "26-Jun 20:00|Uruguay|España",
+            "27-Jun 17:00|Panamá|Inglaterra", "27-Jun 17:00|Croacia|Ghana", "27-Jun 22:00|Argelia|Austria", "27-Jun 22:00|Jordania|Argentina", "27-Jun 19:30|Colombia|Portugal", "27-Jun 19:30|RD Congo|Uzbekistán"
+        ];
+
+        let diasOrdenados = {};
+        let partidosPorPersona = { Jona: [], David: [], Raúl: [], Sergio: [] };
+
+        // Parse manual para evitar errores de objetos Date en iOS Safari
+        rawSchedule.forEach(function(str) {
+            let p = str.split('|');
+            let dt = p[0].split(' ');
+            let fechaOriginal = dt[0];
+            let horaEST = dt[1];
+            
+            let arrHora = horaEST.split(':');
+            let h = parseInt(arrHora[0], 10);
+            let m = parseInt(arrHora[1], 10);
+            
+            let horaCuliacan = h - 3;
+            let arrFecha = fechaOriginal.split('-');
+            let diaSinaloa = parseInt(arrFecha[0], 10);
+            let mesSinaloa = arrFecha[1];
+
+            if (horaCuliacan < 0) {
+                horaCuliacan = 24 + horaCuliacan;
+                diaSinaloa = diaSinaloa - 1;
+            }
+
+            let strHora = (horaCuliacan < 10 ? '0' : '') + horaCuliacan;
+            let strMin = (m < 10 ? '0' : '') + m;
+            
+            let fechaFinalStr = diaSinaloa + '-' + mesSinaloa;
+            let horaFinalStr = strHora + ':' + strMin;
+
+            let t1 = p[1]; let t2 = p[2];
+            let objT1 = equiposDatos[t1]; let objT2 = equiposDatos[t2];
+
+            let objPartido = {
+                fecha: fechaFinalStr,
+                hora: horaFinalStr,
+                t1: t1, t2: t2,
+                d1: objT1.d, d2: objT2.d,
+                c1: objT1.c, c2: objT2.c,
+                gr: objT1.g 
+            };
+
+            if (!diasOrdenados[fechaFinalStr]) diasOrdenados[fechaFinalStr] = [];
+            diasOrdenados[fechaFinalStr].push(objPartido);
+
+            partidosPorPersona[objT1.d].push(objPartido);
+            partidosPorPersona[objT2.d].push(objPartido);
+        });
+
+        // Ordenar horas
+        for (let dia in diasOrdenados) {
+            if (Object.prototype.hasOwnProperty.call(diasOrdenados, dia)) {
+                diasOrdenados[dia].sort(function(a, b) {
+                    return a.hora.localeCompare(b.hora);
+                });
+            }
+        }
+
+        // Renderizar General
+        const vGeneral = document.getElementById('vista-general');
+        let htmlGeneral = '';
+        for (let dia in diasOrdenados) {
+            if (Object.prototype.hasOwnProperty.call(diasOrdenados, dia)) {
+                htmlGeneral += '<div class="fecha-header">🗓️ ' + dia + ' de 2026</div>';
+                let gridHTML = '<div class="grid-partidos">';
+                diasOrdenados[dia].forEach(function(pt) {
+                    gridHTML += `
+                    <div class="partido-card">
+                        <div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div>
+                        <div class="p-teams">
+                            <div class="team">
+                                <img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera">
+                                <span class="t-nombre">${pt.t1}</span>
+                                <span class="t-dueño d-${pt.d1}">${pt.d1}</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera">
+                                <span class="t-nombre">${pt.t2}</span>
+                                <span class="t-dueño d-${pt.d2}">${pt.d2}</span>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                gridHTML += '</div>';
+                htmlGeneral += gridHTML;
+            }
+        }
+        vGeneral.innerHTML = htmlGeneral;
+
+        // Renderizar por Persona
+        const personas = ["Jona", "David", "Raúl", "Sergio"];
+        personas.forEach(function(pers) {
+            const divPersona = document.getElementById('lista-pers-' + pers);
+            partidosPorPersona[pers].sort(function(a, b) {
+                let dA = parseInt(a.fecha.split('-')[0], 10);
+                let dB = parseInt(b.fecha.split('-')[0], 10);
+                if(dA === dB) return a.hora.localeCompare(b.hora);
+                return dA - dB;
+            });
+
+            let htmlPersona = '';
+            partidosPorPersona[pers].forEach(function(pt) {
+                let esLocal = (pt.d1 === pers);
+                let miEquipo = esLocal ? pt.t1 : pt.t2;
+                let rivalEq = esLocal ? pt.t2 : pt.t1;
+                let rivalPer = esLocal ? pt.d2 : pt.d1;
+                let cMio = esLocal ? pt.c1 : pt.c2;
+                let cRival = esLocal ? pt.c2 : pt.c1;
+
+                htmlPersona += `
+                    <div class="p-mini">
+                        <div>
+                            <div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div>
+                            <div class="p-mini-equipos">
+                                <img src="https://flagcdn.com/w20/${cMio}.png" style="width:20px; border-radius:2px;"> ${miEquipo}
+                                <span style="color:#aaa; font-size:0.7rem; margin:0 4px;">vs</span>
+                                <img src="https://flagcdn.com/w20/${cRival}.png" style="width:20px; border-radius:2px;"> ${rivalEq}
+                            </div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-size:0.65rem; color:#777;">Rival</div>
+                            <span class="t-dueño d-${rivalPer}" style="font-size:0.7rem; display:inline-block; margin-top:0">${rivalPer}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            divPersona.innerHTML = htmlPersona;
+        });
+
+        // Tabs logic - Manejo explícito para iOS
+        function cambiarVista(evento, vista) {
+            // Prevenir comportamiento indeseado
+            if(evento) evento.preventDefault();
+
+            // Quitar clase activa a todos
+            let botones = document.querySelectorAll('.tab-btn');
+            for(let i=0; i<botones.length; i++) {
+                botones[i].classList.remove('active');
+            }
+
+            let vistas = document.querySelectorAll('.vista');
+            for(let i=0; i<vistas.length; i++) {
+                vistas[i].classList.remove('active');
+            }
+            
+            // Agregar clase activa al botón presionado y a su vista
+            document.getElementById('btn-' + vista).classList.add('active');
+            document.getElementById('vista-' + vista).classList.add('active');
+            
+            // Scroll hacia arriba al cambiar de vista
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

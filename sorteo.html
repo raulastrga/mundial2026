@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo Mundial 2026 - Con Banderas</title>
+    <style>
+        :root {
+            --primary: #0a2540;
+            --secondary: #0070f3;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        #grupo-actual {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ff0055;
+            margin-bottom: 20px;
+            height: 30px;
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,112,243,0.3);
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #0051b3;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #555 !important;
+            color: #aaa;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .grid-participantes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+            border-top: 5px solid var(--primary);
+        }
+
+        .card:nth-child(1) { border-top-color: #ff4a5a; }
+        .card:nth-child(2) { border-top-color: #2ed573; }
+        .card:nth-child(3) { border-top-color: #1e90ff; }
+        .card:nth-child(4) { border-top-color: #ffa502; }
+
+        .card h2 {
+            margin-top: 0;
+            color: #222;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .counter {
+            font-size: 0.9rem;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 20px;
+            color: #666;
+        }
+
+        .lista-equipos {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lista-equipos li {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            animation: aparecido 0.4s ease forwards;
+        }
+
+        .pais-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bandera {
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .lista-equipos li span.tag-grupo {
+            font-size: 0.75rem;
+            color: white;
+            background: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        @keyframes aparecido {
+            from { opacity: 0; transform: translateY(-10px); background: #fff9db; }
+            to { opacity: 1; transform: translateY(0); background: #fff; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sorteo Mundial 2026</h1>
+    <div class="subtitle">Ordenado por Grupos (A al L) • Con Banderas • 1 segundo por equipo</div>
+    <div id="grupo-actual">Esperando inicio...</div>
+
+    <button id="btnSorteo">¡INICIAR SORTEO POR GRUPOS!</button>
+
+    <div class="grid-participantes">
+        <div class="card">
+            <h2>Jona <span class="counter" id="count-Jona">0/12</span></h2>
+            <ul id="lista-Jona" class="lista-equipos"></ul>
+        </div>
+        <div class="card">
+            <h2>David <span class="counter" id="count-David">0/12</span></h2>
+            <ul id="lista-David" class="lista-equipos"></ul>
+        </div>
+        <div class="card">
+            <h2>Raúl <span class="counter" id="count-Raúl">0/12</span></h2>
+            <ul id="lista-Raúl" class="lista-equipos"></ul>
+        </div>
+        <div class="card">
+            <h2>Sergio <span class="counter" id="count-Sergio">0/12</span></h2>
+            <ul id="lista-Sergio" class="lista-equipos"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Estructura de grupos con nombres y banderas correspondientes
+        const gruposMundial = {
+            "A": [
+                { nombre: "México", bandera: "🇲🇽" },
+                { nombre: "Sudáfrica", bandera: "🇿🇦" },
+                { nombre: "Corea", bandera: "🇰🇷" },
+                { nombre: "Chequia", bandera: "🇨🇿" }
+            ],
+            "B": [
+                { nombre: "Canadá", bandera: "🇨🇦" },
+                { nombre: "Bosnia", bandera: "🇧🇦" },
+                { nombre: "Qatar", bandera: "🇶🇦" },
+                { nombre: "Suiza", bandera: "🇨🇭" }
+            ],
+            "C": [
+                { nombre: "Brasil", bandera: "🇧🇷" },
+                { nombre: "Marruecos", bandera: "🇲🇦" },
+                { nombre: "Haití", bandera: "🇭🇹" },
+                { nombre: "Escocia", bandera: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" }
+            ],
+            "D": [
+                { nombre: "EE.UU.", bandera: "🇺🇸" },
+                { nombre: "Paraguay", bandera: "🇵🇾" },
+                { nombre: "Australia", bandera: "🇦🇺" },
+                { nombre: "Turquía", bandera: "🇹🇷" }
+            ],
+            "E": [
+                { nombre: "Alemania", bandera: "🇩🇪" },
+                { nombre: "Curazao", bandera: "🇨🇼" },
+                { nombre: "C. de Marfil", bandera: "🇨🇮" },
+                { nombre: "Ecuador", bandera: "🇪🇨" }
+            ],
+            "F": [
+                { nombre: "Países Bajos", bandera: "🇳🇱" },
+                { nombre: "Japón", bandera: "🇯🇵" },
+                { nombre: "Suecia", bandera: "🇸🇪" },
+                { nombre: "Túnez", bandera: "🇹🇳" }
+            ],
+            "G": [
+                { nombre: "Bélgica", bandera: "🇧🇪" },
+                { nombre: "Egipto", bandera: "🇪🇬" },
+                { nombre: "Irán", bandera: "🇮🇷" },
+                { nombre: "N. Zelanda", bandera: "🇳🇿" }
+            ],
+            "H": [
+                { nombre: "España", bandera: "🇪🇸" },
+                { nombre: "Cabo Verde", bandera: "🇨🇻" },
+                { nombre: "Arabia S.", bandera: "🇸🇦" },
+                { nombre: "Uruguay", bandera: "🇺🇾" }
+            ],
+            "I": [
+                { nombre: "Francia", bandera: "🇫🇷" },
+                { nombre: "Senegal", bandera: "🇸🇳" },
+                { nombre: "Irak", bandera: "🇮🇶" },
+                { nombre: "Noruega", bandera: "🇳🇴" }
+            ],
+            "J": [
+                { nombre: "Argentina", bandera: "🇦🇷" },
+                { nombre: "Argelia", bandera: "🇩🇿" },
+                { nombre: "Austria", bandera: "🇦🇹" },
+                { nombre: "Jordania", bandera: "🇯🇴" }
+            ],
+            "K": [
+                { nombre: "Portugal", bandera: "🇵🇹" },
+                { nombre: "RD Congo", bandera: "🇨🇩" },
+                { nombre: "Uzbekistán", bandera: "🇺🇿" },
+                { nombre: "Colombia", bandera: "🇨🇴" }
+            ],
+            "L": [
+                { nombre: "Inglaterra", bandera: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+                { nombre: "Croacia", bandera: "🇭🇷" },
+                { nombre: "Ghana", bandera: "🇬🇭" },
+                { nombre: "Panamá", bandera: "🇵🇦" }
+            ]
+        };
+
+        const letrasGrupos = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+        const participantesOriginales = ["Jona", "David", "Raúl", "Sergio"];
+        
+        const boton = document.getElementById('btnSorteo');
+        const indicadorGrupo = document.getElementById('grupo-actual');
+
+        function mezclar(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        boton.addEventListener('click', () => {
+            boton.disabled = true;
+            boton.innerText = "SORTEANDO...";
+
+            let listaFinalOrdenada = [];
+            
+            // Estructurar el orden de los grupos (A-L) con sus equipos internos mezclados
+            letrasGrupos.forEach(letra => {
+                let equiposDelGrupo = [...gruposMundial[letra]];
+                mezclar(equiposDelGrupo);
+                
+                equiposDelGrupo.forEach(equipo => {
+                    listaFinalOrdenada.push({ nombre: equipo.nombre, bandera: equipo.bandera, grupo: letra });
+                });
+            });
+
+            // Mezclar el orden de los 4 amigos para cada una de las 12 rondas
+            let ordenParticipantes = [];
+            for (let r = 0; r < 12; r++) {
+                let rondaAmigos = [...participantesOriginales];
+                mezclar(rondaAmigos);
+                ordenParticipantes = ordenParticipantes.concat(rondaAmigos);
+            }
+
+            // Limpieza de interfaz
+            participantesOriginales.forEach(p => {
+                document.getElementById(`lista-${p}`).innerHTML = "";
+                document.getElementById(`count-${p}`).innerText = "0/12";
+            });
+
+            let indice = 0;
+
+            const temporizador = setInterval(() => {
+                if (indice >= listaFinalOrdenada.length) {
+                    clearInterval(temporizador);
+                    boton.innerText = "SORTEO COMPLETO";
+                    indicadorGrupo.innerText = "¡Sorteo terminado con éxito!";
+                    indicadorGrupo.style.color = "#2ed573";
+                    return;
+                }
+
+                const equipoActual = listaFinalOrdenada[indice];
+                const personaAsignada = ordenParticipantes[indice];
+
+                indicadorGrupo.innerText = `Repartiendo: GRUPO ${equipoActual.grupo}`;
+
+                const listaUl = document.getElementById(`lista-${personaAsignada}`);
+                const li = document.createElement('li');
+                
+                // Estructura HTML interna con el contenedor de la bandera y el texto
+                li.innerHTML = `
+                    <div class="pais-contenedor">
+                        <span class="bandera">${equipoActual.bandera}</span>
+                        <span>${equipoActual.nombre}</span>
+                    </div>
+                    <span class="tag-grupo">Gr. ${equipoActual.grupo}</span>
+                `;
+                listaUl.appendChild(li);
+
+                const totalActual = listaUl.children.length;
+                document.getElementById(`count-${personaAsignada}`).innerText = `${totalActual}/12`;
+
+                indice++;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
