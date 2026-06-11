@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Calendario Enfrentamientos - Mundial 2026</title>
+    <title>Quiniela Mundial 2026</title>
     <style>
         :root {
             --primary: #0a2540;
@@ -47,37 +47,64 @@
             text-align: center;
         }
 
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
+        /* Navegación Principal y Secundaria */
+        .nav-container {
             width: 100%;
             max-width: 800px;
-            justify-content: center;
-            flex-wrap: wrap; /* Para pantallas pequeñas */
+            margin-bottom: 20px;
         }
 
-        .tab-btn {
-            background-color: #e0e0e0;
+        .main-tabs {
+            display: flex;
+            background: #e0e0e0;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 10px;
+        }
+
+        .m-tab {
+            flex: 1;
+            background: transparent;
             border: none;
             padding: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #555;
             border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .m-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .sub-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .s-tab {
+            background-color: transparent;
+            border: 2px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 20px;
             font-weight: bold;
             font-size: 0.9rem;
             cursor: pointer;
-            color: #333;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            flex: 1 1 30%;
-            min-width: 105px;
-            max-width: 250px;
-            -webkit-appearance: none;
-            touch-action: manipulation;
+            color: #666;
+            transition: all 0.2s;
+            flex: 1;
+            max-width: 200px;
         }
 
-        .tab-btn.active {
-            background-color: var(--secondary);
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,112,243,0.3);
+        .s-tab.active {
+            border-color: var(--secondary);
+            background-color: rgba(0, 112, 243, 0.1);
+            color: var(--secondary);
         }
 
         .contenedor-vistas {
@@ -86,7 +113,7 @@
         }
 
         .vista { display: none; }
-        .vista.active { display: block; -webkit-animation: fadeIn 0.3s ease-in-out; animation: fadeIn 0.3s ease-in-out; }
+        .vista.active { display: block; animation: fadeIn 0.3s ease-in-out; }
 
         /* Estilos de los Partidos y Calendario General */
         .fecha-header {
@@ -120,11 +147,7 @@
             transition: transform 0.2s;
         }
 
-        .partido-pasado {
-            opacity: 0.6;
-            filter: grayscale(0.85);
-        }
-
+        .partido-pasado { opacity: 0.6; filter: grayscale(0.85); }
         .proximo-partido {
             border: 2px solid var(--secondary);
             box-shadow: 0 0 15px rgba(0, 112, 243, 0.25);
@@ -148,50 +171,13 @@
             white-space: nowrap;
         }
 
-        .p-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #777;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed #ddd;
-            padding-bottom: 5px;
-        }
-
-        .p-teams {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            text-align: center;
-        }
-
-        .img-bandera {
-            width: 36px;
-            height: 24px;
-            object-fit: cover;
-            border-radius: 3px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            margin-bottom: 5px;
-        }
-
-        .t-nombre { font-weight: bold; font-size: 0.95rem; }
+        .p-info { display: flex; justify-content: space-between; font-size: 0.8rem; color: #777; margin-bottom: 8px; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
+        .p-teams { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .team { display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
+        .img-bandera { width: 36px; height: 24px; object-fit: cover; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 5px; }
         
-        .t-dueño {
-            font-size: 0.75rem;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            margin-top: 4px;
-            font-weight: 600;
-        }
+        .t-nombre { font-weight: bold; font-size: 0.95rem; }
+        .t-dueño { font-size: 0.75rem; color: white; padding: 2px 8px; border-radius: 12px; margin-top: 4px; font-weight: 600; }
 
         .d-Jona { background-color: var(--jona); color: white; }
         .d-David { background-color: var(--david); color: #111; }
@@ -199,179 +185,121 @@
         .d-Sergio { background-color: var(--sergio); color: white; }
 
         .vs { font-weight: bold; color: #aaa; font-size: 0.9rem; }
-        
-        .score {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--primary);
-            background: #eef2f5;
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
+        .score { font-size: 1.3rem; font-weight: 900; color: var(--primary); background: #eef2f5; padding: 4px 10px; border-radius: 6px; }
 
-        details.dias-pasados {
-            width: 100%;
-            margin-bottom: 20px;
-            background: #e9ecef;
-            border-radius: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        details.dias-pasados summary {
-            font-weight: bold;
-            cursor: pointer;
-            padding: 10px;
-            color: #555;
-            text-align: center;
-            list-style: none;
-        }
+        details.dias-pasados { width: 100%; margin-bottom: 20px; background: #e9ecef; border-radius: 10px; padding: 10px; box-sizing: border-box; }
+        details.dias-pasados summary { font-weight: bold; cursor: pointer; padding: 10px; color: #555; text-align: center; list-style: none; }
         details.dias-pasados summary::-webkit-details-marker { display: none; }
 
-        /* Estilos vista por persona */
-        .persona-seccion {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid;
+        /* Estilos vista por chango (Collapse) */
+        details.chango-seccion { background: white; padding: 15px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid; transition: all 0.3s ease; }
+        #sec-Jona { border-color: var(--jona); } #sec-David { border-color: var(--david); }
+        #sec-Raúl { border-color: var(--raul); } #sec-Sergio { border-color: var(--sergio); }
+
+        details.chango-seccion summary { 
+            margin-top: 0; color: #333; font-size: 1.3rem; font-weight: bold; 
+            cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; 
+            -webkit-tap-highlight-color: transparent; outline: none;
         }
+        details.chango-seccion summary::-webkit-details-marker { display: none; }
+        details.chango-seccion summary::after { content: '▼'; font-size: 0.9rem; color: #999; transition: transform 0.3s; }
+        details.chango-seccion[open] summary::after { transform: rotate(180deg); }
+        details.chango-seccion[open] summary { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+
+        .lista-partidos-chango { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+
+        .p-mini { background: #f9f9f9; border: 1px solid #eaeaea; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; font-size: 0.85rem; transition: all 0.3s; }
+        .p-mini-fecha { font-size: 0.75rem; color: #0070f3; font-weight: bold; margin-bottom: 8px; text-align: center; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
+        .p-mini-equipos { display: flex; align-items: flex-start; justify-content: space-between; font-weight: 500; }
+        .p-mini-col { display: flex; flex-direction: column; align-items: center; width: 40%; text-align: center; }
+
+        /* Estilos vista grupos y tablas */
+        .seccion-contenedor { background: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .seccion-titulo { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
         
-        #sec-Jona { border-color: var(--jona); }
-        #sec-David { border-color: var(--david); }
-        #sec-Raúl { border-color: var(--raul); }
-        #sec-Sergio { border-color: var(--sergio); }
+        .tabla-stats { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: center; }
+        .tabla-stats th { background: #f4f7f6; color: #666; padding: 8px 4px; font-weight: 600; }
+        .tabla-stats td { padding: 10px 4px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .td-izq { text-align: left; display: flex; align-items: center; gap: 8px; font-weight: 600; }
 
-        .persona-seccion h2 { margin-top: 0; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; font-size: 1.3rem; }
+        /* Gráficas */
+        .barra-container { margin-bottom: 15px; }
+        .barra-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
+        .barra-fondo { background: #eee; border-radius: 10px; width: 100%; height: 20px; overflow: hidden; position: relative; }
+        .barra-progreso { height: 100%; border-radius: 10px; transition: width 0.8s ease-out; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-size: 0.75rem; font-weight: bold; }
 
-        .lista-partidos-persona {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-        }
-
-        .p-mini {
-            background: #f9f9f9;
-            border: 1px solid #eaeaea;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-
-        .p-mini-fecha {
-            font-size: 0.75rem;
-            color: #0070f3;
-            font-weight: bold;
-            margin-bottom: 8px;
-            text-align: center;
-            border-bottom: 1px dashed #ddd;
-            padding-bottom: 5px;
-        }
-
-        .p-mini-equipos {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            font-weight: 500;
-        }
-
-        .p-mini-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 40%;
-            text-align: center;
-        }
-
-        /* Estilos vista grupos */
-        .grupo-contenedor {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .grupo-titulo {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-top: 0;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 5px;
-        }
-        .tabla-grupo {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        .tabla-grupo th {
-            background: #f4f7f6;
-            color: #666;
-            padding: 8px 4px;
-            font-weight: 600;
-        }
-        .tabla-grupo td {
-            padding: 8px 4px;
-            border-bottom: 1px solid #eee;
-            vertical-align: middle;
-        }
-        .td-equipo {
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @-webkit-keyframes fadeIn {
-            from { opacity: 0; -webkit-transform: translateY(5px); }
-            to { opacity: 1; -webkit-transform: translateY(0); }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <h1>Partidos de la Quiniela</h1>
-    <div class="subtitle">Mundial 2026 - Culiacán (MST)</div>
+    <h1>Mundial 2026</h1>
+    <div class="subtitle">Horarios Culiacán (MST)</div>
 
-    <div class="tabs">
-        <button class="tab-btn active" id="btn-general" onclick="cambiarVista(event, 'general')">📅 Calendario</button>
-        <button class="tab-btn" id="btn-persona" onclick="cambiarVista(event, 'persona')">👤 Por Persona</button>
-        <button class="tab-btn" id="btn-grupos" onclick="cambiarVista(event, 'grupos')">🏆 Grupos</button>
+    <div class="nav-container">
+        <div class="main-tabs">
+            <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
+            <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
+        </div>
+        
+        <div class="sub-tabs" id="sub-calendarios">
+            <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
+            <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')">🐵 Por Chango</button>
+        </div>
+
+        <div class="sub-tabs" id="sub-resultados" style="display: none;">
+            <button class="s-tab" id="s-res-grupos" onclick="setSub('res-grupos')">🎯 Grupos</button>
+            <button class="s-tab" id="s-res-chango" onclick="setSub('res-chango')">📈 Por Chango</button>
+        </div>
     </div>
 
     <div class="contenedor-vistas">
-        <div id="vista-general" class="vista active"></div>
+        
+        <div id="vista-cal-general" class="vista active"></div>
 
-        <div id="vista-persona" class="vista">
-            <div class="persona-seccion" id="sec-Jona"><h2>Jona (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-Jona"></div></div>
-            <div class="persona-seccion" id="sec-David"><h2>David (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-David"></div></div>
-            <div class="persona-seccion" id="sec-Raúl"><h2>Raúl (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-Raúl"></div></div>
-            <div class="persona-seccion" id="sec-Sergio"><h2>Sergio (18 Partidos)</h2><div class="lista-partidos-persona" id="lista-pers-Sergio"></div></div>
+        <div id="vista-cal-chango" class="vista">
+            <details class="chango-seccion" id="sec-Jona"><summary>🐵 Jona (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Jona"></div></details>
+            <details class="chango-seccion" id="sec-David"><summary>🦍 David (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-David"></div></details>
+            <details class="chango-seccion" id="sec-Raúl"><summary>🦧 Raúl (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Raúl"></div></details>
+            <details class="chango-seccion" id="sec-Sergio"><summary>🐒 Sergio (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Sergio"></div></details>
         </div>
 
-        <div id="vista-grupos" class="vista"></div>
+        <div id="vista-res-grupos" class="vista"></div>
+
+        <div id="vista-res-chango" class="vista">
+            <div class="seccion-contenedor">
+                <h3 class="seccion-titulo">🏆 Rendimiento Global (Puntos)</h3>
+                <div id="grafica-changos"></div>
+            </div>
+            <div class="seccion-contenedor">
+                <h3 class="seccion-titulo">📊 Tabla Estadística General</h3>
+                <div style="overflow-x:auto;">
+                    <table class="tabla-stats">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left;">Chango</th>
+                                <th title="Partidos Jugados">PJ</th>
+                                <th title="Victorias">G</th>
+                                <th title="Empates">E</th>
+                                <th title="Derrotas">P</th>
+                                <th title="Goles a Favor">GF</th>
+                                <th title="Diferencia de Goles">DG</th>
+                                <th title="Puntos">Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body-changos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         // ==========================================
-        // ⚽ RESULTADOS DE LOS PARTIDOS
-        // Agrega los resultados de los juegos aquí.
-        // El formato es: "EquipoLocal-EquipoVisitante": [GolesLocal, GolesVisitante]
+        // ⚽ RESULTADOS DE LOS PARTIDOS (Ingresar goles aquí)
         // ==========================================
         const resultados = {
-            // Ejemplo de uso (Bórralos/Cámbialos cuando empiece el mundial):
             "México-Sudáfrica": [2, 1],
         };
 
@@ -382,7 +310,7 @@
         }
 
         // ==========================================
-        // DATOS DE EQUIPOS Y FIXTURE
+        // DATOS BASE
         // ==========================================
         const equiposDatos = {
             "Uruguay": {d: "Jona", c: "uy", g: "H"}, "Túnez": {d: "Jona", c: "tn", g: "F"}, "Jordania": {d: "Jona", c: "jo", g: "J"},
@@ -427,318 +355,261 @@
         ];
 
         let diasOrdenados = {};
-        let partidosPorPersona = { Jona: [], David: [], Raúl: [], Sergio: [] };
+        let changos = ["Jona", "David", "Raúl", "Sergio"];
+        let partidosPorChango = { Jona: [], David: [], Raúl: [], Sergio: [] };
+        
+        // Estructuras de Estadísticas
         let gruposStats = {};
-        const hoy = new Date(); // Obtenemos la fecha y hora actual real
+        let estadisticasChangos = {
+            Jona: { nombre: 'Jona', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--jona)' },
+            David: { nombre: 'David', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--david)' },
+            Raúl: { nombre: 'Raúl', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--raul)' },
+            Sergio: { nombre: 'Sergio', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--sergio)' }
+        };
 
-        // Inicializar datos de grupos
+        const hoy = new Date();
+
+        // Inicializar Grupos
         for(let eq in equiposDatos) {
             let g = equiposDatos[eq].g;
             if(!gruposStats[g]) gruposStats[g] = [];
-            gruposStats[g].push({
-                equipo: eq, bandera: equiposDatos[eq].c, dueño: equiposDatos[eq].d,
-                pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0
-            });
+            gruposStats[g].push({ equipo: eq, bandera: equiposDatos[eq].c, dueño: equiposDatos[eq].d, pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0 });
         }
 
-        // Función para crear objeto de fecha real y comparar
         function obtenerFechaObjeto(diaMesStr, horaStr) {
             let partesDia = diaMesStr.split('-');
             let dia = parseInt(partesDia[0], 10);
-            let mes = partesDia[1] === 'Jun' ? 5 : 6; // En JS Junio es 5, Julio 6
+            let mes = partesDia[1] === 'Jun' ? 5 : 6;
             let partesHora = horaStr.split(':');
             let h = parseInt(partesHora[0], 10);
             let m = parseInt(partesHora[1], 10);
             return new Date(2026, mes, dia, h, m, 0);
         }
 
+        // Procesar Calendario
         rawSchedule.forEach(function(str) {
             let p = str.split('|');
             let dt = p[0].split(' ');
-            let fechaOriginal = dt[0];
-            let horaEST = dt[1];
+            let hEST = parseInt(dt[1].split(':')[0], 10);
+            let m = parseInt(dt[1].split(':')[1], 10);
+            let hCUL = hEST - 3;
+            let dSIN = parseInt(dt[0].split('-')[0], 10);
             
-            let arrHora = horaEST.split(':');
-            let h = parseInt(arrHora[0], 10);
-            let m = parseInt(arrHora[1], 10);
+            if (hCUL < 0) { hCUL += 24; dSIN -= 1; }
             
-            let horaCuliacan = h - 3;
-            let arrFecha = fechaOriginal.split('-');
-            let diaSinaloa = parseInt(arrFecha[0], 10);
-            let mesSinaloa = arrFecha[1];
+            let fFinal = dSIN + '-' + dt[0].split('-')[1];
+            let hFinal = (hCUL < 10 ? '0' : '') + hCUL + ':' + (m < 10 ? '0' : '') + m;
 
-            if (horaCuliacan < 0) {
-                horaCuliacan = 24 + horaCuliacan;
-                diaSinaloa = diaSinaloa - 1;
-            }
-
-            let strHora = (horaCuliacan < 10 ? '0' : '') + horaCuliacan;
-            let strMin = (m < 10 ? '0' : '') + m;
-            
-            let fechaFinalStr = diaSinaloa + '-' + mesSinaloa;
-            let horaFinalStr = strHora + ':' + strMin;
-
-            let t1 = p[1]; let t2 = p[2];
-            let objT1 = equiposDatos[t1]; let objT2 = equiposDatos[t2];
-            
             let objPartido = {
-                fecha: fechaFinalStr,
-                hora: horaFinalStr,
-                fechaObj: obtenerFechaObjeto(fechaFinalStr, horaFinalStr),
-                t1: t1, t2: t2,
-                d1: objT1.d, d2: objT2.d,
-                c1: objT1.c, c2: objT2.c,
-                gr: objT1.g 
+                fecha: fFinal, hora: hFinal, fechaObj: obtenerFechaObjeto(fFinal, hFinal),
+                t1: p[1], t2: p[2], d1: equiposDatos[p[1]].d, d2: equiposDatos[p[2]].d,
+                c1: equiposDatos[p[1]].c, c2: equiposDatos[p[2]].c, gr: equiposDatos[p[1]].g 
             };
 
-            // Determinar si ya pasó (se le suma 110 min aprox. de duración del partido si deseas, o desde que arranca)
             objPartido.yaPaso = objPartido.fechaObj < hoy;
 
-            if (!diasOrdenados[fechaFinalStr]) diasOrdenados[fechaFinalStr] = [];
-            diasOrdenados[fechaFinalStr].push(objPartido);
+            if (!diasOrdenados[fFinal]) diasOrdenados[fFinal] = [];
+            diasOrdenados[fFinal].push(objPartido);
 
-            partidosPorPersona[objT1.d].push(objPartido);
-            partidosPorPersona[objT2.d].push(objPartido);
+            partidosPorChango[objPartido.d1].push(objPartido);
+            partidosPorChango[objPartido.d2].push(objPartido);
         });
 
-        // Ordenar horas
-        for (let dia in diasOrdenados) {
-            if (Object.prototype.hasOwnProperty.call(diasOrdenados, dia)) {
-                diasOrdenados[dia].sort((a, b) => a.hora.localeCompare(b.hora));
-            }
-        }
+        for (let dia in diasOrdenados) diasOrdenados[dia].sort((a, b) => a.hora.localeCompare(b.hora));
 
         // ==========================================
-        // RENDERIZAR CALENDARIO GENERAL
-        // ==========================================
-        const vGeneral = document.getElementById('vista-general');
-        let htmlPasados = '<details class="dias-pasados"><summary>📁 Ver Días Anteriores (Ya jugados)</summary>';
-        let htmlFuturos = '';
-        let encontroProximo = false;
-        let hayPasados = false;
-
-        for (let dia in diasOrdenados) {
-            let todosPasadosEnElDia = true;
-            let gridHTML = '<div class="grid-partidos">';
-            
-            diasOrdenados[dia].forEach(function(pt) {
-                if (!pt.yaPaso) todosPasadosEnElDia = false;
-                
-                let res = getResult(pt.t1, pt.t2);
-                let scoreHtml = res ? `<div class="score">${res[0]} - ${res[1]}</div>` : '<div class="vs">VS</div>';
-                let claseAdicional = pt.yaPaso ? 'partido-pasado' : '';
-                let badgeProximo = '';
-                
-                // Destacar el siguiente partido (El primero que no ha pasado)
-                if (!pt.yaPaso && !encontroProximo) {
-                    claseAdicional += ' proximo-partido';
-                    badgeProximo = '<div class="badge-proximo">👉 Siguiente Partido</div>';
-                    encontroProximo = true;
-                }
-
-                gridHTML += `
-                <div class="partido-card ${claseAdicional}">
-                    ${badgeProximo}
-                    <div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div>
-                    <div class="p-teams">
-                        <div class="team">
-                            <img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera">
-                            <span class="t-nombre">${pt.t1}</span>
-                            <span class="t-dueño d-${pt.d1}">${pt.d1}</span>
-                        </div>
-                        ${scoreHtml}
-                        <div class="team">
-                            <img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera">
-                            <span class="t-nombre">${pt.t2}</span>
-                            <span class="t-dueño d-${pt.d2}">${pt.d2}</span>
-                        </div>
-                    </div>
-                </div>`;
-            });
-            gridHTML += '</div>';
-            
-            let headerHtml = `<div class="fecha-header">🗓️ ${dia} de 2026</div>`;
-            
-            if (todosPasadosEnElDia) {
-                htmlPasados += headerHtml + gridHTML;
-                hayPasados = true;
-            } else {
-                htmlFuturos += headerHtml + gridHTML;
-            }
-        }
-        htmlPasados += '</details>';
-        vGeneral.innerHTML = (hayPasados ? htmlPasados : '') + htmlFuturos;
-
-        // ==========================================
-        // RENDERIZAR POR PERSONA
-        // ==========================================
-        const personas = ["Jona", "David", "Raúl", "Sergio"];
-        personas.forEach(function(pers) {
-            const divPersona = document.getElementById('lista-pers-' + pers);
-            partidosPorPersona[pers].sort(function(a, b) {
-                let dA = parseInt(a.fecha.split('-')[0], 10);
-                let dB = parseInt(b.fecha.split('-')[0], 10);
-                if(dA === dB) return a.hora.localeCompare(b.hora);
-                return dA - dB;
-            });
-
-            let htmlPersona = '';
-            partidosPorPersona[pers].forEach(function(pt) {
-                let esLocal = (pt.d1 === pers);
-                let miEquipo = esLocal ? pt.t1 : pt.t2;
-                let rivalEq = esLocal ? pt.t2 : pt.t1;
-                let rivalPer = esLocal ? pt.d2 : pt.d1;
-                let cMio = esLocal ? pt.c1 : pt.c2;
-                let cRival = esLocal ? pt.c2 : pt.c1;
-
-                let res = getResult(pt.t1, pt.t2);
-                let scoreCenter = '';
-                
-                if (res) {
-                    let gMio = esLocal ? res[0] : res[1];
-                    let gRival = esLocal ? res[1] : res[0];
-                    scoreCenter = `<div style="font-weight:900; font-size:1.15rem; color:var(--primary); background:#eef2f5; padding:2px 8px; border-radius:6px;">${gMio} - ${gRival}</div>`;
-                } else {
-                    scoreCenter = `<span style="color:#aaa; font-size:0.75rem; font-weight:bold;">VS</span>`;
-                }
-
-                htmlPersona += `
-                    <div class="p-mini ${pt.yaPaso ? 'partido-pasado' : ''}">
-                        <div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div>
-                        <div class="p-mini-equipos">
-                            <div class="p-mini-col">
-                                <img src="https://flagcdn.com/w20/${cMio}.png" style="width:28px; border-radius:3px; margin-bottom:4px;"> 
-                                <span style="font-size:0.8rem; line-height:1.1;">${miEquipo}</span>
-                                <span class="t-dueño d-${pers}" style="font-size:0.65rem; margin-top:4px;">Tu equipo</span>
-                            </div>
-                            
-                            <div style="display:flex; align-items:center; justify-content:center; width:20%; height:100%; min-height:40px;">
-                                ${scoreCenter}
-                            </div>
-                            
-                            <div class="p-mini-col">
-                                <img src="https://flagcdn.com/w20/${cRival}.png" style="width:28px; border-radius:3px; margin-bottom:4px;"> 
-                                <span style="font-size:0.8rem; line-height:1.1;">${rivalEq}</span>
-                                <span class="t-dueño d-${rivalPer}" style="font-size:0.65rem; margin-top:4px;">Rival: ${rivalPer}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            divPersona.innerHTML = htmlPersona;
-        });
-
-        // ==========================================
-        // PROCESAR RESULTADOS Y RENDERIZAR GRUPOS
+        // PROCESAR RESULTADOS (Grupos y Changos)
         // ==========================================
         for (let key in resultados) {
             let [t1, t2] = key.split('-');
             let g1 = resultados[key][0];
             let g2 = resultados[key][1];
             
-            let gr1 = equiposDatos[t1].g;
-            let gr2 = equiposDatos[t2].g;
-            
-            let eq1 = gruposStats[gr1].find(e => e.equipo === t1);
-            let eq2 = gruposStats[gr2].find(e => e.equipo === t2);
+            let c1 = equiposDatos[t1].d;
+            let c2 = equiposDatos[t2].d;
+
+            // Actualizar Changos
+            estadisticasChangos[c1].pj++; estadisticasChangos[c1].gf += g1; estadisticasChangos[c1].gc += g2;
+            estadisticasChangos[c2].pj++; estadisticasChangos[c2].gf += g2; estadisticasChangos[c2].gc += g1;
+
+            if (g1 > g2) { estadisticasChangos[c1].pg++; estadisticasChangos[c1].pts += 3; estadisticasChangos[c2].pp++; }
+            else if (g1 < g2) { estadisticasChangos[c2].pg++; estadisticasChangos[c2].pts += 3; estadisticasChangos[c1].pp++; }
+            else { estadisticasChangos[c1].pe++; estadisticasChangos[c1].pts += 1; estadisticasChangos[c2].pe++; estadisticasChangos[c2].pts += 1; }
+
+            // Actualizar Grupos
+            let gr1 = equiposDatos[t1].g; let eq1 = gruposStats[gr1].find(e => e.equipo === t1);
+            let gr2 = equiposDatos[t2].g; let eq2 = gruposStats[gr2].find(e => e.equipo === t2);
             
             if(eq1 && eq2) {
-                eq1.pj++; eq2.pj++;
-                eq1.gf += g1; eq2.gf += g2;
-                eq1.gc += g2; eq2.gc += g1;
-                
-                if (g1 > g2) {
-                    eq1.pg++; eq2.pp++;
-                    eq1.pts += 3;
-                } else if (g1 < g2) {
-                    eq2.pg++; eq1.pp++;
-                    eq2.pts += 3;
-                } else {
-                    eq1.pe++; eq2.pe++;
-                    eq1.pts += 1; eq2.pts += 1;
-                }
+                eq1.pj++; eq2.pj++; eq1.gf += g1; eq2.gf += g2; eq1.gc += g2; eq2.gc += g1;
+                if (g1 > g2) { eq1.pg++; eq2.pp++; eq1.pts += 3; }
+                else if (g1 < g2) { eq2.pg++; eq1.pp++; eq2.pts += 3; }
+                else { eq1.pe++; eq2.pe++; eq1.pts += 1; eq2.pts += 1; }
             }
         }
 
-        const vGrupos = document.getElementById('vista-grupos');
-        let htmlGrupos = '';
-        let gruposNombres = Object.keys(gruposStats).sort();
+        // ==========================================
+        // RENDERIZAR VISTAS
+        // ==========================================
+        
+        // 1. Calendario General
+        const vGeneral = document.getElementById('vista-cal-general');
+        let htmlPasados = '<details class="dias-pasados"><summary>📁 Mostrar Días Pasados</summary>';
+        let htmlFuturos = ''; let encontroProximo = false; let hayPasados = false;
 
-        gruposNombres.forEach(g => {
-            // Ordenar por: Puntos, luego Diferencia de Goles, luego Goles a Favor
-            gruposStats[g].sort((a, b) => {
-                if (b.pts !== a.pts) return b.pts - a.pts;
-                let dgA = a.gf - a.gc;
-                let dgB = b.gf - b.gc;
-                if (dgB !== dgA) return dgB - dgA;
+        for (let dia in diasOrdenados) {
+            let todosPasadosEnElDia = true;
+            let gridHTML = '<div class="grid-partidos">';
+            diasOrdenados[dia].forEach(function(pt) {
+                if (!pt.yaPaso) todosPasadosEnElDia = false;
+                let res = getResult(pt.t1, pt.t2);
+                let scoreHtml = res ? `<div class="score">${res[0]} - ${res[1]}</div>` : '<div class="vs">VS</div>';
+                let clsAd = pt.yaPaso ? 'partido-pasado' : (!encontroProximo ? 'proximo-partido' : '');
+                let badge = (!pt.yaPaso && !encontroProximo) ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
+                if(!pt.yaPaso) encontroProximo = true;
+
+                gridHTML += `
+                <div class="partido-card ${clsAd}">${badge}
+                    <div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div>
+                    <div class="p-teams">
+                        <div class="team"><img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div>
+                        ${scoreHtml}
+                        <div class="team"><img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div>
+                    </div>
+                </div>`;
+            });
+            let head = `<div class="fecha-header">🗓️ ${dia} de 2026</div>`;
+            if (todosPasadosEnElDia) { htmlPasados += head + gridHTML + '</div>'; hayPasados = true; }
+            else { htmlFuturos += head + gridHTML + '</div>'; }
+        }
+        vGeneral.innerHTML = (hayPasados ? htmlPasados + '</details>' : '') + htmlFuturos;
+
+        // 2. Calendario Por Chango
+        changos.forEach(function(c) {
+            const divChango = document.getElementById('lista-pers-' + c);
+            partidosPorChango[c].sort((a,b) => {
+                let dA = parseInt(a.fecha.split('-')[0], 10); let dB = parseInt(b.fecha.split('-')[0], 10);
+                return (dA === dB) ? a.hora.localeCompare(b.hora) : dA - dB;
+            });
+
+            let htmlC = '';
+            partidosPorChango[c].forEach(function(pt) {
+                let esLoc = (pt.d1 === c);
+                let res = getResult(pt.t1, pt.t2);
+                let scoreCenter = res ? `<div style="font-weight:900; font-size:1.1rem; color:var(--primary); background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLoc?res[0]:res[1]} - ${esLoc?res[1]:res[0]}</div>` : `<span style="color:#aaa; font-size:0.75rem; font-weight:bold;">VS</span>`;
+
+                htmlC += `
+                    <div class="p-mini ${pt.yaPaso ? 'partido-pasado' : ''}">
+                        <div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div>
+                        <div class="p-mini-equipos">
+                            <div class="p-mini-col">
+                                <img src="https://flagcdn.com/w20/${esLoc?pt.c1:pt.c2}.png" style="width:28px; border-radius:3px; margin-bottom:4px;"> 
+                                <span style="font-size:0.8rem; line-height:1.1;">${esLoc?pt.t1:pt.t2}</span>
+                                <span class="t-dueño d-${c}" style="font-size:0.65rem; margin-top:4px;">Tu equipo</span>
+                            </div>
+                            <div style="display:flex; align-items:center;">${scoreCenter}</div>
+                            <div class="p-mini-col">
+                                <img src="https://flagcdn.com/w20/${esLoc?pt.c2:pt.c1}.png" style="width:28px; border-radius:3px; margin-bottom:4px;"> 
+                                <span style="font-size:0.8rem; line-height:1.1;">${esLoc?pt.t2:pt.t1}</span>
+                                <span class="t-dueño d-${esLoc?pt.d2:pt.d1}" style="font-size:0.65rem; margin-top:4px;">Rival: ${esLoc?pt.d2:pt.d1}</span>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            divChango.innerHTML = htmlC;
+        });
+
+        // 3. Resultados Grupos
+        const vGrupos = document.getElementById('vista-res-grupos');
+        let htmlG = '';
+        Object.keys(gruposStats).sort().forEach(g => {
+            gruposStats[g].sort((a,b) => {
+                if(b.pts !== a.pts) return b.pts - a.pts;
+                if((b.gf - b.gc) !== (a.gf - a.gc)) return (b.gf - b.gc) - (a.gf - a.gc);
                 return b.gf - a.gf;
             });
-
-            htmlGrupos += `<div class="grupo-contenedor">
-                <h3 class="grupo-titulo">Grupo ${g}</h3>
-                <div style="overflow-x:auto;">
-                <table class="tabla-grupo">
-                    <thead>
-                        <tr>
-                            <th style="text-align:left;">Equipo</th>
-                            <th title="Partidos Jugados">PJ</th>
-                            <th title="Victorias">G</th>
-                            <th title="Empates">E</th>
-                            <th title="Derrotas">P</th>
-                            <th title="Goles a Favor">GF</th>
-                            <th title="Diferencia de Goles">DG</th>
-                            <th title="Puntos">Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                    
-            gruposStats[g].forEach((eq, index) => {
-                let dg = eq.gf - eq.gc;
-                let dSign = dg > 0 ? '+' : '';
-                htmlGrupos += `
-                    <tr>
-                        <td class="td-equipo">
-                            <span style="color:#aaa; font-size:0.75rem; width:12px; font-weight:normal;">${index+1}</span>
-                            <img src="https://flagcdn.com/w20/${eq.bandera}.png" style="width:20px; border-radius:2px;">
-                            <div>
-                                <div style="line-height:1.2; font-size:0.85rem;">${eq.equipo}</div>
-                                <span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; padding:1px 5px; margin-top:2px; display:inline-block;">${eq.dueño}</span>
-                            </div>
-                        </td>
-                        <td>${eq.pj}</td>
-                        <td>${eq.pg}</td>
-                        <td>${eq.pe}</td>
-                        <td>${eq.pp}</td>
-                        <td>${eq.gf}</td>
-                        <td>${dSign}${dg}</td>
-                        <td style="font-weight:900; color:var(--primary); font-size:1rem;">${eq.pts}</td>
-                    </tr>`;
-            });
-            htmlGrupos += `</tbody></table></div></div>`;
-        });
-        vGrupos.innerHTML = htmlGrupos;
-
-
-        // ==========================================
-        // LÓGICA DE PESTAÑAS (TABS)
-        // ==========================================
-        function cambiarVista(evento, vista) {
-            if(evento) evento.preventDefault();
-
-            let botones = document.querySelectorAll('.tab-btn');
-            for(let i=0; i<botones.length; i++) {
-                botones[i].classList.remove('active');
-            }
-
-            let vistas = document.querySelectorAll('.vista');
-            for(let i=0; i<vistas.length; i++) {
-                vistas[i].classList.remove('active');
-            }
             
-            document.getElementById('btn-' + vista).classList.add('active');
-            document.getElementById('vista-' + vista).classList.add('active');
+            htmlG += `<div class="seccion-contenedor"><h3 class="seccion-titulo">🎯 Grupo ${g}</h3><div style="overflow-x:auto;"><table class="tabla-stats">`;
+            gruposStats[g].forEach((eq, i) => {
+                let dg = eq.gf - eq.gc;
+                htmlG += `<tr><td class="td-izq"><span style="color:#aaa; font-size:0.75rem;">${i+1}</span><img src="https://flagcdn.com/w20/${eq.bandera}.png" style="width:20px; border-radius:2px;"><div><div style="line-height:1.2">${eq.equipo}</div><span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; padding:1px 5px; margin-top:2px; display:inline-block;">${eq.dueño}</span></div></td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pe}</td><td>${eq.pp}</td><td>${eq.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900; color:var(--primary);">${eq.pts}</td></tr>`;
+            });
+            htmlG += `</table></div></div>`;
+        });
+        vGrupos.innerHTML = htmlG;
+
+        // 4. Resultados Por Chango
+        let arrChangos = Object.values(estadisticasChangos);
+        arrChangos.sort((a,b) => {
+            if(b.pts !== a.pts) return b.pts - a.pts;
+            if((b.gf - b.gc) !== (a.gf - a.gc)) return (b.gf - b.gc) - (a.gf - a.gc);
+            return b.gf - a.gf;
+        });
+
+        // Generar Gráfica
+        let maxPts = Math.max(...arrChangos.map(c => c.pts));
+        if (maxPts === 0) maxPts = 1; 
+        let htmlGrafica = '';
+        arrChangos.forEach(c => {
+            let pct = (c.pts / maxPts) * 100;
+            if (pct === 0) pct = 2; 
+            htmlGrafica += `
+                <div class="barra-container">
+                    <div class="barra-header"><span>${c.nombre}</span><span>${c.pts} Puntos</span></div>
+                    <div class="barra-fondo">
+                        <div class="barra-progreso" style="width: ${pct}%; background-color: ${c.color};"></div>
+                    </div>
+                </div>`;
+        });
+        document.getElementById('grafica-changos').innerHTML = htmlGrafica;
+
+        // Generar Tabla Changos
+        let htmlTablaC = '';
+        arrChangos.forEach((c, i) => {
+            let dg = c.gf - c.gc;
+            htmlTablaC += `
+                <tr>
+                    <td class="td-izq">
+                        <span style="color:#aaa; font-size:0.75rem;">${i+1}</span>
+                        <span class="t-dueño d-${c.nombre}" style="font-size:0.8rem; padding:4px 8px;">${c.nombre}</span>
+                    </td>
+                    <td>${c.pj}</td><td>${c.pg}</td><td>${c.pe}</td><td>${c.pp}</td><td>${c.gf}</td><td>${dg>0?'+':''}${dg}</td>
+                    <td style="font-weight:900; color:var(--primary); font-size:1rem;">${c.pts}</td>
+                </tr>`;
+        });
+        document.getElementById('tabla-body-changos').innerHTML = htmlTablaC;
+
+        // ==========================================
+        // LÓGICA DE NAVEGACIÓN (TABS)
+        // ==========================================
+        function setMain(mainStr) {
+            document.querySelectorAll('.m-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('m-' + mainStr).classList.add('active');
+
+            document.getElementById('sub-calendarios').style.display = mainStr === 'calendarios' ? 'flex' : 'none';
+            document.getElementById('sub-resultados').style.display = mainStr === 'resultados' ? 'flex' : 'none';
+
+            if(mainStr === 'calendarios') setSub('cal-general');
+            if(mainStr === 'resultados') setSub('res-grupos');
+        }
+
+        function setSub(subStr) {
+            document.querySelectorAll('.s-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('s-' + subStr).classList.add('active');
+
+            document.querySelectorAll('.vista').forEach(v => v.classList.remove('active'));
+            document.getElementById('vista-' + subStr).classList.add('active');
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if(subStr === 'res-chango') {
+                let barras = document.querySelectorAll('.barra-progreso');
+                barras.forEach(b => {
+                    let finalWidth = b.style.width;
+                    b.style.width = '0%';
+                    setTimeout(() => { b.style.width = finalWidth; }, 50);
+                });
+            }
         }
     </script>
 </body>
