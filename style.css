@@ -1,0 +1,92 @@
+:root {
+    --primary: #0a2540; --secondary: #0070f3; --bg: #f4f7f6; --card-bg: #ffffff;
+    --jona: #ff4a5a; --david: #2ed573; --raul: #1e90ff; --sergio: #ffa502;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg); color: #333; margin: 0; padding: 15px; padding-top: env(safe-area-inset-top, 15px);
+    display: flex; flex-direction: column; align-items: center; -webkit-font-smoothing: antialiased;
+}
+h1 { color: var(--primary); margin: 10px 0 5px 0; text-transform: uppercase; text-align: center; font-size: 1.6rem; }
+.subtitle { color: #666; margin-bottom: 20px; font-size: 0.9rem; text-align: center; }
+
+.status-container { text-align: center; margin-top: 5px; min-height: 20px; }
+.badge-estado { font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: bold; display: inline-block; }
+.b-vivo { background-color: #ff4a5a; color: white; animation: pulse 1.5s infinite; }
+.b-fin { background-color: #e0e0e0; color: #666; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+.nav-container { width: 100%; max-width: 800px; margin-bottom: 20px; }
+.main-tabs { display: flex; background: #e0e0e0; border-radius: 12px; padding: 4px; margin-bottom: 10px; }
+.m-tab { flex: 1; background: transparent; border: none; padding: 10px; font-weight: 800; font-size: 1rem; color: #555; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+.m-tab.active { background: white; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.sub-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
+.s-tab { background-color: transparent; border: 2px solid #ddd; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer; color: #666; transition: all 0.2s; flex: 1; max-width: 200px; }
+.s-tab.active { border-color: var(--secondary); background-color: rgba(0, 112, 243, 0.1); color: var(--secondary); }
+.btn-actualizar { background-color: var(--secondary); color: white; border: none; padding: 8px 16px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
+
+.contenedor-vistas { width: 100%; max-width: 1000px; }
+.vista { display: none; }
+.vista.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+.fecha-header { background-color: var(--primary); color: white; padding: 8px 15px; border-radius: 6px; margin: 20px 0 10px 0; font-weight: bold; font-size: 1.1rem; position: sticky; top: 10px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.grid-partidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+.partido-card { background: var(--card-bg); border-radius: 10px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s; position: relative; cursor: pointer; }
+.partido-pasado { opacity: 0.6; filter: grayscale(0.85); }
+.partido-vivo { border: 2px solid #ff4a5a; box-shadow: 0 0 12px rgba(255,74,90,0.4); }
+.proximo-partido { border: 2px solid var(--secondary); box-shadow: 0 0 15px rgba(0, 112, 243, 0.25); transform: scale(1.02); z-index: 5; }
+.badge-proximo { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--secondary); color: white; padding: 3px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; white-space: nowrap; }
+.p-info { display: flex; justify-content: space-between; font-size: 0.8rem; color: #777; margin-bottom: 8px; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
+.p-teams { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.team { display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
+.img-bandera { width: 36px; height: 24px; object-fit: cover; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 5px; }
+.t-nombre { font-weight: bold; font-size: 0.95rem; }
+.t-dueño { font-size: 0.75rem; color: white; padding: 2px 8px; border-radius: 12px; margin-top: 4px; font-weight: 600; }
+.d-Jona { background-color: var(--jona); } .d-David { background-color: var(--david); color: #111; } .d-Raúl { background-color: var(--raul); } .d-Sergio { background-color: var(--sergio); }
+.vs { font-weight: bold; color: #aaa; font-size: 0.9rem; }
+.score { font-size: 1.3rem; font-weight: 900; color: var(--primary); background: #eef2f5; padding: 4px 10px; border-radius: 6px; }
+
+.historial-panel { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; animation: fadeIn 0.25s ease-out; }
+.partido-card.seleccionado { border-color: #0070f3; box-shadow: 0 4px 12px rgba(0,112,243,0.2); transform: scale(1.01); }
+.partido-card.seleccionado .historial-panel { display: block; }
+.h-titulo { font-size: 0.75rem; font-weight: bold; color: var(--primary); text-transform: uppercase; margin-bottom: 6px; text-align: center; letter-spacing: 0.5px; }
+.h-match { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; padding: 3px 0; border-bottom: 1px solid #f0f0f0; color: #555; }
+.h-match:last-child { border-bottom: none; }
+.h-fecha { color: #999; font-size: 0.65rem; width: 45px; }
+.h-teams { flex: 1; text-align: center; font-weight: 500; }
+.h-vacio { text-align: center; font-size: 0.75rem; color: #999; font-style: italic; padding: 5px 0; }
+
+details.dias-pasados { width: 100%; margin-bottom: 20px; background: #e9ecef; border-radius: 10px; padding: 10px; box-sizing: border-box; }
+details.dias-pasados summary { font-weight: bold; cursor: pointer; padding: 10px; color: #555; text-align: center; list-style: none; }
+details.dias-pasados summary::-webkit-details-marker { display: none; }
+
+details.chango-seccion { background: white; padding: 15px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid; transition: all 0.3s ease; }
+#sec-Jona { border-color: var(--jona); } #sec-David { border-color: var(--david); } #sec-Raúl { border-color: var(--raul); } #sec-Sergio { border-color: var(--sergio); }
+details.chango-seccion summary { margin-top: 0; color: #333; font-size: 1.3rem; font-weight: bold; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; outline: none; }
+details.chango-seccion summary::-webkit-details-marker { display: none; }
+details.chango-seccion summary::after { content: '▼'; font-size: 0.9rem; color: #999; transition: transform 0.3s; }
+details.chango-seccion[open] summary::after { transform: rotate(180deg); }
+details.chango-seccion[open] summary { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+.lista-partidos-chango { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.p-mini { background: #f9f9f9; border: 1px solid #eaeaea; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; font-size: 0.85rem; cursor: pointer; transition: transform 0.2s; }
+.p-mini.seleccionado { border-color: #0070f3; box-shadow: 0 4px 12px rgba(0,112,243,0.15); }
+.p-mini.seleccionado .historial-panel { display: block; }
+.p-mini-fecha { font-size: 0.75rem; color: #0070f3; font-weight: bold; margin-bottom: 8px; text-align: center; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
+.p-mini-equipos { display: flex; align-items: flex-start; justify-content: space-between; font-weight: 500; }
+.p-mini-col { display: flex; flex-direction: column; align-items: center; width: 40%; text-align: center; }
+
+.seccion-contenedor { background: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.seccion-titulo { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+.tabla-stats { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: center; }
+.tabla-stats th { background: #f4f7f6; color: #666; padding: 8px 4px; font-weight: 600; }
+.tabla-stats td { padding: 10px 4px; border-bottom: 1px solid #eee; vertical-align: middle; }
+.td-izq { text-align: left; display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.barra-container { margin-bottom: 15px; }
+.barra-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
+.barra-fondo { background: #eee; border-radius: 10px; width: 100%; height: 20px; overflow: hidden; }
+.barra-progreso { height: 100%; border-radius: 10px; transition: width 0.8s ease-out; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-size: 0.75rem; font-weight: bold; }
+
+#cargando-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.spinner { border: 4px solid rgba(0,0,0,0.1); border-left-color: var(--secondary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 15px; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

@@ -6,99 +6,69 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Estilos adicionales para las nuevas funcionalidades (no toca style.css) -->
     <style>
-        :root {
-            --primary: #0a2540; --secondary: #0070f3; --bg: #f4f7f6; --card-bg: #ffffff;
-            --jona: #ff4a5a; --david: #2ed573; --raul: #1e90ff; --sergio: #ffa502;
+        .btn-wa {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg); color: #333; margin: 0; padding: 15px; padding-top: env(safe-area-inset-top, 15px);
-            display: flex; flex-direction: column; align-items: center; -webkit-font-smoothing: antialiased;
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
         }
-        h1 { color: var(--primary); margin: 10px 0 5px 0; text-transform: uppercase; text-align: center; font-size: 1.6rem; }
-        .subtitle { color: #666; margin-bottom: 20px; font-size: 0.9rem; text-align: center; }
-
-        .status-container { text-align: center; margin-top: 5px; min-height: 20px; }
-        .badge-estado { font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: bold; display: inline-block; }
-        .b-vivo { background-color: #ff4a5a; color: white; animation: pulse 1.5s infinite; }
-        .b-fin { background-color: #e0e0e0; color: #666; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
-
-        .nav-container { width: 100%; max-width: 800px; margin-bottom: 20px; }
-        .main-tabs { display: flex; background: #e0e0e0; border-radius: 12px; padding: 4px; margin-bottom: 10px; }
-        .m-tab { flex: 1; background: transparent; border: none; padding: 10px; font-weight: 800; font-size: 1rem; color: #555; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
-        .m-tab.active { background: white; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .sub-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
-        .s-tab { background-color: transparent; border: 2px solid #ddd; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer; color: #666; transition: all 0.2s; flex: 1; max-width: 200px; }
-        .s-tab.active { border-color: var(--secondary); background-color: rgba(0, 112, 243, 0.1); color: var(--secondary); }
-        .btn-actualizar { background-color: var(--secondary); color: white; border: none; padding: 8px 16px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
-
-        .contenedor-vistas { width: 100%; max-width: 1000px; }
-        .vista { display: none; }
-        .vista.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-
-        .fecha-header { background-color: var(--primary); color: white; padding: 8px 15px; border-radius: 6px; margin: 20px 0 10px 0; font-weight: bold; font-size: 1.1rem; position: sticky; top: 10px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .grid-partidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
-        .partido-card { background: var(--card-bg); border-radius: 10px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s; position: relative; cursor: pointer; }
-        .partido-pasado { opacity: 0.6; filter: grayscale(0.85); }
-        .partido-vivo { border: 2px solid #ff4a5a; box-shadow: 0 0 12px rgba(255,74,90,0.4); }
-        .proximo-partido { border: 2px solid var(--secondary); box-shadow: 0 0 15px rgba(0, 112, 243, 0.25); transform: scale(1.02); z-index: 5; }
-        .badge-proximo { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--secondary); color: white; padding: 3px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; white-space: nowrap; }
-        .p-info { display: flex; justify-content: space-between; font-size: 0.8rem; color: #777; margin-bottom: 8px; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
-        .p-teams { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .team { display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
-        .img-bandera { width: 36px; height: 24px; object-fit: cover; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 5px; }
-        .t-nombre { font-weight: bold; font-size: 0.95rem; }
-        .t-dueño { font-size: 0.75rem; color: white; padding: 2px 8px; border-radius: 12px; margin-top: 4px; font-weight: 600; }
-        .d-Jona { background-color: var(--jona); } .d-David { background-color: var(--david); color: #111; } .d-Raúl { background-color: var(--raul); } .d-Sergio { background-color: var(--sergio); }
-        .vs { font-weight: bold; color: #aaa; font-size: 0.9rem; }
-        .score { font-size: 1.3rem; font-weight: 900; color: var(--primary); background: #eef2f5; padding: 4px 10px; border-radius: 6px; }
-        
-        .historial-panel { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; animation: fadeIn 0.25s ease-out; }
-        .partido-card.seleccionado { border-color: #0070f3; box-shadow: 0 4px 12px rgba(0,112,243,0.2); transform: scale(1.01); }
-        .partido-card.seleccionado .historial-panel { display: block; }
-        .h-titulo { font-size: 0.75rem; font-weight: bold; color: var(--primary); text-transform: uppercase; margin-bottom: 6px; text-align: center; letter-spacing: 0.5px; }
-        .h-match { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; padding: 3px 0; border-bottom: 1px solid #f0f0f0; color: #555; }
-        .h-match:last-child { border-bottom: none; }
-        .h-fecha { color: #999; font-size: 0.65rem; width: 45px; }
-        .h-teams { flex: 1; text-align: center; font-weight: 500; }
-        .h-vacio { text-align: center; font-size: 0.75rem; color: #999; font-style: italic; padding: 5px 0; }
-
-        details.dias-pasados { width: 100%; margin-bottom: 20px; background: #e9ecef; border-radius: 10px; padding: 10px; box-sizing: border-box; }
-        details.dias-pasados summary { font-weight: bold; cursor: pointer; padding: 10px; color: #555; text-align: center; list-style: none; }
-        details.dias-pasados summary::-webkit-details-marker { display: none; }
-
-        details.chango-seccion { background: white; padding: 15px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid; transition: all 0.3s ease; }
-        #sec-Jona { border-color: var(--jona); } #sec-David { border-color: var(--david); } #sec-Raúl { border-color: var(--raul); } #sec-Sergio { border-color: var(--sergio); }
-        details.chango-seccion summary { margin-top: 0; color: #333; font-size: 1.3rem; font-weight: bold; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; outline: none; }
-        details.chango-seccion summary::-webkit-details-marker { display: none; }
-        details.chango-seccion summary::after { content: '▼'; font-size: 0.9rem; color: #999; transition: transform 0.3s; }
-        details.chango-seccion[open] summary::after { transform: rotate(180deg); }
-        details.chango-seccion[open] summary { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
-        .lista-partidos-chango { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-        .p-mini { background: #f9f9f9; border: 1px solid #eaeaea; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; font-size: 0.85rem; cursor: pointer; transition: transform 0.2s; }
-        .p-mini.seleccionado { border-color: #0070f3; box-shadow: 0 4px 12px rgba(0,112,243,0.15); }
-        .p-mini.seleccionado .historial-panel { display: block; }
-        .p-mini-fecha { font-size: 0.75rem; color: #0070f3; font-weight: bold; margin-bottom: 8px; text-align: center; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
-        .p-mini-equipos { display: flex; align-items: flex-start; justify-content: space-between; font-weight: 500; }
-        .p-mini-col { display: flex; flex-direction: column; align-items: center; width: 40%; text-align: center; }
-
-        .seccion-contenedor { background: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .seccion-titulo { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
-        .tabla-stats { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: center; }
-        .tabla-stats th { background: #f4f7f6; color: #666; padding: 8px 4px; font-weight: 600; }
-        .tabla-stats td { padding: 10px 4px; border-bottom: 1px solid #eee; vertical-align: middle; }
-        .td-izq { text-align: left; display: flex; align-items: center; gap: 8px; font-weight: 600; }
-        .barra-container { margin-bottom: 15px; }
-        .barra-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
-        .barra-fondo { background: #eee; border-radius: 10px; width: 100%; height: 20px; overflow: hidden; }
-        .barra-progreso { height: 100%; border-radius: 10px; transition: width 0.8s ease-out; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-size: 0.75rem; font-weight: bold; }
-
-        #cargando-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .spinner { border: 4px solid rgba(0,0,0,0.1); border-left-color: var(--secondary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 15px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px;
+            border-left: 4px solid var(--secondary);
+        }
+        .stat-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+        .rachas {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .racha-item {
+            display: inline-block;
+            width: 28px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 20px;
+            background: #eee;
+        }
+        .racha-win { background: #2ed573; color: white; }
+        .racha-draw { background: #ffa502; color: white; }
+        .racha-loss { background: #ff4a5a; color: white; }
+        .curiosidad {
+            background: #eef2ff;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -137,10 +107,14 @@
     </div>
     <div id="vista-res-grupos" class="vista"></div>
     <div id="vista-res-chango" class="vista">
-        <div class="seccion-contenedor">
-            <h3 class="seccion-titulo">🏆 Rendimiento Global (Puntos)</h3>
-            <div id="grafica-changos"></div>
+        <!-- Sección con botón WhatsApp y gráfica -->
+        <div class="flex-between">
+            <h3 class="seccion-titulo" style="margin-bottom:0;">🏆 Rendimiento Global (Puntos)</h3>
+            <button class="btn-wa" onclick="compartirWhatsApp()">📱 Compartir en WhatsApp</button>
         </div>
+        <div id="grafica-changos"></div>
+        
+        <!-- Tabla general -->
         <div class="seccion-contenedor">
             <h3 class="seccion-titulo">📊 Tabla Estadística General</h3>
             <div style="overflow-x:auto;">
@@ -150,87 +124,33 @@
                 </table>
             </div>
         </div>
+
+        <!-- Contenedores para estadísticas avanzadas (se llenan dinámicamente) -->
+        <div class="seccion-contenedor" id="estadisticas-avanzadas">
+            <h3 class="seccion-titulo">📈 Estadísticas Avanzadas</h3>
+            <div id="stats-avanzadas-container"></div>
+            <div id="curiosidades-container"></div>
+        </div>
     </div>
 </div>
 
-<script>
-    // ---- BASE DE DATOS HISTÓRICA DE ENFRENTAMIENTOS DIRECTOS (H2H) ----
-    const baseDatosH2H = {
-        "México-Sudáfrica": [{ f: "2010", r: "México 1 - 1 Sudáfrica" }, { f: "2005", r: "México 1 - 2 Sudáfrica" }, { f: "2000", r: "México 4 - 2 Sudáfrica" }, { f: "1993", r: "México 4 - 0 Sudáfrica" }],
-        "Corea del Sur-República Checa": [{ f: "2016", r: "Corea del S. 2 - 1 Rep. Checa" }, { f: "2001", r: "Rep. Checa 5 - 0 Corea del S." }, { f: "1998", r: "Corea del S. 2 - 2 Rep. Checa" }],
-        "Canadá-Bosnia": [{ f: "2024", r: "Canadá 1 - 0 Bosnia" }],
-        "USA-Paraguay": [{ f: "2018", r: "USA 1 - 0 Paraguay" }, { f: "2016", r: "USA 1 - 0 Paraguay" }, { f: "2011", r: "USA 0 - 1 Paraguay" }, { f: "2010", r: "USA 2 - 1 Paraguay" }, { f: "2003", r: "USA 2 - 0 Paraguay" }],
-        "Haití-Escocia": [{ f: "1974", r: "Escocia 2 - 0 Haití" }],
-        "Australia-Turquía": [{ f: "2004", r: "Australia 2 - 3 Turquía" }, { f: "2004", r: "Australia 0 - 1 Turquía" }],
-        "Brasil-Marruecos": [{ f: "2023", r: "Marruecos 2 - 1 Brasil" }, { f: "1998", r: "Brasil 3 - 0 Marruecos" }, { f: "1997", r: "Brasil 2 - 0 Marruecos" }],
-        "Qatar-Suiza": [{ f: "2018", r: "Suiza 0 - 1 Qatar" }],
-        "Costa de Marfil-Ecuador": [{ f: "2011", r: "Ecuador 1 - 1 Costa de Marfil" }],
-        "Alemania-Curazao": [],
-        "Países Bajos-Japón": [{ f: "2013", r: "Países Bajos 2 - 2 Japón" }, { f: "2010", r: "Países Bajos 1 - 0 Japón" }, { f: "2009", r: "Países Bajos 3 - 0 Japón" }],
-        "Suecia-Túnez": [{ f: "2002", r: "Túnez 1 - 0 Suecia" }],
-        "Arabia S.-Uruguay": [{ f: "2018", r: "Uruguay 1 - 0 Arabia S." }, { f: "2014", r: "Arabia S. 1 - 1 Uruguay" }, { f: "2002", r: "Arabia S. 3 - 2 Uruguay" }],
-        "España-Cabo Verde": [],
-        "Irán-Nueva Zelanda": [{ f: "2003", r: "Irán 3 - 0 Nueva Zelanda" }],
-        "Bélgica-Egipto": [{ f: "2022", r: "Egipto 2 - 1 Bélgica" }, { f: "2018", r: "Bélgica 3 - 0 Egipto" }, { f: "2005", r: "Egipto 4 - 0 Bélgica" }],
-        "Francia-Senegal": [{ f: "2002", r: "Francia 0 - 1 Senegal" }],
-        "Irak-Noruega": [],
-        "Argentina-Argelia": [{ f: "2007", r: "Argentina 4 - 3 Argelia" }],
-        "Austria-Jordania": [],
-        "Ghana-Panamá": [],
-        "Inglaterra-Croacia": [{ f: "2021", r: "Inglaterra 1 - 0 Croacia" }, { f: "2018", r: "Inglaterra 2 - 1 Croacia" }, { f: "2018", r: "Croacia 0 - 0 Inglaterra" }, { f: "2018", r: "Croacia 2 - 1 Inglaterra" }, { f: "2009", r: "Inglaterra 5 - 1 Croacia" }],
-        "Portugal-RD Congo": [],
-        "Uzbekistán-Colombia": [],
-        "República Checa-Sudáfrica": [{ f: "2005", r: "Rep. Checa 0 - 2 Sudáfrica" }, { f: "2000", r: "Rep. Checa 1 - 2 Sudáfrica" }],
-        "Suiza-Bosnia": [{ f: "2016", r: "Suiza 0 - 2 Bosnia" }, { f: "2010", r: "Suiza 2 - 2 Bosnia" }],
-        "Canadá-Qatar": [{ f: "2022", r: "Canadá 2 - 0 Qatar" }],
-        "México-Corea del Sur": [{ f: "2020", r: "Corea del S. 2 - 3 México" }, { f: "2018", r: "Alemania 1 - 2 México" }, { f: "2014", r: "México 4 - 0 Corea del S." }, { f: "2006", r: "México 0 - 1 Corea del S." }, { f: "2002", r: "México 0 - 0 Corea del S." }],
-        "Brasil-Haití": [{ f: "2016", r: "Brasil 7 - 1 Haití" }, { f: "2004", r: "Haití 0 - 6 Brasil" }, { f: "1974", r: "Brasil 4 - 1 Haití" }],
-        "Escocia-Marruecos": [{ f: "1998", r: "Escocia 0 - 3 Marruecos" }],
-        "Turquía-Paraguay": [{ f: "2002", r: "Turquía 2 - 0 Paraguay" }],
-        "USA-Australia": [{ f: "2010", r: "USA 3 - 1 Australia" }],
-        "Alemania-Costa de Marfil": [{ f: "2009", r: "Alemania 2 - 2 Costa de Marfil" }],
-        "Ecuador-Curazao": [],
-        "Países Bajos-Suecia": [{ f: "2017", r: "Países Bajos 2 - 0 Suecia" }, { f: "2016", r: "Suecia 1 - 1 Países Bajos" }, { f: "2011", r: "Suecia 3 - 2 Países Bajos" }, { f: "2010", r: "Países Bajos 4 - 1 Suecia" }, { f: "2008", r: "Países Bajos 3 - 1 Suecia" }],
-        "Túnez-Japón": [{ f: "2023", r: "Japón 2 - 0 Túnez" }, { f: "2022", r: "Japón 0 - 3 Túnez" }, { f: "2015", r: "Japón 2 - 0 Túnez" }],
-        "Uruguay-Cabo Verde": [],
-        "España-Arabia S.": [{ f: "2012", r: "España 5 - 0 Arabia S." }, { f: "2010", r: "España 3 - 2 Arabia S." }, { f: "2006", r: "España 1 - 0 Arabia S." }],
-        "Bélgica-Irán": [],
-        "Nueva Zelanda-Egipto": [{ f: "2024", r: "Egipto 1 - 0 Nueva Zelanda" }],
-        "Noruega-Senegal": [{ f: "2006", r: "Noruega 2 - 1 Senegal" }],
-        "Francia-Irak": [],
-        "Argentina-Austria": [{ f: "1980", r: "Argentina 5 - 1 Austria" }],
-        "Jordania-Argelia": [],
-        "Inglaterra-Ghana": [{ f: "2011", r: "Inglaterra 1 - 1 Ghana" }],
-        "Panamá-Croacia": [],
-        "Portugal-Uzbekistán": [],
-        "Colombia-Portugal": [{ f: "2014", r: "Portugal 0 - 0 Colombia" }],
-        "RD Congo-Uzbekistán": []
-    };
+<!-- Archivos de datos externos (asegúrate de que existan en las rutas correctas) -->
+<script src="./basedatosH2H.js"></script>
+<script src="./dic.js"></script>
+<script src="./equiposdatos.js"></script>
+<script src="./rawcalendario.js"></script>
 
-    // ---- TRADUCCIÓN COMPLETA ----
+<script>
+    // ---- TRADUCCIÓN COMPLETA (usa el diccionario externo) ----
     function traducirEquipo(nombreIngles) {
         if (!nombreIngles) return null;
-        const dic = {
-            "Mexico": "México", "South Africa": "Sudáfrica", "Korea Republic": "Corea del Sur", "Czechia": "República Checa",
-            "Canada": "Canadá", "Bosnia and Herzegovina": "Bosnia", "USA": "USA", "Paraguay": "Paraguay",
-            "Qatar": "Qatar", "Switzerland": "Suiza", "Brazil": "Brasil", "Morocco": "Marruecos",
-            "Haiti": "Haití", "Scotland": "Escocia", "Australia": "Australia", "Türkiye": "Turquía",
-            "Germany": "Alemania", "Curaçao": "Curazao", "Netherlands": "Países Bajos", "Japan": "Japón",
-            "Côte d'Ivoire": "Costa de Marfil", "Ecuador": "Ecuador", "Sweden": "Suecia", "Tunisia": "Túnez",
-            "Spain": "España", "Cabo Verde": "Cabo Verde", "Belgium": "Bélgica", "Egypt": "Egipto",
-            "Saudi Arabia": "Arabia S.", "Uruguay": "Uruguay", "IR Iran": "Irán", "New Zealand": "Nueva Zelanda",
-            "France": "Francia", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Noruega",
-            "Argentina": "Argentina", "Algeria": "Argelia", "Austria": "Austria", "Jordan": "Jordania",
-            "Portugal": "Portugal", "Congo DR": "RD Congo", "England": "Inglaterra", "Croatia": "Croacia",
-            "Ghana": "Ghana", "Panama": "Panamá", "Uzbekistan": "Uzbekistán", "Colombia": "Colombia"
-        };
         if (dic[nombreIngles]) return dic[nombreIngles];
         console.warn(`Nombre de equipo no traducido: ${nombreIngles}`);
         return nombreIngles;
     }
 
     let resultadosEnVivo = {};
-    let horariosJSON = {}; // Almacenar fecha/hora real del JSON
+    let horariosJSON = {};
     let intervalAutoActualizar;
 
     // ---- FETCH Y PROCESAMIENTO DEL JSON ----
@@ -255,28 +175,12 @@
                     const isLive = ['PLAYING', 'LIVE', 'IN_PROGRESS'].includes(status);
 
                     const key = `${local}-${visita}`;
-                    
-                    // Guardar fecha/hora real del JSON (formato ISO)
-                    if (m.date) {
-                        horariosJSON[key] = new Date(m.date);
-                    }
+                    if (m.date) horariosJSON[key] = new Date(m.date);
                     
                     if (isComplete) {
-                        resultadosEnVivo[key] = {
-                            g1: parseInt(m.homeScore, 10),
-                            g2: parseInt(m.awayScore, 10),
-                            status: 'FINISHED',
-                            minute: null,
-                            isLive: false
-                        };
+                        resultadosEnVivo[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'FINISHED', minute: null, isLive: false };
                     } else if (isLive && m.homeScore !== null && m.awayScore !== null) {
-                        resultadosEnVivo[key] = {
-                            g1: parseInt(m.homeScore, 10),
-                            g2: parseInt(m.awayScore, 10),
-                            status: 'LIVE',
-                            minute: m.minutes || 0,
-                            isLive: true
-                        };
+                        resultadosEnVivo[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'LIVE', minute: m.minutes || 0, isLive: true };
                     } else {
                         resultadosEnVivo[key] = { status: 'SCHEDULED', isLive: false };
                     }
@@ -326,113 +230,184 @@
     function esFechaPasada(fechaObj) {
         if (!fechaObj) return false;
         const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
+        hoy.setHours(0,0,0,0);
         const fechaComparar = new Date(fechaObj);
-        fechaComparar.setHours(0, 0, 0, 0);
+        fechaComparar.setHours(0,0,0,0);
         return fechaComparar < hoy;
     }
 
     function formatearHoraLocal(fechaISO) {
         if (!fechaISO) return "Hora por confirmar";
-        const fecha = new Date(fechaISO);
-        return fecha.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Mazatlan' });
+        return new Date(fechaISO).toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'America/Mazatlan' });
     }
     
     function formatearFechaLocal(fechaISO) {
         if (!fechaISO) return "Fecha por confirmar";
-        const fecha = new Date(fechaISO);
-        return fecha.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', timeZone: 'America/Mazatlan' }).replace('.', '');
+        return new Date(fechaISO).toLocaleDateString('es-MX', { day:'numeric', month:'short', timeZone:'America/Mazatlan' }).replace('.','');
     }
 
     function obtenerHtmlHistorial(t1, t2) {
         let key = `${t1}-${t2}`;
         let matches = baseDatosH2H[key];
-        if (!matches) {
-            key = `${t2}-${t1}`;
-            matches = baseDatosH2H[key];
-        }
-        
-        let html = `<div class="historial-panel" onclick="event.stopPropagation();">`;
-        html += `<div class="h-titulo">Historial Reciente (H2H)</div>`;
-        
-        if (!matches || matches.length === 0) {
-            html += `<div class="h-vacio">No hay enfrentamientos previos registrados</div>`;
-        } else {
-            const ultimos5 = matches.slice(0, 5);
-            ultimos5.forEach(m => {
-                html += `<div class="h-match"><span class="h-fecha">📅 ${m.f}</span><span class="h-teams">${m.r}</span></div>`;
-            });
-        }
+        if (!matches) { key = `${t2}-${t1}`; matches = baseDatosH2H[key]; }
+        let html = `<div class="historial-panel" onclick="event.stopPropagation();"><div class="h-titulo">Historial Reciente (H2H)</div>`;
+        if (!matches || matches.length === 0) html += `<div class="h-vacio">No hay enfrentamientos previos registrados</div>`;
+        else matches.slice(0,5).forEach(m => html += `<div class="h-match"><span class="h-fecha">📅 ${m.f}</span><span class="h-teams">${m.r}</span></div>`);
         html += `</div>`;
         return html;
     }
 
     function alternarTarjetaPartido(elemento) {
         const yaSeleccionado = elemento.classList.contains('seleccionado');
-        document.querySelectorAll('.partido-card, .p-mini').forEach(card => {
-            card.classList.remove('seleccionado');
-        });
-        if (!yaSeleccionado) {
-            elemento.classList.add('seleccionado');
-        }
+        document.querySelectorAll('.partido-card, .p-mini').forEach(card => card.classList.remove('seleccionado'));
+        if (!yaSeleccionado) elemento.classList.add('seleccionado');
     }
 
-    function construirInterfaz() {
-        const equiposDatos = {
-            "Uruguay": {d: "Jona", c: "uy", g: "H"}, "Túnez": {d: "Jona", c: "tn", g: "F"}, "Jordania": {d: "Jona", c: "jo", g: "J"},
-            "Australia": {d: "Jona", c: "au", g: "D"}, "Inglaterra": {d: "Jona", c: "gb-eng", g: "L"}, "Marruecos": {d: "Jona", c: "ma", g: "C"},
-            "México": {d: "Jona", c: "mx", g: "A"}, "Nueva Zelanda": {d: "Jona", c: "nz", g: "G"}, "Alemania": {d: "Jona", c: "de", g: "E"},
-            "RD Congo": {d: "Jona", c: "cd", g: "K"}, "Noruega": {d: "Jona", c: "no", g: "I"}, "Canadá": {d: "Jona", c: "ca", g: "B"},
-            "Cabo Verde": {d: "David", c: "cv", g: "H"}, "Japón": {d: "David", c: "jp", g: "F"}, "Austria": {d: "David", c: "at", g: "J"},
-            "USA": {d: "David", c: "us", g: "D"}, "Panamá": {d: "David", c: "pa", g: "L"}, "Haití": {d: "David", c: "ht", g: "C"},
-            "República Checa": {d: "David", c: "cz", g: "A"}, "Irán": {d: "David", c: "ir", g: "G"}, "Costa de Marfil": {d: "David", c: "ci", g: "E"},
-            "Portugal": {d: "David", c: "pt", g: "K"}, "Francia": {d: "David", c: "fr", g: "I"}, "Bosnia": {d: "David", c: "ba", g: "B"},
-            "España": {d: "Raúl", c: "es", g: "H"}, "Suecia": {d: "Raúl", c: "se", g: "F"}, "Argelia": {d: "Raúl", c: "dz", g: "J"},
-            "Turquía": {d: "Raúl", c: "tr", g: "D"}, "Ghana": {d: "Raúl", c: "gh", g: "L"}, "Brasil": {d: "Raúl", c: "br", g: "C"},
-            "Sudáfrica": {d: "Raúl", c: "za", g: "A"}, "Egipto": {d: "Raúl", c: "eg", g: "G"}, "Curazao": {d: "Raúl", c: "cw", g: "E"},
-            "Colombia": {d: "Raúl", c: "co", g: "K"}, "Senegal": {d: "Raúl", c: "sn", g: "I"}, "Suiza": {d: "Raúl", c: "ch", g: "B"},
-            "Arabia S.": {d: "Sergio", c: "sa", g: "H"}, "Países Bajos": {d: "Sergio", c: "nl", g: "F"}, "Argentina": {d: "Sergio", c: "ar", g: "J"},
-            "Paraguay": {d: "Sergio", c: "py", g: "D"}, "Croacia": {d: "Sergio", c: "hr", g: "L"}, "Escocia": {d: "Sergio", c: "gb-sct", g: "C"},
-            "Corea del Sur": {d: "Sergio", c: "kr", g: "A"}, "Bélgica": {d: "Sergio", c: "be", g: "G"}, "Ecuador": {d: "Sergio", c: "ec", g: "E"},
-            "Uzbekistán": {d: "Sergio", c: "uz", g: "K"}, "Irak": {d: "Sergio", c: "iq", g: "I"}, "Qatar": {d: "Sergio", c: "qa", g: "B"}
-        };
+    // ==================== NUEVAS FUNCIONES PARA ESTADÍSTICAS AVANZADAS Y WHATSAPP ====================
+    function calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados) {
+        let partidosPorChangoFecha = { Jona: [], David: [], Raúl: [], Sergio: [] };
+        for (let res of resultadosFinalizados) {
+            const c1 = equiposDatos[res.t1]?.d;
+            const c2 = equiposDatos[res.t2]?.d;
+            if (c1) partidosPorChangoFecha[c1].push({ chango: c1, resultado: res.g1 > res.g2 ? 'G' : (res.g1 < res.g2 ? 'P' : 'E'), fecha: res.fecha });
+            if (c2) partidosPorChangoFecha[c2].push({ chango: c2, resultado: res.g2 > res.g1 ? 'G' : (res.g2 < res.g1 ? 'P' : 'E'), fecha: res.fecha });
+        }
+        for (let c in partidosPorChangoFecha) {
+            partidosPorChangoFecha[c].sort((a,b) => a.fecha - b.fecha);
+        }
+        let rachas = {};
+        for (let c in partidosPorChangoFecha) {
+            let ultimos = partidosPorChangoFecha[c].slice(-5).map(p => p.resultado);
+            rachas[c] = ultimos;
+        }
 
-        const rawSchedule = [
-            "11-Jun|México|Sudáfrica", "11-Jun|Corea del Sur|República Checa", "12-Jun|Canadá|Bosnia", "12-Jun|USA|Paraguay",
-            "13-Jun|Haití|Escocia", "13-Jun|Australia|Turquía", "13-Jun|Brasil|Marruecos", "13-Jun|Qatar|Suiza",
-            "14-Jun|Costa de Marfil|Ecuador", "14-Jun|Alemania|Curazao", "14-Jun|Países Bajos|Japón", "14-Jun|Suecia|Túnez",
-            "15-Jun|Arabia S.|Uruguay", "15-Jun|España|Cabo Verde", "15-Jun|Irán|Nueva Zelanda", "15-Jun|Bélgica|Egipto",
-            "16-Jun|Francia|Senegal", "16-Jun|Irak|Noruega", "16-Jun|Argentina|Argelia", "16-Jun|Austria|Jordania",
-            "17-Jun|Ghana|Panamá", "17-Jun|Inglaterra|Croacia", "17-Jun|Portugal|RD Congo", "17-Jun|Uzbekistán|Colombia",
-            "18-Jun|República Checa|Sudáfrica", "18-Jun|Suiza|Bosnia", "18-Jun|Canadá|Qatar", "18-Jun|México|Corea del Sur",
-            "19-Jun|Brasil|Haití", "19-Jun|Escocia|Marruecos", "19-Jun|Turquía|Paraguay", "19-Jun|USA|Australia",
-            "20-Jun|Alemania|Costa de Marfil", "20-Jun|Ecuador|Curazao", "20-Jun|Países Bajos|Suecia", "20-Jun|Túnez|Japón",
-            "21-Jun|Uruguay|Cabo Verde", "21-Jun|España|Arabia S.", "21-Jun|Bélgica|Irán", "21-Jun|Nueva Zelanda|Egipto",
-            "22-Jun|Noruega|Senegal", "22-Jun|Francia|Irak", "22-Jun|Argentina|Austria", "22-Jun|Jordania|Argelia",
-            "23-Jun|Inglaterra|Ghana", "23-Jun|Panamá|Croacia", "23-Jun|Portugal|Uzbekistán", "23-Jun|Colombia|RD Congo",
-            "24-Jun|Escocia|Brasil", "24-Jun|Marruecos|Haití", "24-Jun|Suiza|Canadá", "24-Jun|Bosnia|Qatar",
-            "24-Jun|República Checa|México", "24-Jun|Sudáfrica|Corea del Sur", "25-Jun|Curazao|Costa de Marfil",
-            "25-Jun|Ecuador|Alemania", "25-Jun|Japón|Suecia", "25-Jun|Túnez|Países Bajos", "25-Jun|Turquía|USA",
-            "25-Jun|Paraguay|Australia", "26-Jun|Noruega|Francia", "26-Jun|Senegal|Irak", "26-Jun|Egipto|Irán",
-            "26-Jun|Nueva Zelanda|Bélgica", "26-Jun|Cabo Verde|Arabia S.", "26-Jun|Uruguay|España", "27-Jun|Panamá|Inglaterra",
-            "27-Jun|Croacia|Ghana", "27-Jun|Argelia|Austria", "27-Jun|Jordania|Argentina", "27-Jun|Colombia|Portugal",
-            "27-Jun|RD Congo|Uzbekistán"
+        let mayorGoleadaFavor = {}, mayorGoleadaContra = {};
+        for (let c in estadisticasChangos) {
+            mayorGoleadaFavor[c] = { dif: 0, rival: '' };
+            mayorGoleadaContra[c] = { dif: 0, rival: '' };
+        }
+        for (let res of resultadosFinalizados) {
+            const c1 = equiposDatos[res.t1]?.d;
+            const c2 = equiposDatos[res.t2]?.d;
+            if (c1) {
+                let dif = res.g1 - res.g2;
+                if (dif > mayorGoleadaFavor[c1].dif) { mayorGoleadaFavor[c1].dif = dif; mayorGoleadaFavor[c1].rival = res.t2; }
+                if (-dif > mayorGoleadaContra[c1].dif) { mayorGoleadaContra[c1].dif = -dif; mayorGoleadaContra[c1].rival = res.t2; }
+            }
+            if (c2) {
+                let dif = res.g2 - res.g1;
+                if (dif > mayorGoleadaFavor[c2].dif) { mayorGoleadaFavor[c2].dif = dif; mayorGoleadaFavor[c2].rival = res.t1; }
+                if (-dif > mayorGoleadaContra[c2].dif) { mayorGoleadaContra[c2].dif = -dif; mayorGoleadaContra[c2].rival = res.t1; }
+            }
+        }
+        return { rachas, mayorGoleadaFavor, mayorGoleadaContra };
+    }
+
+    function generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats) {
+        let html = '<div class="stats-grid">';
+        const changos = Object.values(estadisticasChangos).sort((a,b)=>b.pts - a.pts);
+        for (let c of changos) {
+            const racha = avanzadas.rachas[c.nombre] || [];
+            const rachaHtml = `<div class="rachas">${racha.map(r => `<span class="racha-item ${r==='G'?'racha-win':r==='E'?'racha-draw':'racha-loss'}">${r==='G'?'✅':r==='E'?'➖':'❌'}</span>`).join('')}${racha.length===0?'—':''}</div>`;
+            const mayorF = avanzadas.mayorGoleadaFavor[c.nombre];
+            const mayorC = avanzadas.mayorGoleadaContra[c.nombre];
+            html += `
+                <div class="stat-card">
+                    <h4>🐒 ${c.nombre}</h4>
+                    <div><strong>Racha (últimos 5):</strong> ${rachaHtml}</div>
+                    <div><strong>Mayor goleada a favor:</strong> ${mayorF.dif>0 ? `${mayorF.dif} goles vs ${mayorF.rival}` : 'Ninguna'}</div>
+                    <div><strong>Mayor goleada en contra:</strong> ${mayorC.dif>0 ? `${mayorC.dif} goles vs ${mayorC.rival}` : 'Ninguna'}</div>
+                </div>
+            `;
+        }
+        // Rendimiento por grupo
+        let grupoHtml = `<div class="stat-card" style="grid-column: span 2;"><h4>📊 Rendimiento por Grupo (puntos por chango)</h4><div style="font-size:0.75rem;">`;
+        for (let g in gruposStats) {
+            grupoHtml += `<strong>Grupo ${g}:</strong> `;
+            const puntosPorChango = {};
+            for (let eq of gruposStats[g]) {
+                const dueño = eq.dueño;
+                if (!puntosPorChango[dueño]) puntosPorChango[dueño] = { pts: 0, pj: 0 };
+                puntosPorChango[dueño].pts += eq.pts;
+                puntosPorChango[dueño].pj += eq.pj;
+            }
+            const items = Object.entries(puntosPorChango).map(([ch, d]) => `${ch} ${d.pts}/${d.pj} pts`).join(' | ');
+            grupoHtml += items + '<br>';
+        }
+        grupoHtml += `</div></div>`;
+        html += grupoHtml;
+        html += `</div>`;
+        return html;
+    }
+
+    function generarCuriosidades(estadisticasChangos, avanzadas) {
+        const changos = Object.values(estadisticasChangos);
+        const maxGoles = changos.reduce((max, c) => c.gf > max.gf ? c : max, { gf: -1 });
+        const minGolesRecibidos = changos.reduce((min, c) => c.gc < min.gc ? c : min, { gc: 9999 });
+        const maxEmpates = changos.reduce((max, c) => c.pe > max.pe ? c : max, { pe: -1 });
+        const mejorDG = changos.reduce((max, c) => (c.gf-c.gc) > (max.gf-max.gc) ? c : max, { gf:0, gc:0 });
+        const peorDG = changos.reduce((min, c) => (c.gf-c.gc) < (min.gf-min.gc) ? c : min, { gf:0, gc:0 });
+        
+        let curiosidades = [
+            `⚽ Máximo goleador: **${maxGoles.nombre}** con ${maxGoles.gf} goles a favor.`,
+            `🛡️ Mejor defensa: **${minGolesRecibidos.nombre}** con solo ${minGolesRecibidos.gc} goles en contra.`,
+            `🤝 Rey del empate: **${maxEmpates.nombre}** con ${maxEmpates.pe} empates.`,
+            `📈 Mejor diferencia de goles: **${mejorDG.nombre}** (${mejorDG.gf-mejorDG.gc} goles de diferencia).`,
+            `📉 Peor diferencia de goles: **${peorDG.nombre}** (${peorDG.gf-peorDG.gc} goles de diferencia).`
         ];
+        const rachasLargas = Object.entries(avanzadas.rachas).map(([ch, r]) => ({ ch, ultimos: r.slice(-3) }));
+        const rachaGanadora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'G'));
+        if (rachaGanadora) curiosidades.push(`🔥 **${rachaGanadora.ch}** viene con 3 victorias consecutivas.`);
+        const rachaPerdedora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'P'));
+        if (rachaPerdedora) curiosidades.push(`⚠️ **${rachaPerdedora.ch}** lleva 3 derrotas seguidas.`);
+        
+        return `<div class="curiosidad"><strong>🎲 Estadísticas divertidas:</strong><br>${curiosidades.join('<br>')}</div>`;
+    }
 
+    function compartirWhatsApp() {
+        const tablaBody = document.getElementById('tabla-body-changos');
+        let texto = "🏆 *QUINIELA MUNDIAL 2026* 🏆\n\n📊 *TABLA DE POSICIONES:*\n";
+        const filas = tablaBody.querySelectorAll('tr');
+        filas.forEach((row, idx) => {
+            const celdas = row.querySelectorAll('td');
+            if (celdas.length >= 7) {
+                const nombre = celdas[0].innerText.trim();
+                const pj = celdas[1].innerText;
+                const g = celdas[2].innerText;
+                const e = celdas[3].innerText;
+                const p = celdas[4].innerText;
+                const gf = celdas[5].innerText;
+                const dg = celdas[6].innerText;
+                const pts = celdas[7].innerText;
+                texto += `${idx+1}. ${nombre} → ${pts} pts (PJ:${pj} G:${g} E:${e} P:${p} GF:${gf} DG:${dg})\n`;
+            }
+        });
+        const curiosidadesDiv = document.getElementById('curiosidades-container');
+        if (curiosidadesDiv) {
+            let curiosidadesTexto = curiosidadesDiv.innerText.replace('🎲 Estadísticas divertidas:', '').trim();
+            texto += `\n✨ *CURIOSIDADES:*\n${curiosidadesTexto}`;
+        }
+        texto += `\n\n#Mundial2026 #Quiniela`;
+        const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+        window.open(url, '_blank');
+    }
+
+    // ---- FUNCIÓN PRINCIPAL (modificada para incluir las estadísticas avanzadas) ----
+    function construirInterfaz() {
         let diasOrdenados = {};
         let partidosPorChango = { Jona: [], David: [], Raúl: [], Sergio: [] };
         let gruposStats = {};
         let estadisticasChangos = {
-            Jona: { nombre: 'Jona', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--jona)' },
-            David: { nombre: 'David', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--david)' },
-            Raúl: { nombre: 'Raúl', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--raul)' },
-            Sergio: { nombre: 'Sergio', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--sergio)' }
+            Jona: { nombre: 'Jona', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0, color:'var(--jona)' },
+            David: { nombre: 'David', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0, color:'var(--david)' },
+            Raúl: { nombre: 'Raúl', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0, color:'var(--raul)' },
+            Sergio: { nombre: 'Sergio', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0, color:'var(--sergio)' }
         };
 
         for (let eq in equiposDatos) {
             let g = equiposDatos[eq].g;
             if (!gruposStats[g]) gruposStats[g] = [];
-            gruposStats[g].push({ equipo: eq, bandera: equiposDatos[eq].c, dueño: equiposDatos[eq].d, pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0 });
+            gruposStats[g].push({ equipo: eq, bandera: equiposDatos[eq].c, dueño: equiposDatos[eq].d, pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 });
         }
 
         // Procesar calendario base
@@ -443,8 +418,6 @@
                 c1: equiposDatos[p[1]].c, c2: equiposDatos[p[2]].c, gr: equiposDatos[p[1]].g,
                 finalizado: false, isLive: false
             };
-            
-            // Obtener fecha/hora real del JSON
             const fechaReal = getHorario(p[1], p[2]);
             if (fechaReal) {
                 objPartido.fechaObj = fechaReal;
@@ -454,19 +427,16 @@
             } else {
                 objPartido.fecha = p[0];
                 objPartido.hora = "Hora por confirmar";
-                objPartido.fechaObj = new Date(2026, 5, parseInt(p[0].split('-')[0]), 0, 0, 0);
+                objPartido.fechaObj = new Date(2026, 5, parseInt(p[0].split('-')[0]), 0,0,0);
                 objPartido.yaPaso = esFechaPasada(objPartido.fechaObj);
             }
-            
             if (!diasOrdenados[objPartido.fecha]) diasOrdenados[objPartido.fecha] = [];
             diasOrdenados[objPartido.fecha].push(objPartido);
             partidosPorChango[objPartido.d1].push(objPartido);
             partidosPorChango[objPartido.d2].push(objPartido);
         });
-        
-        for (let dia in diasOrdenados) diasOrdenados[dia].sort((a,b) => (a.hora || "").localeCompare(b.hora || ""));
+        for (let dia in diasOrdenados) diasOrdenados[dia].sort((a,b)=> (a.hora||"").localeCompare(b.hora||""));
 
-        // Actualizar estado finalizado/en vivo
         for (let dia in diasOrdenados) {
             for (let pt of diasOrdenados[dia]) {
                 const res = getResult(pt.t1, pt.t2);
@@ -477,7 +447,8 @@
             }
         }
 
-        // Procesar estadísticas
+        // Procesar estadísticas y recolectar resultados finalizados
+        let resultadosFinalizados = [];
         for (let key in resultadosEnVivo) {
             const partido = resultadosEnVivo[key];
             if (partido.status !== 'FINISHED' || partido.g1 === undefined) continue;
@@ -485,6 +456,8 @@
             if (!equiposDatos[t1] || !equiposDatos[t2]) continue;
             let g1 = partido.g1, g2 = partido.g2;
             let c1 = equiposDatos[t1].d, c2 = equiposDatos[t2].d;
+            const fechaPartido = getHorario(t1,t2) || new Date();
+            resultadosFinalizados.push({ t1, t2, g1, g2, fecha: fechaPartido });
 
             estadisticasChangos[c1].pj++; estadisticasChangos[c1].gf += g1; estadisticasChangos[c1].gc += g2;
             estadisticasChangos[c2].pj++; estadisticasChangos[c2].gf += g2; estadisticasChangos[c2].gc += g1;
@@ -507,54 +480,26 @@
         let htmlPasados = '<details class="dias-pasados"><summary>📁 Días anteriores a hoy</summary>';
         let htmlFuturos = '';
         let encontroProximo = false;
-        
-        const diasOrdenadosKeys = Object.keys(diasOrdenados).sort((a,b) => {
-            const fechaA = diasOrdenados[a][0]?.fechaObj || new Date(0);
-            const fechaB = diasOrdenados[b][0]?.fechaObj || new Date(0);
-            return fechaA - fechaB;
-        });
-        
+        const diasOrdenadosKeys = Object.keys(diasOrdenados).sort((a,b) => (diasOrdenados[a][0]?.fechaObj||0) - (diasOrdenados[b][0]?.fechaObj||0));
         for (let dia of diasOrdenadosKeys) {
             let todosPasados = diasOrdenados[dia].every(pt => pt.yaPaso === true);
             let gridHTML = '<div class="grid-partidos">';
             for (let pt of diasOrdenados[dia]) {
                 let res = getResult(pt.t1, pt.t2);
                 let estadoInsignia = renderizarInsigniaEstado(res);
-                let scoreHtml = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ?
-                    `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
-                
+                let scoreHtml = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
                 let clsAd = '';
-                if (pt.finalizado) {
-                    clsAd = 'partido-pasado';
-                } else if (pt.isLive) {
-                    clsAd = 'partido-vivo';
-                } else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) {
-                    clsAd = 'proximo-partido';
-                    encontroProximo = true;
-                }
+                if (pt.finalizado) clsAd = 'partido-pasado';
+                else if (pt.isLive) clsAd = 'partido-vivo';
+                else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) { clsAd = 'proximo-partido'; encontroProximo = true; }
                 let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
-                
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                let horaMostrar = pt.hora || "Hora por confirmar";
-
-                gridHTML += `
-                <div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}
-                    <div class="p-info"><span>⏰ ${horaMostrar}</span><span>Grupo ${pt.gr}</span></div>
-                    <div class="p-teams">
-                        <div class="team"><img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div>
-                        <div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div>
-                        <div class="team"><img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div>
-                    </div>
-                    ${h2hHtml}
-                </div>`;
+                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${h2hHtml}</div>`;
             }
             gridHTML += '</div>';
             let header = `<div class="fecha-header">🗓️ ${dia} 2026</div>`;
-            if (todosPasados) {
-                htmlPasados += header + gridHTML;
-            } else {
-                htmlFuturos += header + gridHTML;
-            }
+            if (todosPasados) htmlPasados += header + gridHTML;
+            else htmlFuturos += header + gridHTML;
         }
         vGeneral.innerHTML = (htmlPasados !== '<details class="dias-pasados"><summary>📁 Días anteriores a hoy</summary>' ? htmlPasados + '</details>' : '') + htmlFuturos;
 
@@ -562,31 +507,15 @@
         for (let c of ["Jona","David","Raúl","Sergio"]) {
             const div = document.getElementById('lista-pers-' + c);
             let html = '';
-            partidosPorChango[c].sort((a,b) => {
-                return (a.fechaObj || new Date(0)) - (b.fechaObj || new Date(0));
-            });
+            partidosPorChango[c].sort((a,b)=> (a.fechaObj||0) - (b.fechaObj||0));
             for (let pt of partidosPorChango[c]) {
                 let esLocal = (pt.d1 === c);
                 let res = getResult(pt.t1, pt.t2);
                 let estado = renderizarInsigniaEstado(res);
-                let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ?
-                    `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` :
-                    `<span style="color:#aaa; font-weight:bold;">VS</span>`;
+                let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` : `<span style="color:#aaa; font-weight:bold;">VS</span>`;
                 let clasePasado = pt.finalizado ? 'partido-pasado' : '';
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                let horaMostrar = pt.hora || "Hora por confirmar";
-                let fechaMostrar = pt.fecha || "Fecha por confirmar";
-
-                html += `
-                <div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)">
-                    <div class="p-mini-fecha">${fechaMostrar} - ${horaMostrar} hrs</div>
-                    <div class="p-mini-equipos">
-                        <div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c1 : pt.c2}.png" style="width:28px; border-radius:3px;"><span style="font-size:0.8rem;">${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div>
-                        <div style="display:flex; flex-direction:column; align-items:center;">${scoreCenter}${estado}</div>
-                        <div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c2 : pt.c1}.png" style="width:28px; border-radius:3px;"><span style="font-size:0.8rem;">${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div>
-                    </div>
-                    ${h2hHtml}
-                </div>`;
+                html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c1 : pt.c2}.png" style="width:28px; border-radius:3px;"><span style="font-size:0.8rem;">${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div style="display:flex; flex-direction:column; align-items:center;">${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c2 : pt.c1}.png" style="width:28px; border-radius:3px;"><span style="font-size:0.8rem;">${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
             }
             div.innerHTML = html;
         }
@@ -608,7 +537,7 @@
         // ========== TABLA DE CHANGOS ==========
         let arrChangos = Object.values(estadisticasChangos);
         arrChangos.sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
-        let maxPts = Math.max(...arrChangos.map(c => c.pts), 1);
+        let maxPts = Math.max(...arrChangos.map(c=>c.pts),1);
         let grafica = '', tabla = '';
         arrChangos.forEach((c, i) => {
             let pct = (c.pts / maxPts) * 100;
@@ -618,8 +547,16 @@
         });
         document.getElementById('grafica-changos').innerHTML = grafica;
         document.getElementById('tabla-body-changos').innerHTML = tabla;
+
+        // ========== RENDERIZAR ESTADÍSTICAS AVANZADAS ==========
+        const avanzadas = calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados);
+        const statsHtml = generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats);
+        const curiosidadesHtml = generarCuriosidades(estadisticasChangos, avanzadas);
+        document.getElementById('stats-avanzadas-container').innerHTML = statsHtml;
+        document.getElementById('curiosidades-container').innerHTML = curiosidadesHtml;
     }
 
+    // ---- NAVEGACIÓN ----
     function setMain(mainStr) {
         document.querySelectorAll('.m-tab').forEach(b => b.classList.remove('active'));
         document.getElementById('m-' + mainStr).classList.add('active');
@@ -641,6 +578,7 @@
         }
     }
 
+    // Inicio
     window.onload = () => {
         actualizarResultados();
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
