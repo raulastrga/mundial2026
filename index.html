@@ -40,7 +40,7 @@
 
         .fecha-header { background-color: var(--primary); color: white; padding: 8px 15px; border-radius: 6px; margin: 20px 0 10px 0; font-weight: bold; font-size: 1.1rem; position: sticky; top: 10px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .grid-partidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
-        .partido-card { background: var(--card-bg); border-radius: 10px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; border: 1px solid #eee; transition: transform 0.2s; position: relative; }
+        .partido-card { background: var(--card-bg); border-radius: 10px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s; position: relative; cursor: pointer; }
         .partido-pasado { opacity: 0.6; filter: grayscale(0.85); }
         .partido-vivo { border: 2px solid #ff4a5a; box-shadow: 0 0 12px rgba(255,74,90,0.4); }
         .proximo-partido { border: 2px solid var(--secondary); box-shadow: 0 0 15px rgba(0, 112, 243, 0.25); transform: scale(1.02); z-index: 5; }
@@ -54,6 +54,18 @@
         .d-Jona { background-color: var(--jona); } .d-David { background-color: var(--david); color: #111; } .d-Raúl { background-color: var(--raul); } .d-Sergio { background-color: var(--sergio); }
         .vs { font-weight: bold; color: #aaa; font-size: 0.9rem; }
         .score { font-size: 1.3rem; font-weight: 900; color: var(--primary); background: #eef2f5; padding: 4px 10px; border-radius: 6px; }
+        
+        /* Estilos para el Historial H2H */
+        .historial-panel { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc; animation: fadeIn 0.25s ease-out; }
+        .partido-card.seleccionado { border-color: #0070f3; box-shadow: 0 4px 12px rgba(0,112,243,0.2); transform: scale(1.01); }
+        .partido-card.seleccionado .historial-panel { display: block; }
+        .h-titulo { font-size: 0.75rem; font-weight: bold; color: var(--primary); text-transform: uppercase; margin-bottom: 6px; text-align: center; letter-spacing: 0.5px; }
+        .h-match { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; padding: 3px 0; border-bottom: 1px solid #f0f0f0; color: #555; }
+        .h-match:last-child { border-bottom: none; }
+        .h-fecha { color: #999; font-size: 0.65rem; width: 45px; }
+        .h-teams { flex: 1; text-align: center; font-weight: 500; }
+        .h-vacio { text-align: center; font-size: 0.75rem; color: #999; font-style: italic; padding: 5px 0; }
+
         details.dias-pasados { width: 100%; margin-bottom: 20px; background: #e9ecef; border-radius: 10px; padding: 10px; box-sizing: border-box; }
         details.dias-pasados summary { font-weight: bold; cursor: pointer; padding: 10px; color: #555; text-align: center; list-style: none; }
         details.dias-pasados summary::-webkit-details-marker { display: none; }
@@ -66,7 +78,9 @@
         details.chango-seccion[open] summary::after { transform: rotate(180deg); }
         details.chango-seccion[open] summary { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
         .lista-partidos-chango { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-        .p-mini { background: #f9f9f9; border: 1px solid #eaeaea; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; font-size: 0.85rem; }
+        .p-mini { background: #f9f9f9; border: 1px solid #eaeaea; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; font-size: 0.85rem; cursor: pointer; transition: transform 0.2s; }
+        .p-mini.seleccionado { border-color: #0070f3; box-shadow: 0 4px 12px rgba(0,112,243,0.15); }
+        .p-mini.seleccionado .historial-panel { display: block; }
         .p-mini-fecha { font-size: 0.75rem; color: #0070f3; font-weight: bold; margin-bottom: 8px; text-align: center; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
         .p-mini-equipos { display: flex; align-items: flex-start; justify-content: space-between; font-weight: 500; }
         .p-mini-col { display: flex; flex-direction: column; align-items: center; width: 40%; text-align: center; }
@@ -141,6 +155,165 @@
 </div>
 
 <script>
+    // ---- BASE DE DATOS HISTÓRICA DE ENFRENTAMIENTOS DIRECTOS (H2H) ----
+    const baseDatosH2H = {
+        "México-Sudáfrica": [
+            { f: "2010", r: "México 1 - 1 Sudáfrica" },
+            { f: "2005", r: "México 1 - 2 Sudáfrica" },
+            { f: "2000", r: "México 4 - 2 Sudáfrica" },
+            { f: "1993", r: "México 4 - 0 Sudáfrica" }
+        ],
+        "Corea del Sur-República Checa": [
+            { f: "2016", r: "Corea del S. 2 - 1 Rep. Checa" },
+            { f: "2001", r: "Rep. Checa 5 - 0 Corea del S." },
+            { f: "1998", r: "Corea del S. 2 - 2 Rep. Checa" }
+        ],
+        "Canadá-Bosnia": [
+            { f: "2024", r: "Canadá 1 - 0 Bosnia" }
+        ],
+        "USA-Paraguay": [
+            { f: "2018", r: "USA 1 - 0 Paraguay" },
+            { f: "2016", r: "USA 1 - 0 Paraguay" },
+            { f: "2011", r: "USA 0 - 1 Paraguay" },
+            { f: "2010", r: "USA 2 - 1 Paraguay" },
+            { f: "2003", r: "USA 2 - 0 Paraguay" }
+        ],
+        "Haití-Escocia": [
+            { f: "1974", r: "Escocia 2 - 0 Haití" }
+        ],
+        "Australia-Turquía": [
+            { f: "2004", r: "Australia 2 - 3 Turquía" },
+            { f: "2004", r: "Australia 0 - 1 Turquía" }
+        ],
+        "Brasil-Marruecos": [
+            { f: "2023", r: "Marruecos 2 - 1 Brasil" },
+            { f: "1998", r: "Brasil 3 - 0 Marruecos" },
+            { f: "1997", r: "Brasil 2 - 0 Marruecos" }
+        ],
+        "Qatar-Suiza": [
+            { f: "2018", r: "Suiza 0 - 1 Qatar" }
+        ],
+        "Costa de Marfil-Ecuador": [
+            { f: "2011", r: "Ecuador 1 - 1 Costa de Marfil" }
+        ],
+        "Alemania-Curazao": [],
+        "Países Bajos-Japón": [
+            { f: "2013", r: "Países Bajos 2 - 2 Japón" },
+            { f: "2010", r: "Países Bajos 1 - 0 Japón" },
+            { f: "2009", r: "Países Bajos 3 - 0 Japón" }
+        ],
+        "Suecia-Túnez": [
+            { f: "2002", r: "Túnez 1 - 0 Suecia" }
+        ],
+        "Arabia S.-Uruguay": [
+            { f: "2018", r: "Uruguay 1 - 0 Arabia S." },
+            { f: "2014", r: "Arabia S. 1 - 1 Uruguay" },
+            { f: "2002", r: "Arabia S. 3 - 2 Uruguay" }
+        ],
+        "España-Cabo Verde": [],
+        "Irán-Nueva Zelanda": [
+            { f: "2003", r: "Irán 3 - 0 Nueva Zelanda" }
+        ],
+        "Bélgica-Egipto": [
+            { f: "2022", r: "Egipto 2 - 1 Bélgica" },
+            { f: "2018", r: "Bélgica 3 - 0 Egipto" },
+            { f: "2005", r: "Egipto 4 - 0 Bélgica" }
+        ],
+        "Francia-Senegal": [
+            { f: "2002", r: "Francia 0 - 1 Senegal" }
+        ],
+        "Irak-Noruega": [],
+        "Argentina-Argelia": [
+            { f: "2007", r: "Argentina 4 - 3 Argelia" }
+        ],
+        "Austria-Jordania": [],
+        "Ghana-Panamá": [],
+        "Inglaterra-Croacia": [
+            { f: "2021", r: "Inglaterra 1 - 0 Croacia" },
+            { f: "2018", r: "Inglaterra 2 - 1 Croacia" },
+            { f: "2018", r: "Croacia 0 - 0 Inglaterra" },
+            { f: "2018", r: "Croacia 2 - 1 Inglaterra" },
+            { f: "2009", r: "Inglaterra 5 - 1 Croacia" }
+        ],
+        "Portugal-RD Congo": [],
+        "Uzbekistán-Colombia": [],
+        "República Checa-Sudáfrica": [
+            { f: "2005", r: "Rep. Checa 0 - 2 Sudáfrica" },
+            { f: "2000", r: "Rep. Checa 1 - 2 Sudáfrica" }
+        ],
+        "Suiza-Bosnia": [
+            { f: "2016", r: "Suiza 0 - 2 Bosnia" },
+            { f: "2010", r: "Suiza 2 - 2 Bosnia" }
+        ],
+        "Canadá-Qatar": [
+            { f: "2022", r: "Canadá 2 - 0 Qatar" }
+        ],
+        "México-Corea del Sur": [
+            { f: "2020", r: "Corea del S. 2 - 3 México" },
+            { f: "2018", r: "Alemania 1 - 2 México" },
+            { f: "2014", r: "México 4 - 0 Corea del S." },
+            { f: "2006", r: "México 0 - 1 Corea del S." },
+            { f: "2002", r: "México 0 - 0 Corea del S." }
+        ],
+        "Brasil-Haití": [
+            { f: "2016", r: "Brasil 7 - 1 Haití" },
+            { f: "2004", r: "Haití 0 - 6 Brasil" },
+            { f: "1974", r: "Brasil 4 - 1 Haití" }
+        ],
+        "Escocia-Marruecos": [
+            { f: "1998", r: "Escocia 0 - 3 Marruecos" }
+        ],
+        "Turquía-Paraguay": [
+            { f: "2002", r: "Turquía 2 - 0 Paraguay" }
+        ],
+        "USA-Australia": [
+            { f: "2010", r: "USA 3 - 1 Australia" }
+        ],
+        "Alemania-Costa de Marfil": [
+            { f: "2009", r: "Alemania 2 - 2 Costa de Marfil" }
+        ],
+        "Ecuador-Curazao": [],
+        "Países Bajos-Suecia": [
+            { f: "2017", r: "Países Bajos 2 - 0 Suecia" },
+            { f: "2016", r: "Suecia 1 - 1 Países Bajos" },
+            { f: "2011", r: "Suecia 3 - 2 Países Bajos" },
+            { f: "2010", r: "Países Bajos 4 - 1 Suecia" },
+            { f: "2008", r: "Países Bajos 3 - 1 Suecia" }
+        ],
+        "Túnez-Japón": [
+            { f: "2023", r: "Japón 2 - 0 Túnez" },
+            { f: "2022", r: "Japón 0 - 3 Túnez" },
+            { f: "2015", r: "Japón 2 - 0 Túnez" }
+        ],
+        "Uruguay-Cabo Verde": [],
+        "España-Arabia S.": [
+            { f: "2012", r: "España 5 - 0 Arabia S." },
+            { f: "2010", r: "España 3 - 2 Arabia S." },
+            { f: "2006", r: "España 1 - 0 Arabia S." }
+        ],
+        "Bélgica-Irán": [],
+        "Nueva Zelanda-Egipto": [
+            { f: "2024", r: "Egipto 1 - 0 Nueva Zelanda" }
+        ],
+        "Noruega-Senegal": [
+            { f: "2006", r: "Noruega 2 - 1 Senegal" }
+        ],
+        "Francia-Irak": [],
+        "Argentina-Austria": [
+            { f: "1980", r: "Argentina 5 - 1 Austria" }
+        ],
+        "Jordania-Argelia": [],
+        "Inglaterra-Ghana": [
+            { f: "2011", r: "Inglaterra 1 - 1 Ghana" }
+        ],
+        "Panamá-Croacia": [],
+        "Portugal-Uzbekistán": [],
+        "Colombia-Portugal": [
+            { f: "2014", r: "Portugal 0 - 0 Colombia" }
+        ],
+        "RD Congo-Uzbekistán": []
+    };
+
     // ---- TRADUCCIÓN COMPLETA ----
     function traducirEquipo(nombreIngles) {
         if (!nombreIngles) return null;
@@ -160,10 +333,10 @@
         };
         if (dic[nombreIngles]) return dic[nombreIngles];
         console.warn(`Nombre de equipo no traducido: ${nombreIngles}`);
-        return nombreIngles; // fallback
+        return nombreIngles;
     }
 
-    let resultadosEnVivo = {};     // clave "local-visitante" -> { g1, g2, status, minute, isLive }
+    let resultadosEnVivo = {};     
     let intervalAutoActualizar;
 
     // ---- FETCH Y PROCESAMIENTO DEL JSON ----
@@ -241,12 +414,54 @@
         return '<div class="status-container"></div>';
     }
 
-    // Función para comparar solo la fecha (sin hora)
     function esFechaPasada(fechaObj) {
         const hoy = new Date();
         return fechaObj.getFullYear() < hoy.getFullYear() ||
                (fechaObj.getFullYear() === hoy.getFullYear() && fechaObj.getMonth() < hoy.getMonth()) ||
                (fechaObj.getFullYear() === hoy.getFullYear() && fechaObj.getMonth() === hoy.getMonth() && fechaObj.getDate() < hoy.getDate());
+    }
+
+    // ---- FUNCIÓN PARA OBTENER EL HTML DEL HISTORIAL H2H ----
+    function obtenerHtmlHistorial(t1, t2) {
+        let key = `${t1}-${t2}`;
+        let matches = baseDatosH2H[key];
+        if (!matches) {
+            key = `${t2}-${t1}`;
+            matches = baseDatosH2H[key];
+        }
+        
+        let html = `<div class="historial-panel" onclick="event.stopPropagation();">`;
+        html += `<div class="h-titulo">Historial Reciente (H2H)</div>`;
+        
+        if (!matches || matches.length === 0) {
+            html += `<div class="h-vacio">No hay enfrentamientos previos registrados</div>`;
+        } else {
+            const ultimos5 = matches.slice(0, 5);
+            ultimos5.forEach(m => {
+                html += `
+                <div class="h-match">
+                    <span class="h-fecha">📅 ${m.f}</span>
+                    <span class="h-teams">${m.r}</span>
+                </div>`;
+            });
+        }
+        html += `</div>`;
+        return html;
+    }
+
+    // ---- FUNCIÓN INTERACTIVA PARA TOCAR LA TARJETA ----
+    function alternarTarjetaPartido(elemento) {
+        const yaSeleccionado = elemento.classList.contains('seleccionado');
+        
+        // Cierra cualquier otra tarjeta abierta (Tanto del calendario general como de la sección changos)
+        document.querySelectorAll('.partido-card, .p-mini').forEach(card => {
+            card.classList.remove('seleccionado');
+        });
+
+        // Si no estaba seleccionada previamente, se despliega
+        if (!yaSeleccionado) {
+            elemento.classList.add('seleccionado');
+        }
     }
 
     // ---- CONSTRUCCIÓN DE TODA LA INTERFAZ ----
@@ -284,15 +499,12 @@
             Sergio: { nombre: 'Sergio', pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0, color: 'var(--sergio)' }
         };
 
-        // Inicializar grupos
         for (let eq in equiposDatos) {
             let g = equiposDatos[eq].g;
             if (!gruposStats[g]) gruposStats[g] = [];
             gruposStats[g].push({ equipo: eq, bandera: equiposDatos[eq].c, dueño: equiposDatos[eq].d, pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, pts: 0 });
         }
 
-        const hoyLocal = new Date(); // para comparación de fechas (solo día)
-        // Procesar calendario
         rawSchedule.forEach(str => {
             let p = str.split('|');
             let dt = p[0].split(' ');
@@ -309,8 +521,8 @@
                 fecha: fFinal, hora: hFinal, fechaObj: fechaObj,
                 t1: p[1], t2: p[2], d1: equiposDatos[p[1]].d, d2: equiposDatos[p[2]].d,
                 c1: equiposDatos[p[1]].c, c2: equiposDatos[p[2]].c, gr: equiposDatos[p[1]].g,
-                yaPaso: esFechaPasada(fechaObj),   // basado solo en la fecha (para colapsar días)
-                finalizado: false,                 // se actualizará con el JSON
+                yaPaso: esFechaPasada(fechaObj),
+                finalizado: false,
                 isLive: false
             };
             if (!diasOrdenados[fFinal]) diasOrdenados[fFinal] = [];
@@ -318,10 +530,9 @@
             partidosPorChango[objPartido.d1].push(objPartido);
             partidosPorChango[objPartido.d2].push(objPartido);
         });
-        // Ordenar partidos dentro de cada día por hora
+        
         for (let dia in diasOrdenados) diasOrdenados[dia].sort((a,b) => a.hora.localeCompare(b.hora));
 
-        // Actualizar finalizado e isLive según resultadosEnVivo
         for (let dia in diasOrdenados) {
             for (let pt of diasOrdenados[dia]) {
                 const res = getResult(pt.t1, pt.t2);
@@ -332,7 +543,6 @@
             }
         }
 
-        // Procesar estadísticas solo con partidos FINALIZADOS
         for (let key in resultadosEnVivo) {
             const partido = resultadosEnVivo[key];
             if (partido.status !== 'FINISHED' || partido.g1 === undefined) continue;
@@ -363,7 +573,6 @@
         let htmlFuturos = '';
         let encontroProximo = false;
         for (let dia in diasOrdenados) {
-            // Verificar si todos los partidos de este día tienen yaPaso = true (fecha anterior a hoy)
             let todosPasados = diasOrdenados[dia].every(pt => pt.yaPaso === true);
             let gridHTML = '<div class="grid-partidos">';
             for (let pt of diasOrdenados[dia]) {
@@ -372,27 +581,28 @@
                 let scoreHtml = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ?
                     `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
                 
-                // Determinar clases visuales
                 let clsAd = '';
                 if (pt.finalizado) {
-                    clsAd = 'partido-pasado';      // partido terminado, siempre gris
+                    clsAd = 'partido-pasado';
                 } else if (pt.isLive) {
-                    clsAd = 'partido-vivo';        // en vivo, borde rojo
+                    clsAd = 'partido-vivo';
                 } else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) {
-                    // Solo marcar como próximo si no está finalizado, no está en vivo y su día no es pasado
                     clsAd = 'proximo-partido';
                     encontroProximo = true;
                 }
                 let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
                 
+                let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
+
                 gridHTML += `
-                <div class="partido-card ${clsAd}">${badge}
+                <div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}
                     <div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div>
                     <div class="p-teams">
                         <div class="team"><img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div>
                         <div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div>
                         <div class="team"><img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div>
                     </div>
+                    ${h2hHtml}
                 </div>`;
             }
             gridHTML += '</div>';
@@ -422,14 +632,18 @@
                     `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` :
                     `<span style="color:#aaa; font-weight:bold;">VS</span>`;
                 let clasePasado = pt.finalizado ? 'partido-pasado' : '';
+                
+                let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
+
                 html += `
-                <div class="p-mini ${clasePasado}">
+                <div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)">
                     <div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div>
                     <div class="p-mini-equipos">
                         <div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c1 : pt.c2}.png" style="width:28px; border-radius:3px;"><span style="font-size:0.8rem;">${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div>
                         <div style="display:flex; flex-direction:column; align-items:center;">${scoreCenter}${estado}</div>
                         <div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c2 : pt.c1}.png" style="width:28px; border-radius:3px;"><span style="font-size:0.8rem;">${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div>
                     </div>
+                    ${h2hHtml}
                 </div>`;
             }
             div.innerHTML = html;
@@ -485,10 +699,8 @@
         }
     }
 
-    // Inicialización
     window.onload = () => {
         actualizarResultados();
-        // Actualización automática cada 1 minuto (60000 ms)
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
     };
 </script>
