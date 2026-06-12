@@ -158,7 +158,9 @@
             "Portugal": "Portugal", "Congo DR": "RD Congo", "England": "Inglaterra", "Croatia": "Croacia",
             "Ghana": "Ghana", "Panama": "Panamá", "Uzbekistan": "Uzbekistán", "Colombia": "Colombia"
         };
-        return dic[nombreIngles] || nombreIngles;
+        if (dic[nombreIngles]) return dic[nombreIngles];
+        console.warn(`Nombre de equipo no traducido: ${nombreIngles}`);
+        return nombreIngles; // fallback
     }
 
     let resultadosEnVivo = {};     // clave "local-visitante" -> { g1, g2, status, minute, isLive }
