@@ -170,7 +170,7 @@
                 const proxyUrl = "https://api.allorigins.win/get?url=";
                 const targetUrl = encodeURIComponent("https://play.fifa.com/json/fantasy/rounds.json");
                 
-                const response = await fetch(proxyUrl + targetUrl);
+                const response = await fetch(targetUrl);
                 const jsonResponse = await response.json();
                 const data = JSON.parse(jsonResponse.contents);
                 
