@@ -166,45 +166,37 @@
         // ==========================================
         async function actualizarResultados() {
             try {
-                // Usamos un proxy de API abierta para evitar el bloqueo CORS de los navegadores hacia play.fifa.com
+                // Usamos el proxy para evitar el bloqueo CORS
                 const proxyUrl = "https://api.allorigins.win/get?url=";
                 const targetUrl = encodeURIComponent("https://play.fifa.com/json/fantasy/rounds.json");
                 
                 const response = await fetch(proxyUrl + targetUrl);
                 const jsonResponse = await response.json();
-                
-                // AllOrigins devuelve el string dentro de "contents"
                 const data = JSON.parse(jsonResponse.contents);
                 
-                // Analizador de estructura universal (busca el arreglo de partidos)
-                let matches = [];
-                if (data.matches) matches = data.matches;
-                else if (data.data && Array.isArray(data.data)) matches = data.data;
-                else if (data.rounds) {
-                    data.rounds.forEach(r => { if (r.matches) matches = matches.concat(r.matches); });
-                } else if (Array.isArray(data)) { matches = data; }
-
-                // Procesamos cada partido extraído
-                matches.forEach(m => {
-                    let local = traducirEquipo(m.homeTeam?.name || m.team1?.name || m.local?.name);
-                    let visita = traducirEquipo(m.awayTeam?.name || m.team2?.name || m.visitor?.name);
-                    let gLocal = m.homeScore ?? m.homeTeam?.score ?? m.score1;
-                    let gVisita = m.awayScore ?? m.awayTeam?.score ?? m.score2;
-                    let estadoStr = m.status || m.matchStatus || ""; // PLAYING, FINISHED, SCHEDULED
-                    let minStr = m.minute || m.matchTime || "";
-
-                    if (local && visita && gLocal !== undefined && gLocal !== null) {
-                        resultadosEnVivo[`${local}-${visita}`] = { 
-                            g1: parseInt(gLocal, 10), 
-                            g2: parseInt(gVisita, 10), 
-                            status: estadoStr.toUpperCase(),
-                            minute: minStr 
-                        };
+                // El nuevo JSON es un arreglo de Rondas. Recorremos cada ronda.
+                data.forEach(ronda => {
+                    if (ronda.tournaments && Array.isArray(ronda.tournaments)) {
+                        ronda.tournaments.forEach(m => {
+                            // Mapeo preciso según tu nuevo JSON
+                            let local = traducirEquipo(m.homeSquadName);
+                            let visita = traducirEquipo(m.awaySquadName);
+                            
+                            if (local && visita) {
+                                resultadosEnVivo[`${local}-${visita}`] = { 
+                                    g1: m.homeScore ?? 0, 
+                                    g2: m.awayScore ?? 0, 
+                                    status: m.status.toUpperCase(), // "COMPLETE", "SCHEDULED"
+                                    venue: m.venueName,
+                                    city: m.venueCity
+                                };
+                            }
+                        });
                     }
                 });
 
             } catch (error) {
-                console.error("No se pudo cargar el JSON remoto (Probable URL inaccesible o de prueba).", error);
+                console.error("Error al cargar JSON:", error);
             } finally {
                 document.getElementById('cargando-overlay').style.display = 'none';
                 construirInterfaz();
