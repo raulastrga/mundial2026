@@ -172,7 +172,7 @@
                 
                 const response = await fetch("https://play.fifa.com/json/fantasy/rounds.json");
                 const jsonResponse = await response.json();
-                const data = JSON.parse(jsonResponse.contents);
+                const data = jsonResponse
                 
                 // El nuevo JSON es un arreglo de Rondas. Recorremos cada ronda.
                 data.forEach(ronda => {
