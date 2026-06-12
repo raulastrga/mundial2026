@@ -217,7 +217,7 @@
             if (statusObj.status === "PLAYING" || statusObj.status === "LIVE" || statusObj.status === "IN_PROGRESS") {
                 let min = statusObj.minute ? ` ${statusObj.minute}'` : '';
                 return `<div class="status-container"><span class="badge-estado b-vivo">🔴 En Vivo${min}</span></div>`;
-            } else if (statusObj.status === "FINISHED" || statusObj.status === "PLAYED" || statusObj.status === "COMPLETED") {
+            } else if (statusObj.status === "FINISHED" || statusObj.status === "PLAYED" || statusObj.status === "COMPLETE") {
                 return `<div class="status-container"><span class="badge-estado b-fin">✅ Finalizado</span></div>`;
             }
             return '<div class="status-container"></div>';
