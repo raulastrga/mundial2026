@@ -96,7 +96,7 @@
 </div>
 
 <h1>Mundial 2026</h1>
-<div class="subtitle">Horarios Culiacán (MST) | Actualización automática cada 30s</div>
+<div class="subtitle">Horarios Culiacán (MST) | Actualización automática cada 1 minuto</div>
 
 <div class="nav-container">
     <div class="main-tabs">
@@ -307,7 +307,8 @@
                 fecha: fFinal, hora: hFinal, fechaObj: fechaObj,
                 t1: p[1], t2: p[2], d1: equiposDatos[p[1]].d, d2: equiposDatos[p[2]].d,
                 c1: equiposDatos[p[1]].c, c2: equiposDatos[p[2]].c, gr: equiposDatos[p[1]].g,
-                yaPaso: esFechaPasada(fechaObj),   // basado solo en la fecha (sin hora)
+                yaPaso: esFechaPasada(fechaObj),   // basado solo en la fecha (para colapsar días)
+                finalizado: false,                 // se actualizará con el JSON
                 isLive: false
             };
             if (!diasOrdenados[fFinal]) diasOrdenados[fFinal] = [];
@@ -317,6 +318,17 @@
         });
         // Ordenar partidos dentro de cada día por hora
         for (let dia in diasOrdenados) diasOrdenados[dia].sort((a,b) => a.hora.localeCompare(b.hora));
+
+        // Actualizar finalizado e isLive según resultadosEnVivo
+        for (let dia in diasOrdenados) {
+            for (let pt of diasOrdenados[dia]) {
+                const res = getResult(pt.t1, pt.t2);
+                if (res) {
+                    if (res.status === 'FINISHED') pt.finalizado = true;
+                    else if (res.status === 'LIVE') pt.isLive = true;
+                }
+            }
+        }
 
         // Procesar estadísticas solo con partidos FINALIZADOS
         for (let key in resultadosEnVivo) {
@@ -349,21 +361,28 @@
         let htmlFuturos = '';
         let encontroProximo = false;
         for (let dia in diasOrdenados) {
-            // Verificar si todos los partidos de este día tienen yaPaso = true (es decir, fecha anterior a hoy)
+            // Verificar si todos los partidos de este día tienen yaPaso = true (fecha anterior a hoy)
             let todosPasados = diasOrdenados[dia].every(pt => pt.yaPaso === true);
             let gridHTML = '<div class="grid-partidos">';
             for (let pt of diasOrdenados[dia]) {
                 let res = getResult(pt.t1, pt.t2);
-                // Si el partido está en vivo, sobreescribimos isLive para la clase visual
-                if (res && res.isLive) pt.isLive = true;
                 let estadoInsignia = renderizarInsigniaEstado(res);
                 let scoreHtml = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ?
                     `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
+                
+                // Determinar clases visuales
                 let clsAd = '';
-                if (pt.yaPaso) clsAd = 'partido-pasado';
-                else if (pt.isLive) clsAd = 'partido-vivo';
-                else if (!encontroProximo) { clsAd = 'proximo-partido'; encontroProximo = true; }
-                let badge = (!pt.yaPaso && !pt.isLive && clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
+                if (pt.finalizado) {
+                    clsAd = 'partido-pasado';      // partido terminado, siempre gris
+                } else if (pt.isLive) {
+                    clsAd = 'partido-vivo';        // en vivo, borde rojo
+                } else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) {
+                    // Solo marcar como próximo si no está finalizado, no está en vivo y su día no es pasado
+                    clsAd = 'proximo-partido';
+                    encontroProximo = true;
+                }
+                let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
+                
                 gridHTML += `
                 <div class="partido-card ${clsAd}">${badge}
                     <div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div>
@@ -400,7 +419,7 @@
                 let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ?
                     `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` :
                     `<span style="color:#aaa; font-weight:bold;">VS</span>`;
-                let clasePasado = pt.yaPaso ? 'partido-pasado' : '';
+                let clasePasado = pt.finalizado ? 'partido-pasado' : '';
                 html += `
                 <div class="p-mini ${clasePasado}">
                     <div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div>
@@ -467,7 +486,8 @@
     // Inicialización
     window.onload = () => {
         actualizarResultados();
-        intervalAutoActualizar = setInterval(() => actualizarResultados(false), 30000);
+        // Actualización automática cada 1 minuto (60000 ms)
+        intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
     };
 </script>
 </body>
