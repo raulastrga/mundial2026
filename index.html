@@ -334,7 +334,7 @@
                     let res = getResult(pt.t1, pt.t2);
                     
                     let estadoInsignia = renderizarInsigniaEstado(res);
-                    let scoreHtml = res ? `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
+                    let scoreHtml = res && res.status !== 'SCHEDULED' ? `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
                     
                     let clsAd = pt.yaPaso ? 'partido-pasado' : (!encontroProximo ? 'proximo-partido' : '');
                     let badge = (!pt.yaPaso && !encontroProximo) ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
