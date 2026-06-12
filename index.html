@@ -32,7 +32,8 @@
         .sub-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
         .s-tab { background-color: transparent; border: 2px solid #ddd; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer; color: #666; transition: all 0.2s; flex: 1; max-width: 200px; }
         .s-tab.active { border-color: var(--secondary); background-color: rgba(0, 112, 243, 0.1); color: var(--secondary); }
-        .btn-actualizar { background-color: var(--secondary); color: white; border: none; padding: 8px 16px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
+        .btn-actualizar, .btn-notif { background-color: var(--secondary); color: white; border: none; padding: 8px 16px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
+        .btn-notif { background-color: #ff4a5a; }
 
         .contenedor-vistas { width: 100%; max-width: 1000px; }
         .vista { display: none; }
@@ -99,6 +100,85 @@
         .spinner { border: 4px solid rgba(0,0,0,0.1); border-left-color: var(--secondary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ---------- NUEVOS ESTILOS PARA NOTIFICACIONES, SONIDO Y ANIMACIONES ---------- */
+        .notif-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 320px;
+        }
+        .notif-toast {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+            border-left: 4px solid var(--secondary);
+            cursor: pointer;
+        }
+        .notif-toast.gol { border-left-color: #ff4a5a; }
+        .notif-toast.fin { border-left-color: #e0e0e0; }
+        .notif-toast.inicio { border-left-color: #2ed573; }
+        .notif-icon { font-size: 1.5rem; }
+        .notif-content { flex: 1; }
+        .notif-title { font-weight: bold; font-size: 0.9rem; margin-bottom: 2px; }
+        .notif-text { font-size: 0.75rem; color: #666; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateX(100%); }
+        }
+
+        @keyframes golFlash {
+            0%, 100% { background-color: var(--card-bg); }
+            50% { background-color: #ff4a5a; color: white; transform: scale(1.02); }
+        }
+        .gol-animacion {
+            animation: golFlash 0.5s ease-in-out;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall 2s ease-out forwards;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .sound-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -108,6 +188,8 @@
     <div style="font-weight: bold; color: var(--primary);">Cargando datos del Mundial 2026...</div>
 </div>
 
+<div class="notif-panel" id="notifPanel"></div>
+
 <h1>Mundial 2026</h1>
 <div class="subtitle">Horarios Culiacán (MST) | Actualización automática cada 1 minuto</div>
 
@@ -116,6 +198,7 @@
         <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
         <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
         <button class="btn-actualizar" onclick="actualizarResultados(true)">⟳ Actualizar</button>
+        <button class="btn-notif" id="btnNotif" onclick="solicitarPermisoNotificaciones()">🔔 Activar Notif</button>
     </div>
     <div class="sub-tabs" id="sub-calendarios">
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
@@ -153,7 +236,142 @@
     </div>
 </div>
 
+<button class="sound-control" id="soundToggle" onclick="toggleSound()">🔊</button>
+
 <script>
+    // ==================== SISTEMA DE NOTIFICACIONES, SONIDOS Y ANIMACIONES ====================
+    let notificacionesPermitidas = false;
+    let sonidoHabilitado = true;
+    let audioContext = null;
+    let ultimoEstadoResultados = {};  // para comparar cambios
+
+    // Inicializar audio al primer clic del usuario (requisito de navegador)
+    function initAudio() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+    }
+
+    function reproducirSonido(tipo) {
+        if (!sonidoHabilitado) return;
+        initAudio();
+        const now = audioContext.currentTime;
+        const gain = audioContext.createGain();
+        gain.connect(audioContext.destination);
+        gain.gain.setValueAtTime(0.3, now);
+        const osc = audioContext.createOscillator();
+        osc.connect(gain);
+        switch(tipo) {
+            case 'gol':
+                osc.frequency.setValueAtTime(880, now);
+                osc.frequency.exponentialRampToValueAtTime(1320, now + 0.15);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+                osc.start();
+                osc.stop(now + 0.3);
+                break;
+            case 'inicio':
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.2);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+                osc.start();
+                osc.stop(now + 0.4);
+                break;
+            case 'fin':
+                osc.frequency.setValueAtTime(660, now);
+                osc.frequency.exponentialRampToValueAtTime(330, now + 0.3);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+                osc.start();
+                osc.stop(now + 0.4);
+                break;
+            default:
+                osc.frequency.setValueAtTime(523.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+                osc.start();
+                osc.stop(now + 0.2);
+        }
+    }
+
+    function toggleSound() {
+        sonidoHabilitado = !sonidoHabilitado;
+        const btn = document.getElementById('soundToggle');
+        btn.textContent = sonidoHabilitado ? '🔊' : '🔇';
+        mostrarNotificacionLocal('🔊 Sonido', sonidoHabilitado ? 'Sonido activado' : 'Sonido desactivado', 'general');
+        if (sonidoHabilitado) reproducirSonido('general');
+    }
+
+    function solicitarPermisoNotificaciones() {
+        if ('Notification' in window) {
+            Notification.requestPermission().then(permiso => {
+                if (permiso === 'granted') {
+                    notificacionesPermitidas = true;
+                    mostrarNotificacionLocal('✅ Notificaciones activadas', 'Recibirás alertas de goles, inicios y finales', 'general');
+                    reproducirSonido('general');
+                } else {
+                    mostrarNotificacionLocal('❌ Permiso denegado', 'No podrás recibir notificaciones del Mundial', 'general');
+                }
+            });
+        } else {
+            alert('Tu navegador no soporta notificaciones push');
+        }
+    }
+
+    function mostrarNotificacionPush(titulo, cuerpo, tipo = 'general') {
+        if (notificacionesPermitidas && document.visibilityState !== 'visible') {
+            new Notification(titulo, { body: cuerpo, icon: 'https://flagcdn.com/w40/mx.png', silent: false });
+        }
+        mostrarNotificacionLocal(titulo, cuerpo, tipo);
+    }
+
+    function mostrarNotificacionLocal(titulo, cuerpo, tipo = 'general') {
+        const panel = document.getElementById('notifPanel');
+        const toast = document.createElement('div');
+        toast.className = `notif-toast ${tipo}`;
+        let icono = '🔔';
+        if (tipo === 'gol') icono = '⚽';
+        else if (tipo === 'inicio') icono = '🎺';
+        else if (tipo === 'fin') icono = '🏁';
+        toast.innerHTML = `<div class="notif-icon">${icono}</div><div class="notif-content"><div class="notif-title">${titulo}</div><div class="notif-text">${cuerpo}</div></div>`;
+        toast.onclick = () => toast.remove();
+        panel.appendChild(toast);
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s ease-out forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 5000);
+    }
+
+    function hacerConfetti() {
+        const colores = ['#ff4a5a', '#2ed573', '#1e90ff', '#ffa502', '#0a2540', '#0070f3'];
+        for (let i = 0; i < 50; i++) {
+            const conf = document.createElement('div');
+            conf.className = 'confetti';
+            conf.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+            conf.style.left = Math.random() * 100 + '%';
+            conf.style.width = (Math.random() * 8 + 4) + 'px';
+            conf.style.height = (Math.random() * 8 + 4) + 'px';
+            conf.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            conf.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(conf);
+            setTimeout(() => conf.remove(), 2000);
+        }
+    }
+
+    function animarTarjetaPartido(equipoLocal, equipoVisitante) {
+        // Buscar la tarjeta del partido (en vista general o por chango) y agregar clase de flash
+        const selectorGeneral = `.partido-card:has(.team .t-nombre:contains('${equipoLocal}')):has(.team .t-nombre:contains('${equipoVisitante}'))`;
+        // Como :contains no es estándar, usamos búsqueda manual
+        document.querySelectorAll('.partido-card, .p-mini').forEach(card => {
+            const texto = card.innerText;
+            if (texto.includes(equipoLocal) && texto.includes(equipoVisitante)) {
+                card.classList.add('gol-animacion');
+                setTimeout(() => card.classList.remove('gol-animacion'), 500);
+            }
+        });
+    }
+
+    // ==================== CÓDIGO ORIGINAL (sin modificar) ====================
     // ---- BASE DE DATOS HISTÓRICA DE ENFRENTAMIENTOS DIRECTOS (H2H) ----
     const baseDatosH2H = {
         "México-Sudáfrica": [{ f: "2010", r: "México 1 - 1 Sudáfrica" }, { f: "2005", r: "México 1 - 2 Sudáfrica" }, { f: "2000", r: "México 4 - 2 Sudáfrica" }, { f: "1993", r: "México 4 - 0 Sudáfrica" }],
@@ -230,18 +448,18 @@
     }
 
     let resultadosEnVivo = {};
-    let horariosJSON = {}; // Almacenar fecha/hora real del JSON
+    let horariosJSON = {};
     let intervalAutoActualizar;
 
-    // ---- FETCH Y PROCESAMIENTO DEL JSON ----
+    // ---- FETCH Y PROCESAMIENTO DEL JSON (MODIFICADO PARA DETECTAR CAMBIOS) ----
     async function actualizarResultados(manual = false) {
         if (!manual) document.getElementById('cargando-overlay').style.display = 'flex';
         try {
             const response = await fetch("https://play.fifa.com/json/fantasy/rounds.json");
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
-            resultadosEnVivo = {};
-            horariosJSON = {};
+            const nuevosResultados = {};
+            const nuevosHorarios = {};
 
             for (const ronda of data) {
                 if (!ronda.tournaments || !Array.isArray(ronda.tournaments)) continue;
@@ -253,35 +471,55 @@
                     const status = (m.status || '').toUpperCase();
                     const isComplete = ['COMPLETE', 'FINISHED', 'PLAYED'].includes(status);
                     const isLive = ['PLAYING', 'LIVE', 'IN_PROGRESS'].includes(status);
-
                     const key = `${local}-${visita}`;
+                    if (m.date) nuevosHorarios[key] = new Date(m.date);
                     
-                    // Guardar fecha/hora real del JSON (formato ISO)
-                    if (m.date) {
-                        horariosJSON[key] = new Date(m.date);
-                    }
-                    
+                    let nuevoEstado = { status: 'SCHEDULED', isLive: false };
                     if (isComplete) {
-                        resultadosEnVivo[key] = {
-                            g1: parseInt(m.homeScore, 10),
-                            g2: parseInt(m.awayScore, 10),
-                            status: 'FINISHED',
-                            minute: null,
-                            isLive: false
-                        };
+                        nuevoEstado = { g1: parseInt(m.homeScore, 10), g2: parseInt(m.awayScore, 10), status: 'FINISHED', minute: null, isLive: false };
                     } else if (isLive && m.homeScore !== null && m.awayScore !== null) {
-                        resultadosEnVivo[key] = {
-                            g1: parseInt(m.homeScore, 10),
-                            g2: parseInt(m.awayScore, 10),
-                            status: 'LIVE',
-                            minute: m.minutes || 0,
-                            isLive: true
-                        };
-                    } else {
-                        resultadosEnVivo[key] = { status: 'SCHEDULED', isLive: false };
+                        nuevoEstado = { g1: parseInt(m.homeScore, 10), g2: parseInt(m.awayScore, 10), status: 'LIVE', minute: m.minutes || 0, isLive: true };
+                    }
+                    nuevosResultados[key] = nuevoEstado;
+                }
+            }
+
+            // Detectar cambios y lanzar notificaciones/sonidos/animaciones
+            for (const key in nuevosResultados) {
+                const anterior = resultadosEnVivo[key];
+                const actual = nuevosResultados[key];
+                if (anterior && actual) {
+                    // Gol: cambio en marcador
+                    if (anterior.g1 !== undefined && actual.g1 !== undefined && (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
+                        const [t1, t2] = key.split('-');
+                        const nuevoGol = actual.g1 > (anterior.g1 || 0) ? t1 : (actual.g2 > (anterior.g2 || 0) ? t2 : null);
+                        if (nuevoGol) {
+                            const mensaje = `⚽ ¡GOOOL! ${nuevoGol} anotó en ${t1} vs ${t2}`;
+                            mostrarNotificacionPush('⚽ ¡GOL!', mensaje, 'gol');
+                            reproducirSonido('gol');
+                            hacerConfetti();
+                            animarTarjetaPartido(t1, t2);
+                        }
+                    }
+                    // Inicio de partido en vivo
+                    if (anterior.status !== 'LIVE' && actual.status === 'LIVE') {
+                        const [t1, t2] = key.split('-');
+                        const mensaje = `🎺 El partido ${t1} vs ${t2} ha comenzado`;
+                        mostrarNotificacionPush('🎺 Partido en vivo', mensaje, 'inicio');
+                        reproducirSonido('inicio');
+                    }
+                    // Finalización
+                    if (anterior.status !== 'FINISHED' && actual.status === 'FINISHED') {
+                        const [t1, t2] = key.split('-');
+                        const mensaje = `🏁 Finalizado: ${t1} ${actual.g1} - ${actual.g2} ${t2}`;
+                        mostrarNotificacionPush('🏁 Partido finalizado', mensaje, 'fin');
+                        reproducirSonido('fin');
                     }
                 }
             }
+
+            resultadosEnVivo = nuevosResultados;
+            horariosJSON = nuevosHorarios;
             construirInterfaz();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
@@ -641,9 +879,12 @@
         }
     }
 
+    // Inicialización
     window.onload = () => {
         actualizarResultados();
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
+        // Activar audio al primer clic del usuario
+        document.body.addEventListener('click', () => { if (audioContext) initAudio(); }, { once: true });
     };
 </script>
 </body>
