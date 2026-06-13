@@ -1004,3 +1004,68 @@ body.dark-mode .s-tab.active {
     background-color: var(--primary-light);
     color: white;
 }
+
+/* Tabs principales en modo oscuro */
+body.dark-mode .tabs-principales {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+body.dark-mode .m-tab {
+    color: #94a3b8;          /* gris claro, pero visible */
+}
+body.dark-mode .m-tab.active {
+    background: rgba(79, 70, 229, 0.9);
+    color: white;
+    box-shadow: 0 2px 10px rgba(79,70,229,0.3);
+}
+body.dark-mode .m-tab:active {
+    background: rgba(79, 70, 229, 0.6);
+}
+
+body.dark-mode .m-tab:hover {
+    background: rgba(255,255,255,0.1);
+    color: #e2e8f0;
+}
+
+body.dark-mode .s-tab:hover {
+    background: rgba(255,255,255,0.1);
+    color: #e2e8f0;
+}
+
+/* ========== ACORDEONES POR CHANGO - MODO OSCURIO ========== */
+body.dark-mode details.chango-seccion {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode details.chango-seccion summary {
+    color: #f8fafc;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+body.dark-mode details.chango-seccion summary::after {
+    color: #94a3b8;
+}
+
+body.dark-mode details.chango-seccion[open] summary {
+    color: var(--accent);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Mejorar el color de los bordes superiores de cada chango (las líneas de colores) */
+body.dark-mode #sec-Jona { border-color: var(--jona); }
+body.dark-mode #sec-David { border-color: var(--david); }
+body.dark-mode #sec-Raúl { border-color: var(--raul); }
+body.dark-mode #sec-Sergio { border-color: var(--sergio); }
+
+/* Tarjetas internas (p-mini) dentro del acordeón en modo oscuro ya están cubiertas,
+   pero reforzamos su fondo si es necesario */
+body.dark-mode .lista-partidos-chango .p-mini {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+body.dark-mode .lista-partidos-chango .p-mini:hover {
+    background: rgba(30, 41, 59, 0.9);
+}
