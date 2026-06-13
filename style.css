@@ -1,20 +1,41 @@
 /* ========== VARIABLES GLOBALES ========== */
+/* ========== VARIABLES GLOBALES ========== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap');
+
 :root {
-    --primary: #0a2540;
-    --secondary: #0070f3;
-    --bg: #f4f7f6;
-    --card-bg: #ffffff;
-    --jona: #ff4a5a;
-    --david: #2ed573;
-    --raul: #1e90ff;
-    --sergio: #ffa502;
+    /* Colores base */
+    --primary: #1E3A5F;      /* azul marino profundo */
+    --primary-light: #2B4F7C;
+    --secondary: #FF6B4A;    /* coral/naranja */
+    --accent: #00C2A0;       /* verde menta */
+    
+    /* Fondos */
+    --bg-page: #F8FAFE;
+    --bg-card: #FFFFFF;
+    --bg-surface: #FFFFFF;
+    
+    /* Changos (más saturados) */
+    --jona: #FF4757;
+    --david: #2ED573;
+    --raul: #1E90FF;
+    --sergio: #FFA502;
+    
+    /* Estados */
+    --live: #FF6B4A;
+    --finished: #A4B0BE;
+    --upcoming: #1E3A5F;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* ========== RESET Y BASE ========== */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg);
-    color: #333;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-page);
+    color: #1E293B;
     margin: 0;
     padding: 15px;
     padding-top: env(safe-area-inset-top, 15px);
@@ -22,6 +43,7 @@ body {
     flex-direction: column;
     align-items: center;
     -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
 }
 
 h1 {
@@ -845,50 +867,59 @@ details.chango-seccion[open] summary {
 }
 
 /* ========== DARK MODE ========== */
+/* ========== DARK MODE ========== */
 body.dark-mode {
-    --primary: #e0e0e0;
+    --primary: #94A3B8;
     --secondary: #3b82f6;
-    --bg: #121212;
-    --card-bg: #1e1e1e;
-    color: #e0e0e0;
+    --bg-page: #0F172A;
+    --bg-card: #1E293B;
+    --bg-surface: #1E293B;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
+body.dark-mode {
+    background-color: var(--bg-page);
+    color: #E2E8F0;
+}
+
+/* Ajustes de tarjetas y componentes para modo oscuro (mantén los que ya tenías, pero actualiza referencias) */
 body.dark-mode .partido-card,
 body.dark-mode .p-mini,
 body.dark-mode .seccion-contenedor,
 body.dark-mode details.chango-seccion,
 body.dark-mode .stat-card,
 body.dark-mode .curiosidad {
-    background: #1e1e1e;
-    border-color: #333;
-    color: #e0e0e0;
+    background: var(--bg-card);
+    border-color: #334155;
+    color: #E2E8F0;
 }
 
 body.dark-mode .score {
-    background: #2a2a2a;
-    color: #e0e0e0;
+    background: #2D3A4A;
+    color: #E2E8F0;
 }
 
 body.dark-mode .fecha-header {
-    background: #0a2540;
+    background: #0F172A;
 }
 
 body.dark-mode .barra-fondo {
-    background: #2a2a2a;
+    background: #2D3A4A;
 }
 
 body.dark-mode .main-tabs {
-    background: #2a2a2a;
+    background: #1E293B;
 }
 
 body.dark-mode .tabs-principales .m-tab.active {
-    background: #1e1e1e;
-    color: #e0e0e0;
+    background: var(--bg-card);
+    color: var(--secondary);
 }
 
 body.dark-mode .s-tab {
-    border-color: #444;
-    color: #aaa;
+    border-color: #475569;
+    color: #94A3B8;
 }
 
 body.dark-mode .s-tab.active {
@@ -897,8 +928,8 @@ body.dark-mode .s-tab.active {
 }
 
 body.dark-mode .btn-circle {
-    background: #2a2a2a;
-    color: #e0e0e0;
+    background: #2D3A4A;
+    color: #E2E8F0;
 }
 
 body.dark-mode .btn-wa {
@@ -906,17 +937,33 @@ body.dark-mode .btn-wa {
 }
 
 body.dark-mode .dark-mode-toggle {
-    background: #333;
+    background: #334155;
     color: #ffd966;
 }
 
 body.dark-mode .btn-chango {
-    background: #2a2a2a;
-    color: #e0e0e0;
+    background: #2D3A4A;
+    color: #E2E8F0;
 }
 
 body.dark-mode .selector-chango .btn-chango.active {
     background: var(--secondary);
+}
+
+/* Ajustes específicos para nuevos elementos (grupos, curiosidades) */
+body.dark-mode .grupo-card {
+    background: #1E293B;
+    border-color: #334155;
+}
+
+body.dark-mode .curiosidad-card {
+    background: #1E293B;
+    border-color: #FFA502;
+}
+
+body.dark-mode .pj-chango,
+body.dark-mode .curiosidad-detail {
+    color: #94A3B8;
 }
 
 /* ========== RESPONSIVE ADICIONAL ========== */
