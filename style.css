@@ -1,350 +1,233 @@
-/* ========== VARIABLES GLOBALES ========== */
-/* ========== VARIABLES GLOBALES ========== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap');
+/* ========== FUENTE PREMIUM ========== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    /* Colores base */
-    --primary: #1E3A5F;      /* azul marino profundo */
-    --primary-light: #2B4F7C;
-    --secondary: #FF6B4A;    /* coral/naranja */
-    --accent: #00C2A0;       /* verde menta */
+    /* Paleta Principal (World Cup) */
+    --primary: #1e1b4b;       /* Indigo Oscuro (Títulos) */
+    --primary-light: #4f46e5; /* Indigo Brillante (Activos) */
+    --secondary: #f43f5e;     /* Rosa Deportivo */
+    --accent: #0ea5e9;        /* Azul Claro */
     
-    /* Fondos */
-    --bg-page: #F8FAFE;
-    --bg-card: #FFFFFF;
-    --bg-surface: #FFFFFF;
+    /* Variables de Changos */
+    --jona: #ef4444;    /* Rojo vibrante */
+    --david: #10b981;   /* Esmeralda */
+    --raul: #3b82f6;    /* Azul fuerte */
+    --sergio: #f59e0b;  /* Ámbar */
     
-    /* Changos (más saturados) */
-    --jona: #FF4757;
-    --david: #2ED573;
-    --raul: #1E90FF;
-    --sergio: #FFA502;
-    
-    /* Estados */
-    --live: #FF6B4A;
-    --finished: #A4B0BE;
-    --upcoming: #1E3A5F;
-    
-    /* Sombras */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    /* Configuración de Cristal (Glassmorphism) */
+    --bg-page: #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.65);
+    --card-border: rgba(255, 255, 255, 0.8);
+    --glass-blur: blur(16px);
 }
 
 /* ========== RESET Y BASE ========== */
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Outfit', sans-serif;
     background-color: var(--bg-page);
-    color: #1E293B;
+    color: #334155;
     margin: 0;
     padding: 16px;
-    padding-top: env(safe-area-inset-top, 15px);
+    padding-top: env(safe-area-inset-top, 20px);
     display: flex;
     flex-direction: column;
     align-items: center;
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
+    overflow-x: hidden;
 }
 
+/* ========== FONDO ANIMADO (ORBES) ========== */
+.bg-orbs {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -2;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    animation: float 12s infinite alternate ease-in-out;
+}
+.orb-1 { width: 350px; height: 350px; background: #c7d2fe; top: -50px; left: -100px; }
+.orb-2 { width: 450px; height: 450px; background: #fecdd3; bottom: -100px; right: -50px; animation-delay: -3s; }
+.orb-3 { width: 250px; height: 250px; background: #bae6fd; top: 35%; left: 40%; animation-delay: -6s; }
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, -40px) scale(1.1); }
+}
+
+/* ========== ENCABEZADOS ========== */
+.header-container { text-align: center; margin-bottom: 20px; }
 h1 {
     color: var(--primary);
-    margin: 10px 0 5px 0;
+    margin: 10px 0 2px 0;
     text-transform: uppercase;
-    text-align: center;
-    font-size: 1.6rem;
-}
-
-.subtitle {
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-h1 {
-  margin: 16px 0 8px;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 .subtitle {
-  margin-bottom: 24px;
-}
-.seccion-contenedor {
-  padding: 16px; /* era 15px, subimos a 16 */
-}
-
-/* ========== CONTENEDORES PRINCIPALES ========== */
-.nav-container {
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 20px;
-}
-
-.contenedor-vistas {
-    width: 100%;
-    max-width: 1000px;
-}
-
-.vista {
-    display: none;
-}
-
-.vista.active {
-    display: block;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-/* ========== BOTONES Y NAVEGACIÓN (NUEVA ESTRUCTURA) ========== */
-.main-tabs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: #e0e0e0;
-    border-radius: 12px;
-    padding: 8px;
+    color: #64748b;
     margin-bottom: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
-/* Primera fila: pestañas principales (ocupan todo el ancho equitativamente) */
+/* ========== NAVEGACIÓN Y TABS ========== */
+.nav-container { width: 100%; max-width: 800px; margin-bottom: 25px; }
+.contenedor-vistas { width: 100%; max-width: 1000px; }
+.vista { display: none; }
+.vista.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+
 .tabs-principales {
     display: flex;
-    gap: 6px;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: var(--glass-blur);
+    padding: 6px;
+    border-radius: 18px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
 }
-
-.tabs-principales .m-tab {
+.m-tab {
     flex: 1;
     background: transparent;
     border: none;
-    padding: 10px 5px;
-    font-weight: 800;
-    font-size: 0.9rem;
-    color: #555;
-    border-radius: 8px;
+    padding: 12px 5px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #64748b;
+    border-radius: 14px;
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.m-tab.active {
+    background: white;
+    color: var(--primary-light);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transform: scale(1.02);
+}
+
+.sub-tabs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 18px 0;
+}
+.s-tab {
+    background-color: transparent;
+    border: 2px solid #cbd5e1;
+    padding: 8px 20px;          /* Ajuste de padding */
+    border-radius: 40px;        /* Más redondeado */
+    font-weight: 700;
+    font-size: 0.85rem;         /* Reducido para móvil */
+    cursor: pointer;
+    color: #64748b;
     transition: all 0.3s;
+    flex: 0 1 auto;             /* En lugar de flex:1, que se adapte al contenido */
     text-align: center;
     white-space: nowrap;
 }
-
-.tabs-principales .m-tab.active {
-    background: white;
-    color: var(--primary);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* ========== BOTÓN FLOTANTE CON MENÚ DESPLEGABLE ========== */
-.fab-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.fab-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--secondary);
-    color: white;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.fab-btn:active {
-    transform: scale(0.95);
-}
-
-.fab-menu {
-    position: absolute;
-    bottom: 70px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    padding: 12px;
-    border-radius: 30px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(20px);
-    transition: all 0.2s ease;
-}
-
-.fab-menu.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-}
-
-.fab-item {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: white;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-}
-
-.fab-item:active {
-    transform: scale(0.9);
-}
-
-.fab-item.btn-notif-circle {
-    background: #ff4a5a;
-    color: white;
-}
-
-.fab-item.dark-mode-toggle {
-    background: var(--primary);
-    color: white;
-}
-
-/* Ajustes para modo oscuro */
-body.dark-mode .fab-menu {
-    background: rgba(30, 30, 30, 0.95);
-}
-
-body.dark-mode .fab-item {
-    background: #2a2a2a;
-    color: #e0e0e0;
-}
-
-/* En móviles muy pequeños, reducir tamaño */
 @media (max-width: 480px) {
-    .fab-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 1.3rem;
-    }
-    .fab-item {
-        width: 42px;
-        height: 42px;
-        font-size: 1rem;
+    .s-tab {
+        padding: 6px 16px;
+        font-size: 0.75rem;
     }
 }
-
-/* ========== SUB-TABS ========== */
-.sub-tabs {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.s-tab {
-    background-color: transparent;
-    border: 2px solid #ddd;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    color: #666;
-    transition: all 0.2s;
-    flex: 1;
-    max-width: 200px;
-}
-
 .s-tab.active {
-    border-color: var(--secondary);
-    background-color: rgba(0, 112, 243, 0.1);
-    color: var(--secondary);
+    border-color: var(--primary-light);
+    background-color: var(--primary-light);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
 }
 
-/* ========== CALENDARIO Y TARJETAS DE PARTIDOS ========== */
+/* ========== CALENDARIO Y TARJETAS DE PARTIDO ========== */
 .fecha-header {
-    background-color: var(--primary);
+    background: rgba(30, 27, 75, 0.85);
+    backdrop-filter: var(--glass-blur);
     color: white;
-    padding: 8px 15px;
-    border-radius: 6px;
-    margin: 20px 0 10px 0;
-    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 16px;
+    margin: 30px 0 20px 0;
+    font-weight: 800;
     font-size: 1.1rem;
     position: sticky;
-    top: 10px;
+    top: 15px;
     z-index: 10;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .grid-partidos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
 }
 
 .partido-card {
     background: var(--card-bg);
-    border-radius: 10px;
-    padding: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
-    border: 1px solid #eee;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     cursor: pointer;
 }
-
-.partido-pasado {
-    opacity: 0.6;
-    filter: grayscale(0.85);
+.partido-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
 }
 
-.partido-vivo {
-    border: 2px solid #ff4a5a;
-    box-shadow: 0 0 12px rgba(255, 74, 90, 0.4);
-}
-
+.partido-pasado { opacity: 0.75; filter: grayscale(0.5); }
 .proximo-partido {
-    border: 2px solid var(--secondary);
-    box-shadow: 0 0 15px rgba(0, 112, 243, 0.25);
+    border: 2px solid var(--primary-light);
     transform: scale(1.02);
-    z-index: 5;
+    box-shadow: 0 12px 35px rgba(79, 70, 229, 0.15);
 }
-
 .badge-proximo {
     position: absolute;
-    top: -12px;
+    top: -14px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--secondary);
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
     color: white;
-    padding: 3px 12px;
-    border-radius: 12px;
+    padding: 5px 18px;
+    border-radius: 20px;
     font-size: 0.75rem;
-    font-weight: bold;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
     white-space: nowrap;
 }
 
+/* Interior de Tarjeta */
 .p-info {
     display: flex;
     justify-content: space-between;
     font-size: 0.8rem;
-    color: #777;
-    margin-bottom: 8px;
-    border-bottom: 1px dashed #ddd;
-    padding-bottom: 5px;
+    color: #64748b;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 10px;
+    font-weight: 600;
 }
-
 .p-teams {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
 }
-
 .team {
     display: flex;
     flex-direction: column;
@@ -353,816 +236,771 @@ body.dark-mode .fab-item {
     text-align: center;
 }
 
+/* Banderas circulares */
 .img-bandera {
-    width: 36px;
-    height: 24px;
+    width: 44px !important;
+    height: 44px !important;
     object-fit: cover;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    object-position: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    border: 2px solid white;
 }
 
-.t-nombre {
-    font-weight: bold;
-    font-size: 0.95rem;
-}
-
+.t-nombre { font-weight: 800; font-size: 1.05rem; color: #1e293b; line-height: 1.1; margin-bottom: 6px; }
 .t-dueño {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     color: white;
-    padding: 2px 8px;
-    border-radius: 12px;
-    margin-top: 4px;
-    font-weight: 600;
-}
-
-.d-Jona {
-    background-color: var(--jona);
-}
-
-.d-David {
-    background-color: var(--david);
-    color: #111;
-}
-
-.d-Raúl {
-    background-color: var(--raul);
-}
-
-.d-Sergio {
-    background-color: var(--sergio);
-}
-
-.vs {
-    font-weight: bold;
-    color: #aaa;
-    font-size: 0.9rem;
-}
-
-.score {
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: var(--primary);
-    background: #eef2f5;
-    padding: 4px 10px;
-    border-radius: 6px;
-}
-
-/* ========== HISTORIAL H2H ========== */
-.historial-panel {
-    display: none;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed #ccc;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.partido-card.seleccionado,
-.p-mini.seleccionado {
-    border-color: #0070f3;
-    box-shadow: 0 4px 12px rgba(0, 112, 243, 0.2);
-    transform: scale(1.01);
-}
-
-.partido-card.seleccionado .historial-panel,
-.p-mini.seleccionado .historial-panel {
-    display: block;
-}
-
-.h-titulo {
-    font-size: 0.75rem;
-    font-weight: bold;
-    color: var(--primary);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 800;
     text-transform: uppercase;
-    margin-bottom: 6px;
-    text-align: center;
     letter-spacing: 0.5px;
 }
 
-.h-match {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.75rem;
-    padding: 3px 0;
-    border-bottom: 1px solid #f0f0f0;
-    color: #555;
+.d-Jona { background: linear-gradient(135deg, var(--jona), #dc2626); }
+.d-David { background: linear-gradient(135deg, var(--david), #059669); color: white; }
+.d-Raúl { background: linear-gradient(135deg, var(--raul), #2563eb); }
+.d-Sergio { background: linear-gradient(135deg, var(--sergio), #d97706); }
+
+.vs {
+    font-weight: 800; color: #94a3b8; font-size: 1rem;
+    background: #f1f5f9; padding: 6px 12px; border-radius: 12px;
+}
+.score {
+    font-size: 1.8rem; font-weight: 900; color: var(--primary);
+    background: transparent; padding: 0;
+    letter-spacing: 1px;
 }
 
-.h-match:last-child {
-    border-bottom: none;
+/* ========== ESTADO DE PARTIDOS ========== */
+.status-container { margin-top: 10px; min-height: 22px; }
+.badge-estado {
+    font-size: 0.75rem; padding: 5px 12px; border-radius: 20px;
+    font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;
+}
+.b-vivo {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    animation: pulseGlow 1.5s infinite;
+}
+.b-fin {
+    background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0;
+}
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
-.h-fecha {
-    color: #999;
-    font-size: 0.65rem;
-    width: 45px;
-}
-
-.h-teams {
-    flex: 1;
-    text-align: center;
-    font-weight: 500;
-}
-
-.h-vacio {
-    text-align: center;
-    font-size: 0.75rem;
-    color: #999;
-    font-style: italic;
-    padding: 5px 0;
-}
-
-/* ========== DÍAS PASADOS (DETAILS) ========== */
-details.dias-pasados {
-    width: 100%;
-    margin-bottom: 20px;
-    background: #e9ecef;
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-details.dias-pasados summary {
-    font-weight: bold;
-    cursor: pointer;
-    padding: 10px;
-    color: #555;
-    text-align: center;
-    list-style: none;
-}
-
-details.dias-pasados summary::-webkit-details-marker {
+/* ========== PANEL DE HISTORIAL (DENTRO DE TARJETA) ========== */
+.h2h-inline-panel {
     display: none;
-}
-
-/* ========== VISTA POR CHANGO ========== */
-details.chango-seccion {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border-top: 5px solid;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
-
-#sec-Jona {
-    border-color: var(--jona);
+/* Mostrar el historial cuando la tarjeta está seleccionada */
+.partido-card.seleccionado .h2h-inline-panel,
+.p-mini.seleccionado .h2h-inline-panel {
+    display: block !important;
+}
+.h2h-titulo {
+    font-weight: 800;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    color: var(--primary-light);
+    text-align: center;
+}
+.h2h-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.historial-item {
+    background: rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 10px 12px;
+    backdrop-filter: blur(4px);
+}
+.historial-fecha {
+    font-size: 0.65rem;
+    color: var(--primary-light);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.historial-texto {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
 }
 
-#sec-David {
-    border-color: var(--david);
+/* ========== ACORDEONES POR CHANGO ========== */
+details.chango-seccion {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+    overflow: hidden;
 }
-
-#sec-Raúl {
-    border-color: var(--raul);
-}
-
-#sec-Sergio {
-    border-color: var(--sergio);
-}
-
 details.chango-seccion summary {
-    margin-top: 0;
-    color: #333;
-    font-size: 1.3rem;
-    font-weight: bold;
+    background: transparent;
+    padding: 20px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e293b;
     cursor: pointer;
     list-style: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    outline: none;
 }
-
-details.chango-seccion summary::-webkit-details-marker {
-    display: none;
-}
-
+details.chango-seccion summary::-webkit-details-marker { display: none; }
 details.chango-seccion summary::after {
     content: '▼';
     font-size: 0.9rem;
-    color: #999;
+    color: #94a3b8;
     transition: transform 0.3s;
 }
-
-details.chango-seccion[open] summary::after {
-    transform: rotate(180deg);
-}
-
+details.chango-seccion[open] summary::after { transform: rotate(180deg); }
 details.chango-seccion[open] summary {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    border-bottom: 2px dashed #e2e8f0;
     margin-bottom: 15px;
+    color: var(--primary-light);
 }
 
+/* Contenedor de la lista de partidos por chango */
 .lista-partidos-chango {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
+    grid-template-columns: 1fr;  /* una columna por defecto en móvil */
+    gap: 16px;
+    margin-top: 8px;
 }
 
+@media (min-width: 600px) {
+    .lista-partidos-chango {
+        grid-template-columns: repeat(2, 1fr);  /* dos columnas en tablets */
+    }
+}
+@media (min-width: 900px) {
+    .lista-partidos-chango {
+        grid-template-columns: repeat(3, 1fr);  /* tres columnas en escritorio */
+    }
+}
+
+/* Tarjetas individuales (p-mini) estilo glassmorphism */
 .p-mini {
-    background: #f9f9f9;
-    border: 1px solid #eaeaea;
-    padding: 10px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    font-size: 0.85rem;
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 14px;
+    transition: all 0.25s ease;
     cursor: pointer;
-    transition: transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
+.p-mini:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Cabecera de la tarjeta (fecha/hora) */
 .p-mini-fecha {
-    font-size: 0.75rem;
-    color: #0070f3;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--primary-light);
     text-align: center;
-    border-bottom: 1px dashed #ddd;
-    padding-bottom: 5px;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
 }
 
+/* Contenedor de equipos (flex con tres columnas) */
 .p-mini-equipos {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    font-weight: 500;
+    gap: 8px;
 }
 
+/* Columna de cada equipo */
 .p-mini-col {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
+    flex: 1;
     text-align: center;
+    gap: 4px;
 }
 
-/* ========== ESTADÍSTICAS Y TABLAS ========== */
+.p-mini-col img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: 1px solid white;
+}
+
+.p-mini-col span {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #1e293b;
+}
+
+/* Etiqueta del dueño (chango) en la tarjeta */
+.t-dueño {
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    background: rgba(0,0,0,0.05);
+    color: white;
+}
+
+/* Área central del marcador o VS */
+.p-mini-equipos > div:not(.p-mini-col) {
+    /* background: rgba(0,0,0,0.03); */
+    border-radius: 30px;
+    padding: 4px 10px;
+    min-width: 55px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+/* Estado de partido (insignia) dentro de la tarjeta */
+.p-mini .status-container {
+    margin-top: 6px;
+    font-size: 0.65rem;
+}
+
+/* Ajustes para modo oscuro */
+body.dark-mode .p-mini {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .p-mini-col span {
+    color: #f1f5f9;
+}
+
+body.dark-mode .p-mini-fecha {
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ========== TABLAS Y ESTADÍSTICAS ========== */
 .seccion-contenedor {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 25px;
 }
-
 .seccion-titulo {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 900;
     color: var(--primary);
     margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed #e2e8f0;
+    padding-bottom: 10px;
 }
-
 .tabla-stats {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
     text-align: center;
 }
-
+.tabla-stats img {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border-radius: 50% !important;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.tabla-stats .img-bandera,
+.tabla-stats img {
+    border-radius: 50% !important;
+}
 .tabla-stats th {
-    background: #f4f7f6;
-    color: #666;
-    padding: 8px 4px;
-    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 12px 6px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.75rem;
 }
-
 .tabla-stats td {
-    padding: 10px 4px;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
+    padding: 12px 6px;
+    border-bottom: 1px solid #f1f5f9;
 }
-
 .td-izq {
     text-align: left;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 600;
+    gap: 10px;
+    font-weight: 700;
+}
+.td-izq img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.barra-container {
-    margin-bottom: 15px;
-}
-
+/* Gráficas de barras */
+.barra-container { margin-bottom: 20px; }
 .barra-header {
     display: flex;
     justify-content: space-between;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    font-weight: 800;
 }
-
 .barra-fondo {
-    background: #eee;
-    border-radius: 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 15px;
     width: 100%;
-    height: 20px;
+    height: 26px;
     overflow: hidden;
 }
-
 .barra-progreso {
     height: 100%;
-    border-radius: 10px;
-    transition: width 0.8s ease-out;
+    border-radius: 15px;
+    transition: width 1s cubic-bezier(0.4,0,0.2,1);
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-right: 8px;
+    padding-right: 12px;
     color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
+    font-weight: 800;
+    background-image: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+    background-size: 30px 30px;
+    animation: moveStripes 1.5s linear infinite;
 }
+@keyframes moveStripes { 0% { background-position: 0 0; } 100% { background-position: 30px 0; } }
 
-/* ========== ESTADÍSTICAS AVANZADAS (CORREGIDO) ========== */
-/* ========== ESTADÍSTICAS AVANZADAS ========== */
-.stats-grid {
+/* Estadísticas avanzadas */
+.stats-grid.changos-grid {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-@media (min-width: 800px) {
-    .stats-grid {
+@media (min-width: 768px) {
+    .stats-grid.changos-grid {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .stat-card {
+    .stats-grid.changos-grid .stat-card {
         flex: 0 0 calc(50% - 15px);
+        margin-bottom: 0;
     }
 }
-
+/* ========== TARJETAS DE ESTADÍSTICAS AVANZADAS ========== */
 .stat-card {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 12px;
-    border-left: 4px solid var(--secondary);
+    background: rgba(255, 255, 255, 0.85);  /* fondo más sólido para mejorar lectura */
+    backdrop-filter: blur(4px);
+    border-radius: 24px;
     box-sizing: border-box;
-    width: 100%;
-    word-break: break-word;
+    padding: 18px;
+    border: 1px solid rgba(79, 70, 229, 0.3); /* borde más visible (color primario claro) */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
 }
 
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Título dentro de la tarjeta (incluye emoji del chango) */
 .stat-card h4 {
-    margin: 0 0 8px 0;
-    font-size: 0.9rem;
-    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid rgba(79, 70, 229, 0.2);
+    padding-bottom: 8px;
 }
 
+/* Aseguramos que los emojis (y texto) tengan contraste */
+.stat-card h4 .emoji,
+.stat-card h4 span {
+    font-size: 1.3rem;
+}
+
+/* Las rachas (con emojis de ✅ ➖ ❌) también necesitan mejor fondo */
 .rachas {
+    background: rgba(0,0,0,0.03);
+    padding: 6px;
+    border-radius: 40px;
     display: flex;
-    gap: 4px;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
+    gap: 6px;
+    margin: 10px 0;
 }
 
 .racha-item {
-    display: inline-block;
-    width: 28px;
-    text-align: center;
-    font-weight: bold;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    background: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.racha-win { background: #10b981; color: white; }
+.racha-draw { background: #f59e0b; color: white; }
+.racha-loss { background: #ef4444; color: white; }
+
+/* Mejorar el texto de "Mayor goleada..." */
+.stat-card div {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+
+/* Modo oscuro */
+body.dark-mode .stat-card {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(79, 70, 229, 0.5);
+}
+body.dark-mode .stat-card h4 {
+    color: #f8fafc;
+}
+body.dark-mode .rachas {
+    background: rgba(255,255,255,0.05);
+}
+body.dark-mode .racha-item {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+body.dark-mode .racha-win { background: #10b981; color: white; }
+body.dark-mode .racha-draw { background: #f59e0b; color: white; }
+body.dark-mode .racha-loss { background: #ef4444; color: white; }
+
+/* Grupos y curiosidades */
+.grupos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+.grupo-card {
+    background: rgba(255,255,255,0.5);
     border-radius: 20px;
-    background: #eee;
+    padding: 12px;
+}
+.grupo-header {
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 10px;
+}
+/* ========== RENDIMIENTO POR GRUPO ========== */
+.grupo-changos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chango-puntos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+/* Badge con ancho fijo para todos los changos */
+.badge-chango {
+    display: inline-block;
+    width: 70px;          /* Ancho fijo para todos los badges */
+    padding: 4px 0;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: center;
+    color: white;
+    background: var(--jona); /* fallback, pero se sobreescribe por clase */
     flex-shrink: 0;
 }
 
-.racha-win {
-    background: #2ed573;
-    color: white;
-}
+/* Colores específicos (ya los tienes) */
+.d-Jona { background: var(--jona); }
+.d-David { background: var(--david); color: #111; }
+.d-Raúl { background: var(--raul); }
+.d-Sergio { background: var(--sergio); }
 
-.racha-draw {
-    background: #ffa502;
-    color: white;
+/* Los puntos y el resto del texto */
+.chango-puntos strong {
+    font-weight: 800;
+    min-width: 30px;
+    text-align: center;
 }
-
-.racha-loss {
-    background: #ff4a5a;
-    color: white;
+.pj-chango {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin-left: auto;
 }
-
-.curiosidad {
-    background: #eef2ff;
+.curiosidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
     margin-top: 15px;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 0.8rem;
 }
+.curiosidad-card {
+    background: rgba(255,245,200,0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 12px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.curiosidad-card:active { transform: scale(0.98); }
+.curiosidad-icon { font-size: 2rem; }
+.curiosidad-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: #b45309; }
+.curiosidad-value { font-weight: 800; font-size: 1rem; margin: 5px 0; }
+.curiosidad-detail { font-size: 0.7rem; }
 
 /* ========== MI JORNADA ========== */
 .selector-chango {
-    margin: 15px 0;
     display: flex;
-    justify-content: center;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
 }
-
 .btn-chango {
-    background: #e0e0e0;
-    border: none;
+    background: white;
+    border: 2px solid #e2e8f0;
     padding: 8px 20px;
     border-radius: 30px;
-    font-weight: bold;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
 }
-
 .btn-chango.active {
-    background: var(--secondary);
+    background: var(--primary-light);
+    border-color: var(--primary-light);
     color: white;
+    transform: scale(1.05);
 }
-
 .proximos-partidos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 15px;
-    margin-top: 20px;
 }
-
 .vacio-mi-jornada {
     text-align: center;
-    padding: 40px;
-    color: #777;
+    padding: 30px;
+    color: #64748b;
 }
 
-/* ========== COMPARTIR WHATSAPP ========== */
+/* ========== WHATSAPP BOTÓN ========== */
 .btn-wa {
-    background-color: #25D366;
+    background: linear-gradient(135deg, #25D366, #128C7E);
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 8px 18px;
     border-radius: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: all 0.2s;
-}
-
-.btn-wa:hover {
-    transform: scale(1.02);
-    background-color: #128C7E;
-}
-
-.flex-between {
-    display: flex;
-    justify-content: space-between;
+    font-weight: 700;
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
+.btn-wa:hover { transform: scale(1.02); }
 
 /* ========== LOADERS Y OVERLAYS ========== */
 #cargando-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--bg);
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(248,250,252,0.85);
+    backdrop-filter: blur(12px);
     z-index: 9999;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: var(--secondary);
+    border: 4px solid rgba(79,70,229,0.1);
+    border-left-color: var(--primary-light);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     animation: spin 1s linear infinite;
-    margin-bottom: 15px;
 }
-
 .partial-loader {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--secondary);
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(30,27,75,0.9);
+    backdrop-filter: blur(8px);
     color: white;
-    border-radius: 50px;
-    padding: 8px 16px;
-    font-size: 0.75rem;
+    padding: 10px 24px;
+    border-radius: 40px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    gap: 12px;
+    font-weight: 700;
+    transition: all 0.3s;
     opacity: 0;
-    transition: opacity 0.3s;
     pointer-events: none;
 }
-
 .partial-loader.visible {
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
 }
-
-.partial-loader .spinner-small {
+.spinner-small {
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-left-color: white;
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
 }
 
-/* ========== DARK MODE ========== */
-/* ========== DARK MODE ========== */
-body.dark-mode {
-    --primary: #94A3B8;
-    --secondary: #3b82f6;
-    --bg-page: #0F172A;
-    --bg-card: #1E293B;
-    --bg-surface: #1E293B;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+/* ========== BOTÓN FLOTANTE ========== */
+.fab-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+}
+.fab-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 6px 15px rgba(79,70,229,0.4);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.fab-btn:active { transform: scale(0.9); }
+.fab-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.2s;
+}
+.fab-menu.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+.fab-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #e2e8f0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.fab-item:active { transform: scale(0.95); }
+
+/* ========== DETALLES DE DÍAS PASADOS ========== */
+details.dias-pasados summary {
+    background: transparent;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 800;
+    cursor: pointer;
+    list-style: none;
+}
+details.dias-pasados summary:hover {
+    background: white;
+    border-color: var(--primary-light);
+    color: var(--primary-light);
 }
 
+/* ========== MODO OSCURO COMPLETO ========== */
 body.dark-mode {
-    background-color: var(--bg-page);
-    color: #E2E8F0;
+    background-color: #0f172a;
+    color: #cbd5e1;
 }
-
-/* Ajustes de tarjetas y componentes para modo oscuro (mantén los que ya tenías, pero actualiza referencias) */
+body.dark-mode .bg-orbs {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+body.dark-mode .card,
 body.dark-mode .partido-card,
-body.dark-mode .p-mini,
 body.dark-mode .seccion-contenedor,
 body.dark-mode details.chango-seccion,
+body.dark-mode .p-mini,
 body.dark-mode .stat-card,
-body.dark-mode .curiosidad {
-    background: var(--bg-card);
-    border-color: #334155;
-    color: #E2E8F0;
+body.dark-mode .grupo-card,
+body.dark-mode .curiosidad-card {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(255,255,255,0.1);
+    color: #cbd5e1;
 }
+body.dark-mode .t-nombre,
+body.dark-mode .score,
+body.dark-mode .seccion-titulo,
+body.dark-mode h1 { color: #f8fafc; }
+body.dark-mode .m-tab.active { background: rgba(255,255,255,0.1); color: var(--accent); }
+body.dark-mode .s-tab.active { background: var(--primary-light); color: white; }
+body.dark-mode .tabla-stats th { background: rgba(0,0,0,0.3); color: #94a3b8; }
+body.dark-mode .tabla-stats td { border-bottom-color: rgba(255,255,255,0.05); }
+body.dark-mode .btn-chango { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+body.dark-mode .btn-chango.active { background: var(--primary-light); color: white; }
+body.dark-mode .historial-item { background: rgba(0,0,0,0.2); }
+body.dark-mode .historial-fecha { color: var(--accent); }
+body.dark-mode .curiosidad-card { background: rgba(0,0,0,0.3); border-color: #f59e0b; }
+body.dark-mode .fab-item { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+body.dark-mode .fab-item.btn-notif-circle { background: #f43f5e; color: white; }
 
-body.dark-mode .score {
-    background: #2D3A4A;
-    color: #E2E8F0;
-}
-
-body.dark-mode .fecha-header {
-    background: #0F172A;
-}
-
-body.dark-mode .barra-fondo {
-    background: #2D3A4A;
-}
-
-body.dark-mode .main-tabs {
-    background: #1E293B;
-}
-
-body.dark-mode .tabs-principales .m-tab.active {
-    background: var(--bg-card);
-    color: var(--secondary);
+/* ========== ANIMACIONES ========== */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 body.dark-mode .s-tab {
     border-color: #475569;
-    color: #94A3B8;
+    color: #94a3b8;
 }
-
 body.dark-mode .s-tab.active {
-    border-color: var(--secondary);
-    color: var(--secondary);
-}
-
-body.dark-mode .btn-circle {
-    background: #2D3A4A;
-    color: #E2E8F0;
-}
-
-body.dark-mode .btn-wa {
-    background: #3b82f6;
-}
-
-body.dark-mode .dark-mode-toggle {
-    background: #334155;
-    color: #ffd966;
-}
-
-body.dark-mode .btn-chango {
-    background: #2D3A4A;
-    color: #E2E8F0;
-}
-
-body.dark-mode .selector-chango .btn-chango.active {
-    background: var(--secondary);
-}
-
-/* Ajustes específicos para nuevos elementos (grupos, curiosidades) */
-body.dark-mode .grupo-card {
-    background: #1E293B;
-    border-color: #334155;
-}
-
-body.dark-mode .curiosidad-card {
-    background: #1E293B;
-    border-color: #FFA502;
-}
-
-body.dark-mode .pj-chango,
-body.dark-mode .curiosidad-detail {
-    color: #94A3B8;
-}
-
-/* ========== RESPONSIVE ADICIONAL ========== */
-@media (max-width: 600px) {
-    .tabs-principales .m-tab {
-        font-size: 0.75rem;
-        padding: 8px 4px;
-    }
-
-    .btn-circle {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-    }
-
-    .stats-grid {
-        gap: 12px;
-    }
-
-    .stat-card {
-        padding: 10px;
-        font-size: 0.8rem;
-    }
-
-    .stat-card h4 {
-        font-size: 0.9rem;
-        margin-bottom: 6px;
-    }
-
-    .rachas {
-        gap: 3px;
-    }
-
-    .racha-item {
-        width: 24px;
-        font-size: 0.7rem;
-    }
-
-    .curiosidad {
-        font-size: 0.75rem;
-        padding: 8px;
-        margin-top: 12px;
-    }
-
-    .barra-header {
-        font-size: 0.8rem;
-    }
-
-    .barra-progreso {
-        font-size: 0.65rem;
-    }
-
-    .btn-wa {
-        font-size: 0.7rem;
-        padding: 6px 12px;
-    }
-}
-
-/* ========== ANIMACIONES ========== */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Estilos para la nueva sección de grupos */
-.grupos-container {
-    margin-top: 20px;
-}
-.subtitulo-estadisticas {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 15px 0 10px;
-    color: var(--primary);
-}
-.grupos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 12px;
-}
-.grupo-card {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.grupo-header {
-    font-weight: bold;
-    font-size: 0.9rem;
-    padding-bottom: 6px;
-    margin-bottom: 6px;
-    border-bottom: 1px dashed #ccc;
-    text-align: center;
-}
-.grupo-changos {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-.chango-puntos {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
-    flex-wrap: wrap;
-}
-.badge-chango {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: bold;
+    border-color: var(--primary-light);
+    background-color: var(--primary-light);
     color: white;
-    min-width: 50px;
-    text-align: center;
-}
-.pj-chango {
-    font-size: 0.7rem;
-    color: #666;
-}
-/* Colores de los changos (igual que antes) */
-.d-Jona { background-color: var(--jona); }
-.d-David { background-color: var(--david); color: #111; }
-.d-Raúl { background-color: var(--raul); }
-.d-Sergio { background-color: var(--sergio); }
-
-/* Estilos para curiosidades en tarjetas */
-.curiosidades-container {
-    margin-top: 15px;
-}
-.curiosidades-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
-}
-.curiosidad-card {
-    background: #fef9e6;
-    border-radius: 16px;
-    padding: 12px 8px;
-    text-align: center;
-    border: 1px solid #ffd966;
-    transition: transform 0.2s;
-}
-.curiosidad-card:active {
-    transform: scale(0.98);
-}
-.curiosidad-icon {
-    font-size: 2rem;
-    margin-bottom: 6px;
-}
-.curiosidad-title {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    color: #888;
-    letter-spacing: 0.5px;
-}
-.curiosidad-value {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin: 4px 0;
-    color: var(--primary);
-}
-.curiosidad-detail {
-    font-size: 0.7rem;
-    color: #555;
-}
-
-/* Modo oscuro */
-body.dark-mode .grupo-card {
-    background: #2a2a2a;
-    border-color: #444;
-}
-body.dark-mode .curiosidad-card {
-    background: #2a2a2a;
-    border-color: #ffa502;
-}
-body.dark-mode .curiosidad-detail {
-    color: #aaa;
-}
-body.dark-mode .pj-chango {
-    color: #aaa;
 }

@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Quiniela Mundial 2026</title>
+    
     <link rel="stylesheet" href="style.css">
-    <!-- PWA manifest -->
+    
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a2540">
+    <meta name="theme-color" content="#f1f5f9">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Mundial 2026">
+    
     <link rel="apple-touch-icon" sizes="60x60" href="/icons/ios/60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/icons/ios/76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="/icons/ios/120.png">
@@ -20,15 +22,20 @@
     <link rel="apple-touch-icon" sizes="167x167" href="/icons/ios/167.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/ios/180.png">
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
 </head>
 <body>
 
+<div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
+
 <div id="cargando-overlay">
     <div class="spinner"></div>
-    <div style="font-weight: bold; color: var(--primary);">Cargando datos del Mundial 2026...</div>
+    <div class="loading-text">Cargando datos del Mundial 2026...</div>
 </div>
 
 <div id="partialLoader" class="partial-loader">
@@ -36,21 +43,25 @@
     <span>Actualizando...</span>
 </div>
 
-<h1>Mundial 2026</h1>
-<div class="subtitle">Horarios Culiacán (MST) | Actualización automática cada 1 minuto</div>
+<div class="header-container">
+    <h1>Mundial 2026</h1>
+    <div class="subtitle">Horarios Culiacán (MST) | Actualización automática cada 1 min</div>
+</div>
 
 <div class="nav-container">
     <div class="main-tabs">
         <div class="tabs-principales">
             <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
             <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
-            <button class="m-tab" id="m-mijornada" onclick="setMain('mijornada')">📅 Mi Jornada</button>
+            <button class="m-tab" id="m-mijornada" onclick="setMain('mijornada')">⏳ Mi Jornada</button>
         </div>
     </div>
+    
     <div class="sub-tabs" id="sub-calendarios">
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
         <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')">🐵 Por Chango</button>
     </div>
+    
     <div class="sub-tabs" id="sub-resultados" style="display: none;">
         <button class="s-tab active" id="s-res-grupos" onclick="setSub('res-grupos')">🎯 Grupos</button>
         <button class="s-tab" id="s-res-chango" onclick="setSub('res-chango')">📈 Por Chango</button>
@@ -58,22 +69,33 @@
 </div>
 
 <div class="contenedor-vistas">
+    
     <div id="vista-cal-general" class="vista active"></div>
+    
     <div id="vista-cal-chango" class="vista">
         <details class="chango-seccion" id="sec-Jona"><summary>🐵 Jona (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Jona"></div></details>
         <details class="chango-seccion" id="sec-David"><summary>🦍 David (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-David"></div></details>
         <details class="chango-seccion" id="sec-Raúl"><summary>🦧 Raúl (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Raúl"></div></details>
         <details class="chango-seccion" id="sec-Sergio"><summary>🐒 Sergio (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Sergio"></div></details>
     </div>
+    
     <div id="vista-res-grupos" class="vista"></div>
+    
     <div id="vista-res-chango" class="vista">
-        <div class="flex-between">
-            <h3 class="seccion-titulo" style="margin-bottom:0;">🏆 Rendimiento Global (Puntos)</h3>
-            <button class="btn-wa" onclick="compartirWhatsApp()">📱 Compartir en WhatsApp</button>
-        </div>
-        <div id="grafica-changos"></div>
+        <!-- Contenedor con fondo para Rendimiento Global -->
         <div class="seccion-contenedor">
-            <h3 class="seccion-titulo">📊 Tabla Estadística General</h3>
+            <div class="flex-between">
+                <h3 class="seccion-titulo" style="margin-bottom:0;">🏆 Rendimiento Global (Puntos)
+                <button class="btn-wa" onclick="compartirWhatsApp()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.8 5.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    Compartir
+                </button>
+                </h3>
+            </div>
+            <div id="grafica-changos"></div>
+        </div>
+        <div class="seccion-contenedor">
+            <h3 class="seccion-titulo">📊 Tabla General</h3>
             <div style="overflow-x:auto;">
                 <table class="tabla-stats">
                     <thead><tr><th style="text-align:left;">Chango</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>DG</th><th>Pts</th></tr></thead>
@@ -82,14 +104,15 @@
             </div>
         </div>
         <div class="seccion-contenedor" id="estadisticas-avanzadas">
-            <h3 class="seccion-titulo">📈 Estadísticas Avanzadas</h3>
+            <h3 class="seccion-titulo">📈 Stats Avanzadas</h3>
             <div id="stats-avanzadas-container"></div>
             <div id="curiosidades-container"></div>
         </div>
     </div>
+    
     <div id="vista-mijornada" class="vista">
         <div class="seccion-contenedor">
-            <h3 class="seccion-titulo">📅 Mi Jornada - Próximos partidos</h3>
+            <h3 class="seccion-titulo">📅 Próximos partidos</h3>
             <div class="selector-chango" id="selector-chango">
                 <button class="btn-chango" data-chango="Jona" onclick="seleccionarChango('Jona')">🐵 Jona</button>
                 <button class="btn-chango" data-chango="David" onclick="seleccionarChango('David')">🦍 David</button>
@@ -101,113 +124,11 @@
     </div>
 </div>
 
+<script src="basedatosH2H.js"></script>
+<script src="dic.js"></script>
+<script src="equiposdatos.js"></script>
+<script src="rawcalendario.js"></script>
 <script>
-    // ==================== DATOS EMBEBIDOS (para que funcione sin archivos externos) ====================
-    const baseDatosH2H = {
-        "México-Sudáfrica": [{ f: "2010", r: "México 1 - 1 Sudáfrica" }, { f: "2005", r: "México 1 - 2 Sudáfrica" }, { f: "2000", r: "México 4 - 2 Sudáfrica" }, { f: "1993", r: "México 4 - 0 Sudáfrica" }],
-        "Corea del Sur-República Checa": [{ f: "2016", r: "Corea del S. 2 - 1 Rep. Checa" }, { f: "2001", r: "Rep. Checa 5 - 0 Corea del S." }, { f: "1998", r: "Corea del S. 2 - 2 Rep. Checa" }],
-        "Canadá-Bosnia": [{ f: "2024", r: "Canadá 1 - 0 Bosnia" }],
-        "USA-Paraguay": [{ f: "2018", r: "USA 1 - 0 Paraguay" }, { f: "2016", r: "USA 1 - 0 Paraguay" }, { f: "2011", r: "USA 0 - 1 Paraguay" }, { f: "2010", r: "USA 2 - 1 Paraguay" }, { f: "2003", r: "USA 2 - 0 Paraguay" }],
-        "Haití-Escocia": [{ f: "1974", r: "Escocia 2 - 0 Haití" }],
-        "Australia-Turquía": [{ f: "2004", r: "Australia 2 - 3 Turquía" }, { f: "2004", r: "Australia 0 - 1 Turquía" }],
-        "Brasil-Marruecos": [{ f: "2023", r: "Marruecos 2 - 1 Brasil" }, { f: "1998", r: "Brasil 3 - 0 Marruecos" }, { f: "1997", r: "Brasil 2 - 0 Marruecos" }],
-        "Qatar-Suiza": [{ f: "2018", r: "Suiza 0 - 1 Qatar" }],
-        "Costa de Marfil-Ecuador": [{ f: "2011", r: "Ecuador 1 - 1 Costa de Marfil" }],
-        "Alemania-Curazao": [],
-        "Países Bajos-Japón": [{ f: "2013", r: "Países Bajos 2 - 2 Japón" }, { f: "2010", r: "Países Bajos 1 - 0 Japón" }, { f: "2009", r: "Países Bajos 3 - 0 Japón" }],
-        "Suecia-Túnez": [{ f: "2002", r: "Túnez 1 - 0 Suecia" }],
-        "Arabia S.-Uruguay": [{ f: "2018", r: "Uruguay 1 - 0 Arabia S." }, { f: "2014", r: "Arabia S. 1 - 1 Uruguay" }, { f: "2002", r: "Arabia S. 3 - 2 Uruguay" }],
-        "España-Cabo Verde": [],
-        "Irán-Nueva Zelanda": [{ f: "2003", r: "Irán 3 - 0 Nueva Zelanda" }],
-        "Bélgica-Egipto": [{ f: "2022", r: "Egipto 2 - 1 Bélgica" }, { f: "2018", r: "Bélgica 3 - 0 Egipto" }, { f: "2005", r: "Egipto 4 - 0 Bélgica" }],
-        "Francia-Senegal": [{ f: "2002", r: "Francia 0 - 1 Senegal" }],
-        "Irak-Noruega": [],
-        "Argentina-Argelia": [{ f: "2007", r: "Argentina 4 - 3 Argelia" }],
-        "Austria-Jordania": [],
-        "Ghana-Panamá": [],
-        "Inglaterra-Croacia": [{ f: "2021", r: "Inglaterra 1 - 0 Croacia" }, { f: "2018", r: "Inglaterra 2 - 1 Croacia" }, { f: "2018", r: "Croacia 0 - 0 Inglaterra" }, { f: "2018", r: "Croacia 2 - 1 Inglaterra" }, { f: "2009", r: "Inglaterra 5 - 1 Croacia" }],
-        "Portugal-RD Congo": [],
-        "Uzbekistán-Colombia": [],
-        "República Checa-Sudáfrica": [{ f: "2005", r: "Rep. Checa 0 - 2 Sudáfrica" }, { f: "2000", r: "Rep. Checa 1 - 2 Sudáfrica" }],
-        "Suiza-Bosnia": [{ f: "2016", r: "Suiza 0 - 2 Bosnia" }, { f: "2010", r: "Suiza 2 - 2 Bosnia" }],
-        "Canadá-Qatar": [{ f: "2022", r: "Canadá 2 - 0 Qatar" }],
-        "México-Corea del Sur": [{ f: "2020", r: "Corea del S. 2 - 3 México" }, { f: "2018", r: "Alemania 1 - 2 México" }, { f: "2014", r: "México 4 - 0 Corea del S." }, { f: "2006", r: "México 0 - 1 Corea del S." }, { f: "2002", r: "México 0 - 0 Corea del S." }],
-        "Brasil-Haití": [{ f: "2016", r: "Brasil 7 - 1 Haití" }, { f: "2004", r: "Haití 0 - 6 Brasil" }, { f: "1974", r: "Brasil 4 - 1 Haití" }],
-        "Escocia-Marruecos": [{ f: "1998", r: "Escocia 0 - 3 Marruecos" }],
-        "Turquía-Paraguay": [{ f: "2002", r: "Turquía 2 - 0 Paraguay" }],
-        "USA-Australia": [{ f: "2010", r: "USA 3 - 1 Australia" }],
-        "Alemania-Costa de Marfil": [{ f: "2009", r: "Alemania 2 - 2 Costa de Marfil" }],
-        "Ecuador-Curazao": [],
-        "Países Bajos-Suecia": [{ f: "2017", r: "Países Bajos 2 - 0 Suecia" }, { f: "2016", r: "Suecia 1 - 1 Países Bajos" }, { f: "2011", r: "Suecia 3 - 2 Países Bajos" }, { f: "2010", r: "Países Bajos 4 - 1 Suecia" }, { f: "2008", r: "Países Bajos 3 - 1 Suecia" }],
-        "Túnez-Japón": [{ f: "2023", r: "Japón 2 - 0 Túnez" }, { f: "2022", r: "Japón 0 - 3 Túnez" }, { f: "2015", r: "Japón 2 - 0 Túnez" }],
-        "Uruguay-Cabo Verde": [],
-        "España-Arabia S.": [{ f: "2012", r: "España 5 - 0 Arabia S." }, { f: "2010", r: "España 3 - 2 Arabia S." }, { f: "2006", r: "España 1 - 0 Arabia S." }],
-        "Bélgica-Irán": [],
-        "Nueva Zelanda-Egipto": [{ f: "2024", r: "Egipto 1 - 0 Nueva Zelanda" }],
-        "Noruega-Senegal": [{ f: "2006", r: "Noruega 2 - 1 Senegal" }],
-        "Francia-Irak": [],
-        "Argentina-Austria": [{ f: "1980", r: "Argentina 5 - 1 Austria" }],
-        "Jordania-Argelia": [],
-        "Inglaterra-Ghana": [{ f: "2011", r: "Inglaterra 1 - 1 Ghana" }],
-        "Panamá-Croacia": [],
-        "Portugal-Uzbekistán": [],
-        "Colombia-Portugal": [{ f: "2014", r: "Portugal 0 - 0 Colombia" }],
-        "RD Congo-Uzbekistán": []
-    };
-    const dic = {
-        "Mexico": "México", "South Africa": "Sudáfrica", "Korea Republic": "Corea del Sur", "Czechia": "República Checa",
-        "Canada": "Canadá", "Bosnia and Herzegovina": "Bosnia", "USA": "USA", "Paraguay": "Paraguay",
-        "Qatar": "Qatar", "Switzerland": "Suiza", "Brazil": "Brasil", "Morocco": "Marruecos",
-        "Haiti": "Haití", "Scotland": "Escocia", "Australia": "Australia", "Türkiye": "Turquía",
-        "Germany": "Alemania", "Curaçao": "Curazao", "Netherlands": "Países Bajos", "Japan": "Japón",
-        "Côte d'Ivoire": "Costa de Marfil", "Ecuador": "Ecuador", "Sweden": "Suecia", "Tunisia": "Túnez",
-        "Spain": "España", "Cabo Verde": "Cabo Verde", "Belgium": "Bélgica", "Egypt": "Egipto",
-        "Saudi Arabia": "Arabia S.", "Uruguay": "Uruguay", "IR Iran": "Irán", "New Zealand": "Nueva Zelanda",
-        "France": "Francia", "Senegal": "Senegal", "Iraq": "Irak", "Norway": "Noruega",
-        "Argentina": "Argentina", "Algeria": "Argelia", "Austria": "Austria", "Jordan": "Jordania",
-        "Portugal": "Portugal", "Congo DR": "RD Congo", "England": "Inglaterra", "Croatia": "Croacia",
-        "Ghana": "Ghana", "Panama": "Panamá", "Uzbekistan": "Uzbekistán", "Colombia": "Colombia"
-    };
-    const equiposDatos = {
-        "Uruguay": {d: "Jona", c: "uy", g: "H"}, "Túnez": {d: "Jona", c: "tn", g: "F"}, "Jordania": {d: "Jona", c: "jo", g: "J"},
-        "Australia": {d: "Jona", c: "au", g: "D"}, "Inglaterra": {d: "Jona", c: "gb-eng", g: "L"}, "Marruecos": {d: "Jona", c: "ma", g: "C"},
-        "México": {d: "Jona", c: "mx", g: "A"}, "Nueva Zelanda": {d: "Jona", c: "nz", g: "G"}, "Alemania": {d: "Jona", c: "de", g: "E"},
-        "RD Congo": {d: "Jona", c: "cd", g: "K"}, "Noruega": {d: "Jona", c: "no", g: "I"}, "Canadá": {d: "Jona", c: "ca", g: "B"},
-        "Cabo Verde": {d: "David", c: "cv", g: "H"}, "Japón": {d: "David", c: "jp", g: "F"}, "Austria": {d: "David", c: "at", g: "J"},
-        "USA": {d: "David", c: "us", g: "D"}, "Panamá": {d: "David", c: "pa", g: "L"}, "Haití": {d: "David", c: "ht", g: "C"},
-        "República Checa": {d: "David", c: "cz", g: "A"}, "Irán": {d: "David", c: "ir", g: "G"}, "Costa de Marfil": {d: "David", c: "ci", g: "E"},
-        "Portugal": {d: "David", c: "pt", g: "K"}, "Francia": {d: "David", c: "fr", g: "I"}, "Bosnia": {d: "David", c: "ba", g: "B"},
-        "España": {d: "Raúl", c: "es", g: "H"}, "Suecia": {d: "Raúl", c: "se", g: "F"}, "Argelia": {d: "Raúl", c: "dz", g: "J"},
-        "Turquía": {d: "Raúl", c: "tr", g: "D"}, "Ghana": {d: "Raúl", c: "gh", g: "L"}, "Brasil": {d: "Raúl", c: "br", g: "C"},
-        "Sudáfrica": {d: "Raúl", c: "za", g: "A"}, "Egipto": {d: "Raúl", c: "eg", g: "G"}, "Curazao": {d: "Raúl", c: "cw", g: "E"},
-        "Colombia": {d: "Raúl", c: "co", g: "K"}, "Senegal": {d: "Raúl", c: "sn", g: "I"}, "Suiza": {d: "Raúl", c: "ch", g: "B"},
-        "Arabia S.": {d: "Sergio", c: "sa", g: "H"}, "Países Bajos": {d: "Sergio", c: "nl", g: "F"}, "Argentina": {d: "Sergio", c: "ar", g: "J"},
-        "Paraguay": {d: "Sergio", c: "py", g: "D"}, "Croacia": {d: "Sergio", c: "hr", g: "L"}, "Escocia": {d: "Sergio", c: "gb-sct", g: "C"},
-        "Corea del Sur": {d: "Sergio", c: "kr", g: "A"}, "Bélgica": {d: "Sergio", c: "be", g: "G"}, "Ecuador": {d: "Sergio", c: "ec", g: "E"},
-        "Uzbekistán": {d: "Sergio", c: "uz", g: "K"}, "Irak": {d: "Sergio", c: "iq", g: "I"}, "Qatar": {d: "Sergio", c: "qa", g: "B"}
-    };
-    const rawSchedule = [
-        "11-Jun|México|Sudáfrica", "11-Jun|Corea del Sur|República Checa", "12-Jun|Canadá|Bosnia", "12-Jun|USA|Paraguay",
-        "13-Jun|Haití|Escocia", "13-Jun|Australia|Turquía", "13-Jun|Brasil|Marruecos", "13-Jun|Qatar|Suiza",
-        "14-Jun|Costa de Marfil|Ecuador", "14-Jun|Alemania|Curazao", "14-Jun|Países Bajos|Japón", "14-Jun|Suecia|Túnez",
-        "15-Jun|Arabia S.|Uruguay", "15-Jun|España|Cabo Verde", "15-Jun|Irán|Nueva Zelanda", "15-Jun|Bélgica|Egipto",
-        "16-Jun|Francia|Senegal", "16-Jun|Irak|Noruega", "16-Jun|Argentina|Argelia", "16-Jun|Austria|Jordania",
-        "17-Jun|Ghana|Panamá", "17-Jun|Inglaterra|Croacia", "17-Jun|Portugal|RD Congo", "17-Jun|Uzbekistán|Colombia",
-        "18-Jun|República Checa|Sudáfrica", "18-Jun|Suiza|Bosnia", "18-Jun|Canadá|Qatar", "18-Jun|México|Corea del Sur",
-        "19-Jun|Brasil|Haití", "19-Jun|Escocia|Marruecos", "19-Jun|Turquía|Paraguay", "19-Jun|USA|Australia",
-        "20-Jun|Alemania|Costa de Marfil", "20-Jun|Ecuador|Curazao", "20-Jun|Países Bajos|Suecia", "20-Jun|Túnez|Japón",
-        "21-Jun|Uruguay|Cabo Verde", "21-Jun|España|Arabia S.", "21-Jun|Bélgica|Irán", "21-Jun|Nueva Zelanda|Egipto",
-        "22-Jun|Noruega|Senegal", "22-Jun|Francia|Irak", "22-Jun|Argentina|Austria", "22-Jun|Jordania|Argelia",
-        "23-Jun|Inglaterra|Ghana", "23-Jun|Panamá|Croacia", "23-Jun|Portugal|Uzbekistán", "23-Jun|Colombia|RD Congo",
-        "24-Jun|Escocia|Brasil", "24-Jun|Marruecos|Haití", "24-Jun|Suiza|Canadá", "24-Jun|Bosnia|Qatar",
-        "24-Jun|República Checa|México", "24-Jun|Sudáfrica|Corea del Sur", "25-Jun|Curazao|Costa de Marfil",
-        "25-Jun|Ecuador|Alemania", "25-Jun|Japón|Suecia", "25-Jun|Túnez|Países Bajos", "25-Jun|Turquía|USA",
-        "25-Jun|Paraguay|Australia", "26-Jun|Noruega|Francia", "26-Jun|Senegal|Irak", "26-Jun|Egipto|Irán",
-        "26-Jun|Nueva Zelanda|Bélgica", "26-Jun|Cabo Verde|Arabia S.", "26-Jun|Uruguay|España", "27-Jun|Panamá|Inglaterra",
-        "27-Jun|Croacia|Ghana", "27-Jun|Argelia|Austria", "27-Jun|Jordania|Argentina", "27-Jun|Colombia|Portugal",
-        "27-Jun|RD Congo|Uzbekistán"
-    ];
-
     // ==================== LÓGICA PRINCIPAL ====================
     let resultadosEnVivo = {};
     let horariosJSON = {};
@@ -304,14 +225,14 @@
         if (Notification.permission !== 'granted') return;
         
         if (document.visibilityState === 'visible') {
-            new Notification(titulo, { body: cuerpo, icon: 'https://flagcdn.com/w40/mx.png' });
+            new Notification(titulo, { body: cuerpo, icon: 'https://flagcdn.com/w160/mx.png' });
         } else {
             if (navigator.serviceWorker && navigator.serviceWorker.ready) {
                 navigator.serviceWorker.ready.then(registration => {
                     registration.showNotification(titulo, {
                         body: cuerpo,
-                        icon: 'https://flagcdn.com/w40/mx.png',
-                        badge: 'https://flagcdn.com/w40/mx.png',
+                        icon: 'https://flagcdn.com/w160/mx.png',
+                        badge: 'https://flagcdn.com/w160/mx.png',
                         vibrate: [200, 100, 200]
                     });
                 }).catch(err => console.error('Error con SW:', err));
@@ -626,7 +547,7 @@
         } else if (statusObj.status === 'FINISHED') {
             return `<div class="status-container"><span class="badge-estado b-fin">✅ Finalizado</span></div>`;
         }
-        return '<div class="status-container"></div>';
+        return '';
     }
 
     function esFechaPasada(fechaObj) {
@@ -647,14 +568,36 @@
         return new Date(fechaISO).toLocaleDateString('es-MX', { day:'numeric', month:'short', timeZone:'America/Mazatlan' }).replace('.','');
     }
 
+    function toggleHistorial(t1, t2) {
+        const panel = document.getElementById(`h2h-${t1}-${t2}`);
+        if (panel.style.display === "none") {
+            panel.style.display = "block";
+        } else {
+            panel.style.display = "none";
+        }
+    }
+
     function obtenerHtmlHistorial(t1, t2) {
         let key = `${t1}-${t2}`;
         let matches = baseDatosH2H[key];
         if (!matches) { key = `${t2}-${t1}`; matches = baseDatosH2H[key]; }
-        let html = `<div class="historial-panel" onclick="event.stopPropagation();"><div class="h-titulo">Historial Reciente (H2H)</div>`;
-        if (!matches || matches.length === 0) html += `<div class="h-vacio">No hay enfrentamientos previos registrados</div>`;
-        else matches.slice(0,5).forEach(m => html += `<div class="h-match"><span class="h-fecha">📅 ${m.f}</span><span class="h-teams">${m.r}</span></div>`);
-        html += `</div>`;
+
+        // Cambiamos a 'h2h-inline-panel' y lo ponemos oculto por defecto
+        let html = `<div class="h2h-inline-panel" id="h2h-${t1}-${t2}" style="display: none;">
+                        <div class="h2h-titulo">⚔️ Historial Reciente (H2H)</div>
+                        <div class="h2h-list">`;
+
+        if (!matches || matches.length === 0) {
+            html += `<div class="historial-item"><p class="historial-texto" style="text-align:center;">No hay enfrentamientos previos</p></div>`;
+        } else {
+            matches.slice(0,5).forEach(m => {
+                html += `<div class="historial-item" style="padding: 10px 12px;">
+                            <div class="historial-fecha">📅 ${m.f}</div>
+                            <p class="historial-texto">${m.r}</p>
+                        </div>`;
+            });
+        }
+        html += `   </div></div>`;
         return html;
     }
 
@@ -869,9 +812,9 @@
             html += `<div class="p-mini" onclick="alternarTarjetaPartido(this)">
                 <div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div>
                 <div class="p-mini-equipos">
-                    <div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c1 : pt.c2}.png" style="width:28px;"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${changoSeleccionado}" style="font-size:0.65rem;">Tu equipo</span></div>
+                    <div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c1 : pt.c2}.png"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${changoSeleccionado}" style="font-size:0.65rem;">Tu equipo</span></div>
                     <div>${scoreCenter}${estado}</div>
-                    <div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c2 : pt.c1}.png" style="width:28px;"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div>
+                    <div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c2 : pt.c1}.png"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div>
                 </div>
                 ${h2hHtml}
             </div>`;
@@ -981,7 +924,7 @@
                 else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) { clsAd = 'proximo-partido'; encontroProximo = true; }
                 let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w40/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w40/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${h2hHtml}</div>`;
+                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${h2hHtml}</div>`;
             }
             gridHTML += '</div>';
             let header = `<div class="fecha-header">🗓️ ${dia} 2026</div>`;
@@ -1002,7 +945,7 @@
                 let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` : `<span style="color:#aaa; font-weight:bold;">VS</span>`;
                 let clasePasado = pt.finalizado ? 'partido-pasado' : '';
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c1 : pt.c2}.png" style="width:28px;"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div>${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w20/${esLocal ? pt.c2 : pt.c1}.png" style="width:28px;"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
+                html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c1 : pt.c2}.png"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div>${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c2 : pt.c1}.png"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
             }
             div.innerHTML = html;
         }
@@ -1015,7 +958,7 @@
             htmlGrupos += `<div class="seccion-contenedor"><h3 class="seccion-titulo">🎯 Grupo ${g}</h3><div style="overflow-x:auto;"><table class="tabla-stats"><thead><tr><th style="text-align:left;">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>DG</th><th>Pts</th></tr></thead><tbody>`;
             gruposStats[g].forEach((eq, i) => {
                 let dg = eq.gf - eq.gc;
-                htmlGrupos += `<tr><td class="td-izq"><span style="color:#aaa;">${i+1}</span><img src="https://flagcdn.com/w20/${eq.bandera}.png" style="width:20px;"><div>${eq.equipo}<span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; margin-left:6px;">${eq.dueño}</span></div></td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pe}</td><td>${eq.pp}</td><td>${eq.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${eq.pts}</td></tr>`;
+                htmlGrupos += `<tr><td class="td-izq"><span style="color:#aaa;">${i+1}</span><img src="https://flagcdn.com/w160/${eq.bandera}.png"><div>${eq.equipo}<span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; margin-left:6px;">${eq.dueño}</span></div></td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pe}</td><td>${eq.pp}</td><td>${eq.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${eq.pts}</td></tr>`;
             });
             htmlGrupos += `</tbody></table></div></div>`;
         }
