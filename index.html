@@ -1104,6 +1104,68 @@
             });
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
         document.querySelector('.btn-chango')?.classList.add('active');
+
+        // Detectar preferencia del sistema y aplicar modo oscuro si no hay preferencia guardada
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedDark = localStorage.getItem('darkMode');
+
+        if (savedDark !== null) {
+        if (savedDark === 'true') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+        } else if (prefersDark) {
+        document.body.classList.add('dark-mode');
+        }
+
+        // Opcional: escuchar cambios en la preferencia del sistema
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        // Solo si el usuario no ha elegido manualmente (sin localStorage)
+        if (localStorage.getItem('darkMode') === null) {
+            if (e.matches) {
+            document.body.classList.add('dark-mode');
+            } else {
+            document.body.classList.remove('dark-mode');
+            }
+        }
+        });
+
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        const pullToRefreshThreshold = 80;
+
+        document.body.addEventListener('touchstart', (e) => {
+        if (window.scrollY === 0) {
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+        }
+        });
+
+        document.body.addEventListener('touchmove', (e) => {
+        if (window.scrollY === 0 && touchStartY > 0) {
+            const diff = e.touches[0].clientY - touchStartY;
+            if (diff > pullToRefreshThreshold) {
+            // Evita el scroll mientras se tira
+            e.preventDefault();
+            }
+        }
+        });
+
+        document.body.addEventListener('touchend', (e) => {
+        if (window.scrollY === 0 && touchStartY > 0) {
+            const diff = e.changedTouches[0].clientY - touchStartY;
+            if (diff > pullToRefreshThreshold && (Date.now() - touchStartTime) < 1000) {
+            // Ejecutar actualización
+            actualizarResultados(true);
+            // Pequeña vibración si soporta
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(50);
+            }
+            }
+        }
+        touchStartY = 0;
+        });
     };
     function toggleFabMenu() {
         const menu = document.getElementById('fabMenu');
