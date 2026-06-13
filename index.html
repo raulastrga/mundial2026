@@ -232,21 +232,25 @@
 
     // Registrar Service Worker
     let serviceWorkerRegistration = null;
-    if ('serviceWorker' in navigator) {
-        try {
-            // Registra el SW usando una ruta relativa a tu repositorio
-            const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
-            console.log('Service Worker registrado:', registration);
-            serviceWorkerRegistration = registration;
-        } catch (err) {
-            console.error('Error al registrar SW:', err);
+
+    // Función async para registrar el Service Worker
+    async function registrarServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            try {
+                const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
+                console.log('Service Worker registrado:', registration);
+                serviceWorkerRegistration = registration;
+            } catch (err) {
+                console.error('Error al registrar SW:', err);
+            }
         }
     }
 
-    // Función para solicitar permiso y obtener token FCM
+    // Llamar a la función de registro (esto es seguro, no necesita await aquí)
+    registrarServiceWorker();
+
     async function solicitarPermisoFCM() {
         try {
-            // Verificar si el navegador soporta notificaciones
             if (!('Notification' in window)) {
                 alert('Tu navegador no soporta notificaciones push.');
                 return;
@@ -257,11 +261,23 @@
                 alert('Necesitas permitir las notificaciones para recibir alertas');
                 return;
             }
+            
+            // Esperar a que el Service Worker esté registrado (si aún no lo está)
+            if (!serviceWorkerRegistration) {
+                // Si no hay registro, esperar un poco (por si la función async aún no terminó)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                if (!serviceWorkerRegistration) {
+                    alert('El Service Worker no está listo. Intenta de nuevo en unos segundos.');
+                    return;
+                }
+            }
+            
             const vapidKey = 'BJYFgBfPbfuj6CIrLfgoSACHMTMHamp2X15xWiBVugFh0E5iP7IDqiNpT4U6nrJ7i4prC0haHd54Dn0mtxN0j40';
             const token = await messaging.getToken({ 
                 vapidKey: vapidKey,
                 serviceWorkerRegistration: serviceWorkerRegistration 
             });
+            
             if (token) {
                 console.log('Token FCM:', token);
                 localStorage.setItem('fcm_token', token);
@@ -826,11 +842,12 @@
         }
     }
 
-    window.onload = () => {
+    window.onload = async () => {
         if (!('Notification' in window)) {
             const notifBtn = document.querySelector('.fab-item.btn-notif-circle');
             if (notifBtn) notifBtn.style.display = 'none';
         }
+        await registrarServiceWorker();
         actualizarResultados()
             .catch(err => console.error("Error en carga inicial:", err))
             .finally(() => {
