@@ -230,12 +230,18 @@
     // Función para solicitar permiso y obtener token FCM
     async function solicitarPermisoFCM() {
         try {
+            // Verificar si el navegador soporta notificaciones
+            if (!('Notification' in window)) {
+                alert('Tu navegador no soporta notificaciones push.');
+                return;
+            }
+            
             const permission = await Notification.requestPermission();
             if (permission !== 'granted') {
                 alert('Necesitas permitir las notificaciones para recibir alertas');
                 return;
             }
-            const vapidKey = 'BJYFgBfPbfuj6CIrLfgoSACHMTMHamp2X15xWiBVugFh0E5iP7IDqiNpT4U6nrJ7i4prC0haHd54Dn0mtxN0j40'; // 🔴 Reemplazar con tu clave VAPID
+            const vapidKey = 'TU_VAPID_KEY'; // Reemplazar con tu clave
             const token = await messaging.getToken({ vapidKey });
             if (token) {
                 console.log('Token FCM:', token);
@@ -252,21 +258,26 @@
 
     // Función para mostrar notificación local (cuando la página está abierta)
     function enviarNotificacionLocal(titulo, cuerpo, tipo = 'general') {
+        // Verificar si el navegador soporta notificaciones
+        if (!('Notification' in window)) return;
         if (Notification.permission !== 'granted') return;
         
-        // Si la página está visible, usa Notification directamente (más fiable)
         if (document.visibilityState === 'visible') {
             new Notification(titulo, { body: cuerpo, icon: 'https://flagcdn.com/w40/mx.png' });
         } else {
-            // Si está en segundo plano, usa el Service Worker
-            navigator.serviceWorker.ready.then(registration => {
-                registration.showNotification(titulo, {
-                    body: cuerpo,
-                    icon: 'https://flagcdn.com/w40/mx.png',
-                    badge: 'https://flagcdn.com/w40/mx.png',
-                    vibrate: [200, 100, 200]
-                });
-            }).catch(err => console.error('Error con SW:', err));
+            if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(titulo, {
+                        body: cuerpo,
+                        icon: 'https://flagcdn.com/w40/mx.png',
+                        badge: 'https://flagcdn.com/w40/mx.png',
+                        vibrate: [200, 100, 200]
+                    });
+                }).catch(err => console.error('Error con SW:', err));
+            } else {
+                // Fallback a notificación normal
+                new Notification(titulo, { body: cuerpo });
+            }
         }
     }
 
@@ -797,6 +808,10 @@
     }
 
     window.onload = () => {
+        if (!('Notification' in window)) {
+            const notifBtn = document.querySelector('.fab-item.btn-notif-circle');
+            if (notifBtn) notifBtn.style.display = 'none';
+        }
         actualizarResultados()
             .catch(err => console.error("Error en carga inicial:", err))
             .finally(() => {
