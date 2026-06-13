@@ -231,16 +231,13 @@
     const messaging = firebase.messaging();
 
     // Registrar Service Worker
-    let serviceWorkerRegistration = null;
     if ('serviceWorker' in navigator) {
-        try {
-            // Registra el SW usando una ruta relativa a tu repositorio
-            const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
-            console.log('Service Worker registrado:', registration);
-            serviceWorkerRegistration = registration;
-        } catch (err) {
-            console.error('Error al registrar SW:', err);
-        }
+        navigator.serviceWorker.register('./firebase-messaging-sw.js')
+            .then((registration) => {
+                console.log('Service Worker registrado:', registration);
+                // No es necesario llamar a messaging.useServiceWorker
+            })
+            .catch((err) => console.error('Error al registrar SW:', err));
     }
 
     // Función para solicitar permiso y obtener token FCM
@@ -257,11 +254,8 @@
                 alert('Necesitas permitir las notificaciones para recibir alertas');
                 return;
             }
-            const vapidKey = 'BJYFgBfPbfuj6CIrLfgoSACHMTMHamp2X15xWiBVugFh0E5iP7IDqiNpT4U6nrJ7i4prC0haHd54Dn0mtxN0j40'; // Reemplazar con tu clave
-            const token = await messaging.getToken({ 
-                vapidKey: vapidKey,
-                serviceWorkerRegistration: serviceWorkerRegistration 
-            });
+            const vapidKey = 'BJYFgBfPbfuj6CIrLfgoSACHMTMHamp2X15xWiBVugFh0E5iP7IDqiNpT4U6nrJ7i4prC0haHd54Dn0mtxN0j40';
+            const token = await messaging.getToken({ vapidKey });
             if (token) {
                 console.log('Token FCM:', token);
                 localStorage.setItem('fcm_token', token);
