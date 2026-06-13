@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Quiniela Mundial 2026</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
 </head>
 <body>
 
@@ -29,7 +32,8 @@
         <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
         <button class="m-tab" id="m-mijornada" onclick="setMain('mijornada')">📅 Mi Jornada</button>
         <button class="btn-actualizar" onclick="actualizarResultados(true)" title="Actualizar">🔄</button>
-        <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()">🌙</button>
+        <button class="btn-notif" onclick="solicitarPermisoFCM()">🔔 Activar Notif</button>
+        <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()">🌙</button>        
     </div>
     <div class="sub-tabs" id="sub-calendarios">
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
@@ -198,6 +202,75 @@
     let intervalAutoActualizar;
     let partidosPorChangoDetalle = {};
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyDwm3uLITtCHYmphoDBUgeNqCjU3yQsJ7A",
+        authDomain: "mundial2026-97d95.firebaseapp.com",
+        projectId: "mundial2026-97d95",
+        storageBucket: "mundial2026-97d95.firebasestorage.app",
+        messagingSenderId: "14676493794",
+        appId: "1:14676493794:web:edc237cefb306eb3f2e5bb",
+        measurementId: "G-DV2RNSV716"
+    };
+
+    // Inicializar Firebase (solo si no está ya inicializado)
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const messaging = firebase.messaging();
+
+    // Registrar Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+            .then((registration) => {
+                console.log('Service Worker registrado:', registration);
+                // No es necesario llamar a messaging.useServiceWorker
+            })
+            .catch((err) => console.error('Error al registrar SW:', err));
+    }
+
+    // Función para solicitar permiso y obtener token FCM
+    async function solicitarPermisoFCM() {
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                alert('Necesitas permitir las notificaciones para recibir alertas');
+                return;
+            }
+            const vapidKey = 'BJYFgBfPbfuj6CIrLfgoSACHMTMHamp2X15xWiBVugFh0E5iP7IDqiNpT4U6nrJ7i4prC0haHd54Dn0mtxN0j40'; // 🔴 Reemplazar con tu clave VAPID
+            const token = await messaging.getToken({ vapidKey });
+            if (token) {
+                console.log('Token FCM:', token);
+                localStorage.setItem('fcm_token', token);
+                alert('✅ Notificaciones push activadas correctamente');
+            } else {
+                alert('No se pudo obtener el token. Revisa la configuración.');
+            }
+        } catch (error) {
+            console.error('Error al obtener token FCM:', error);
+            alert('Error al activar notificaciones: ' + error.message);
+        }
+    }
+
+    // Función para mostrar notificación local (cuando la página está abierta)
+    function enviarNotificacionLocal(titulo, cuerpo, tipo = 'general') {
+        if (Notification.permission !== 'granted') return;
+        
+        // Si la página está visible, usa Notification directamente (más fiable)
+        if (document.visibilityState === 'visible') {
+            new Notification(titulo, { body: cuerpo, icon: 'https://flagcdn.com/w40/mx.png' });
+        } else {
+            // Si está en segundo plano, usa el Service Worker
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification(titulo, {
+                    body: cuerpo,
+                    icon: 'https://flagcdn.com/w40/mx.png',
+                    badge: 'https://flagcdn.com/w40/mx.png',
+                    vibrate: [200, 100, 200]
+                });
+            }).catch(err => console.error('Error con SW:', err));
+        }
+    }
+
     // Dark mode
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
@@ -225,7 +298,10 @@
         return nombreIngles;
     }
 
-    async function actualizarResultados(manual = false) {
+        async function actualizarResultados(manual = false) {
+        // Guardar estado anterior para comparar
+        const estadoAnterior = JSON.parse(JSON.stringify(resultadosEnVivo));
+        
         if (manual) {
             document.getElementById('cargando-overlay').style.display = 'flex';
         } else {
@@ -235,8 +311,8 @@
             const response = await fetch("https://play.fifa.com/json/fantasy/rounds.json");
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
-            resultadosEnVivo = {};
-            horariosJSON = {};
+            const nuevosResultados = {};
+            const nuevosHorarios = {};
             for (const ronda of data) {
                 if (!ronda.tournaments || !Array.isArray(ronda.tournaments)) continue;
                 for (const m of ronda.tournaments) {
@@ -247,25 +323,57 @@
                     const isComplete = ['COMPLETE', 'FINISHED', 'PLAYED'].includes(status);
                     const isLive = ['PLAYING', 'LIVE', 'IN_PROGRESS'].includes(status);
                     const key = `${local}-${visita}`;
-                    if (m.date) horariosJSON[key] = new Date(m.date);
+                    if (m.date) nuevosHorarios[key] = new Date(m.date);
                     if (isComplete) {
-                        resultadosEnVivo[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'FINISHED', minute: null, isLive: false };
+                        nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'FINISHED', minute: null, isLive: false };
                     } else if (isLive && m.homeScore !== null && m.awayScore !== null) {
-                        resultadosEnVivo[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'LIVE', minute: m.minutes || 0, isLive: true };
+                        nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'LIVE', minute: m.minutes || 0, isLive: true };
                     } else {
-                        resultadosEnVivo[key] = { status: 'SCHEDULED', isLive: false };
+                        nuevosResultados[key] = { status: 'SCHEDULED', isLive: false };
                     }
                 }
             }
+            
+            // Detectar cambios y enviar notificaciones
+            for (const key in nuevosResultados) {
+                const anterior = estadoAnterior[key];
+                const actual = nuevosResultados[key];
+                if (anterior && actual) {
+                    // Gol: cambio en el marcador (solo si ambos tienen goles)
+                    if (anterior.g1 !== undefined && actual.g1 !== undefined && 
+                        (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
+                        const [t1, t2] = key.split('-');
+                        const nuevoGol = actual.g1 > (anterior.g1 || 0) ? t1 : 
+                                         (actual.g2 > (anterior.g2 || 0) ? t2 : null);
+                        if (nuevoGol) {
+                            const mensaje = `⚽ ${nuevoGol} anotó en ${t1} vs ${t2}`;
+                            enviarNotificacionLocal('⚽ ¡GOL!', mensaje, 'gol');
+                        }
+                    }
+                    // Inicio de partido en vivo
+                    if (anterior.status !== 'LIVE' && actual.status === 'LIVE') {
+                        const [t1, t2] = key.split('-');
+                        const mensaje = `🎺 El partido ${t1} vs ${t2} ha comenzado`;
+                        enviarNotificacionLocal('🎺 Partido en vivo', mensaje, 'inicio');
+                    }
+                    // Finalización
+                    if (anterior.status !== 'FINISHED' && actual.status === 'FINISHED') {
+                        const [t1, t2] = key.split('-');
+                        const mensaje = `🏁 Finalizado: ${t1} ${actual.g1} - ${actual.g2} ${t2}`;
+                        enviarNotificacionLocal('🏁 Partido finalizado', mensaje, 'fin');
+                    }
+                }
+            }
+            
+            resultadosEnVivo = nuevosResultados;
+            horariosJSON = nuevosHorarios;
             construirInterfaz();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
             if (!manual) alert("No se pudo actualizar. Revisa tu conexión.");
         } finally {
-            // Ocultar siempre el preloader principal si existe
             const overlay = document.getElementById('cargando-overlay');
             if (overlay) overlay.style.display = 'none';
-            // Ocultar loader parcial
             mostrarLoaderParcial(false);
         }
     }

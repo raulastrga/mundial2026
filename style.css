@@ -339,3 +339,15 @@ body.dark-mode .selector-chango .btn-chango.active {
         font-size: 0.65rem;
     }
 }
+
+.btn-notif {
+  background-color: #ff4a5a;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 0.8rem;
+}
