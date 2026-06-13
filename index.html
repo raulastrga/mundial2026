@@ -787,34 +787,50 @@
         filas.forEach((row, idx) => {
             const celdas = row.querySelectorAll('td');
             if (celdas.length >= 7) {
-                const nombre = celdas[0].innerText.trim();
+                // La primera celda contiene algo como "1 Jona" (número y nombre)
+                const primeraCelda = celdas[0].innerText.trim();
+                // Extraer número (primeros dígitos) y el resto como nombre
+                const numeroMatch = primeraCelda.match(/^(\d+)/);
+                const posicion = numeroMatch ? numeroMatch[1] : (idx+1).toString();
+                const nombre = primeraCelda.replace(/^\d+\s*/, '').trim();
+                
                 const pts = celdas[7].innerText.trim();
                 const pj = celdas[1].innerText.trim();
                 const gf = celdas[5].innerText.trim();
                 const dg = celdas[6].innerText.trim();
-                texto += `${idx+1}. ${nombre} → ${pts} pts (PJ:${pj} GF:${gf} DG:${dg})\n`;
+                
+                texto += `${posicion}. ${nombre} → ${pts} pts (PJ:${pj} GF:${gf} DG:${dg})\n`;
             }
         });
         
-        // Agregar estadísticas divertidas
-        const curiosidadesDiv = document.getElementById('curiosidades-container');
-        if (curiosidadesDiv) {
-            // Obtener el texto plano de las curiosidades
-            let curiosidadesTexto = curiosidadesDiv.innerText;
-            // Eliminar el título "🎲 Estadísticas divertidas:" y espacios extras
-            curiosidadesTexto = curiosidadesTexto.replace('🎲 Estadísticas divertidas:', '').trim();
-            // Dividir por líneas y tomar solo las relevantes (máximo 6)
-            let lineas = curiosidadesTexto.split('\n').filter(l => l.trim().length > 0);
-            if (lineas.length > 0) {
-                texto += `\n✨ *ESTADÍSTICAS DESTACADAS*\n`;
-                lineas.slice(0, 6).forEach(linea => {
-                    texto += `• ${linea.trim()}\n`;
-                });
+        // Obtener estadísticas divertidas desde las tarjetas (estructura actual)
+        const curiosidadesCards = document.querySelectorAll('.curiosidad-card');
+        if (curiosidadesCards.length > 0) {
+            texto += `\n✨ *ESTADÍSTICAS DESTACADAS*\n`;
+            curiosidadesCards.forEach(card => {
+                const icono = card.querySelector('.curiosidad-icon')?.innerText || '';
+                const titulo = card.querySelector('.curiosidad-title')?.innerText || '';
+                const valor = card.querySelector('.curiosidad-value')?.innerText || '';
+                const detalle = card.querySelector('.curiosidad-detail')?.innerText || '';
+                // Formato: "⚽ Máximo goleador: David (6 goles)"
+                texto += `• ${icono} ${titulo}: ${valor} (${detalle})\n`;
+            });
+        } else {
+            // Fallback: si no encuentra las tarjetas, usa el texto plano antiguo (por si acaso)
+            const curiosidadesDiv = document.getElementById('curiosidades-container');
+            if (curiosidadesDiv) {
+                let rawText = curiosidadesDiv.innerText.replace('🎲 Estadísticas divertidas:', '').trim();
+                let lineas = rawText.split('\n').filter(l => l.trim().length > 0);
+                if (lineas.length) {
+                    texto += `\n✨ *ESTADÍSTICAS DESTACADAS*\n`;
+                    lineas.slice(0, 8).forEach(linea => {
+                        texto += `• ${linea.trim()}\n`;
+                    });
+                }
             }
         }
         
         texto += `\n#Mundial2026 #Quiniela`;
-        // Abrir WhatsApp con el texto predefinido
         window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
     }
 
