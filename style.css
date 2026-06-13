@@ -705,9 +705,14 @@ details.chango-seccion[open] summary {
 /* ========== ESTADÍSTICAS AVANZADAS ========== */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;  /* Por defecto una columna */
     gap: 15px;
     margin-top: 10px;
+}
+@media (min-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
 }
 
 .stat-card {
@@ -715,6 +720,9 @@ details.chango-seccion[open] summary {
     border-radius: 12px;
     padding: 12px;
     border-left: 4px solid var(--secondary);
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: auto; /* Si el contenido es muy largo, permite scroll horizontal */
 }
 
 .stat-card h4 {
@@ -728,6 +736,7 @@ details.chango-seccion[open] summary {
     gap: 4px;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-start; /* Alinear a la izquierda */
 }
 
 .racha-item {
