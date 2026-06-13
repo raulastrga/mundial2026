@@ -98,7 +98,6 @@ h1 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Segunda fila: botones de acción circulares */
 /* ========== BOTÓN FLOTANTE CON MENÚ DESPLEGABLE ========== */
 .fab-container {
     position: fixed;
@@ -204,52 +203,6 @@ body.dark-mode .fab-item {
     }
 }
 
-.acciones {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-}
-
-.btn-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: white;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.btn-circle:hover {
-    transform: scale(1.05);
-    background: #f0f0f0;
-}
-
-.btn-circle:active {
-    transform: scale(0.95);
-}
-
-/* Botón de notificaciones (color distintivo) */
-.btn-notif-circle {
-    background: #ff4a5a;
-    color: white;
-}
-
-.btn-notif-circle:hover {
-    background: #e03e4e;
-}
-
-/* Dark mode toggle (modo oscuro) - se usa también como .dark-mode-toggle */
-.dark-mode-toggle {
-    background: var(--primary);
-    color: white;
-}
-
 /* ========== SUB-TABS ========== */
 .sub-tabs {
     display: flex;
@@ -276,13 +229,6 @@ body.dark-mode .fab-item {
     border-color: var(--secondary);
     background-color: rgba(0, 112, 243, 0.1);
     color: var(--secondary);
-}
-
-/* Botón actualizar (se mantiene por compatibilidad, pero ahora es circular) */
-.btn-actualizar {
-    /* Los estilos ya están cubiertos por .btn-circle, pero si quieres mantenerlo específico: */
-    background: var(--secondary);
-    color: white;
 }
 
 /* ========== CALENDARIO Y TARJETAS DE PARTIDOS ========== */
@@ -702,16 +648,21 @@ details.chango-seccion[open] summary {
     font-weight: bold;
 }
 
+/* ========== ESTADÍSTICAS AVANZADAS (CORREGIDO) ========== */
 /* ========== ESTADÍSTICAS AVANZADAS ========== */
 .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr;  /* Por defecto una columna */
+    display: flex;
+    flex-direction: column;
     gap: 15px;
-    margin-top: 10px;
 }
-@media (min-width: 768px) {
+@media (min-width: 800px) {
     .stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .stat-card {
+        flex: 0 0 calc(50% - 15px);
     }
 }
 
@@ -722,7 +673,7 @@ details.chango-seccion[open] summary {
     border-left: 4px solid var(--secondary);
     box-sizing: border-box;
     width: 100%;
-    overflow-x: auto; /* Si el contenido es muy largo, permite scroll horizontal */
+    word-break: break-word;
 }
 
 .stat-card h4 {
@@ -736,7 +687,7 @@ details.chango-seccion[open] summary {
     gap: 4px;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start; /* Alinear a la izquierda */
+    justify-content: flex-start;
 }
 
 .racha-item {
@@ -746,6 +697,7 @@ details.chango-seccion[open] summary {
     font-weight: bold;
     border-radius: 20px;
     background: #eee;
+    flex-shrink: 0;
 }
 
 .racha-win {
@@ -967,9 +919,8 @@ body.dark-mode .selector-chango .btn-chango.active {
     background: var(--secondary);
 }
 
-/* ========== RESPONSIVE ========== */
+/* ========== RESPONSIVE ADICIONAL ========== */
 @media (max-width: 600px) {
-    /* Ajustes para móviles pequeños */
     .tabs-principales .m-tab {
         font-size: 0.75rem;
         padding: 8px 4px;
@@ -982,7 +933,6 @@ body.dark-mode .selector-chango .btn-chango.active {
     }
 
     .stats-grid {
-        grid-template-columns: 1fr;
         gap: 12px;
     }
 
@@ -1039,4 +989,123 @@ body.dark-mode .selector-chango .btn-chango.active {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos para la nueva sección de grupos */
+.grupos-container {
+    margin-top: 20px;
+}
+.subtitulo-estadisticas {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 15px 0 10px;
+    color: var(--primary);
+}
+.grupos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+}
+.grupo-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.grupo-header {
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+    border-bottom: 1px dashed #ccc;
+    text-align: center;
+}
+.grupo-changos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.chango-puntos {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+}
+.badge-chango {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+}
+.pj-chango {
+    font-size: 0.7rem;
+    color: #666;
+}
+/* Colores de los changos (igual que antes) */
+.d-Jona { background-color: var(--jona); }
+.d-David { background-color: var(--david); color: #111; }
+.d-Raúl { background-color: var(--raul); }
+.d-Sergio { background-color: var(--sergio); }
+
+/* Estilos para curiosidades en tarjetas */
+.curiosidades-container {
+    margin-top: 15px;
+}
+.curiosidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+}
+.curiosidad-card {
+    background: #fef9e6;
+    border-radius: 16px;
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid #ffd966;
+    transition: transform 0.2s;
+}
+.curiosidad-card:active {
+    transform: scale(0.98);
+}
+.curiosidad-icon {
+    font-size: 2rem;
+    margin-bottom: 6px;
+}
+.curiosidad-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 0.5px;
+}
+.curiosidad-value {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 4px 0;
+    color: var(--primary);
+}
+.curiosidad-detail {
+    font-size: 0.7rem;
+    color: #555;
+}
+
+/* Modo oscuro */
+body.dark-mode .grupo-card {
+    background: #2a2a2a;
+    border-color: #444;
+}
+body.dark-mode .curiosidad-card {
+    background: #2a2a2a;
+    border-color: #ffa502;
+}
+body.dark-mode .curiosidad-detail {
+    color: #aaa;
+}
+body.dark-mode .pj-chango {
+    color: #aaa;
 }

@@ -698,7 +698,8 @@
     }
 
     function generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats) {
-        let html = '<div class="stats-grid">';
+        // Primero, las tarjetas individuales de cada chango (ya estaban bien)
+        let html = '<div class="stats-grid changos-grid">';
         const changos = Object.values(estadisticasChangos).sort((a,b)=>b.pts - a.pts);
         for (let c of changos) {
             const racha = avanzadas.rachas[c.nombre] || [];
@@ -707,9 +708,11 @@
             const mayorC = avanzadas.mayorGoleadaContra[c.nombre];
             html += `<div class="stat-card"><h4>🐒 ${c.nombre}</h4><div><strong>Racha:</strong> ${rachaHtml}</div><div><strong>Mayor goleada a favor:</strong> ${mayorF.dif>0 ? `${mayorF.dif} goles vs ${mayorF.rival}` : 'Ninguna'}</div><div><strong>Mayor goleada en contra:</strong> ${mayorC.dif>0 ? `${mayorC.dif} goles vs ${mayorC.rival}` : 'Ninguna'}</div></div>`;
         }
-        let grupoHtml = `<div class="stat-card" style="grid-column: span 2;"><h4>📊 Rendimiento por Grupo</h4><div style="font-size:0.75rem;">`;
+        html += '</div>'; // cierra changos-grid
+
+        // Nueva sección: Rendimiento por Grupo (con tarjetas)
+        html += '<div class="grupos-container"><h4 class="subtitulo-estadisticas">📊 Rendimiento por Grupo</h4><div class="grupos-grid">';
         for (let g in gruposStats) {
-            grupoHtml += `<strong>Grupo ${g}:</strong> `;
             const puntosPorChango = {};
             for (let eq of gruposStats[g]) {
                 const dueño = eq.dueño;
@@ -717,10 +720,17 @@
                 puntosPorChango[dueño].pts += eq.pts;
                 puntosPorChango[dueño].pj += eq.pj;
             }
-            grupoHtml += Object.entries(puntosPorChango).map(([ch, d]) => `${ch} ${d.pts}/${d.pj} pts`).join(' | ') + '<br>';
+            // Ordenar changos por puntos descendente para mostrar mejor
+            const changosGrupo = Object.keys(puntosPorChango).sort((a,b) => puntosPorChango[b].pts - puntosPorChango[a].pts);
+            html += `<div class="grupo-card"><div class="grupo-header">Grupo ${g}</div><div class="grupo-changos">`;
+            for (let ch of changosGrupo) {
+                const datos = puntosPorChango[ch];
+                const colorClass = `d-${ch}`; // clase CSS para color de fondo
+                html += `<div class="chango-puntos"><span class="badge-chango ${colorClass}">${ch}</span> <strong>${datos.pts}</strong> pts <span class="pj-chango">(${datos.pj} PJ)</span></div>`;
+            }
+            html += `</div></div>`;
         }
-        grupoHtml += `</div></div>`;
-        html += grupoHtml + '</div>';
+        html += `</div></div>`;
         return html;
     }
 
@@ -731,39 +741,80 @@
         const maxEmpates = changos.reduce((max, c) => c.pe > max.pe ? c : max, { pe: -1 });
         const mejorDG = changos.reduce((max, c) => (c.gf-c.gc) > (max.gf-max.gc) ? c : max, { gf:0, gc:0 });
         const peorDG = changos.reduce((min, c) => (c.gf-c.gc) < (min.gf-min.gc) ? c : min, { gf:0, gc:0 });
-        let curiosidades = [
-            `⚽ Máximo goleador: **${maxGoles.nombre}** con ${maxGoles.gf} goles.`,
-            `🛡️ Mejor defensa: **${minGolesRecibidos.nombre}** (${minGolesRecibidos.gc} goles en contra).`,
-            `🤝 Rey del empate: **${maxEmpates.nombre}** con ${maxEmpates.pe} empates.`,
-            `📈 Mejor DG: **${mejorDG.nombre}** (${mejorDG.gf-mejorDG.gc}).`,
-            `📉 Peor DG: **${peorDG.nombre}** (${peorDG.gf-peorDG.gc}).`
+        
+        // Array de curiosidades con icono, título y descripción
+        const curiosidadesList = [
+            { icon: '⚽', title: 'Máximo goleador', value: maxGoles.nombre, detail: `${maxGoles.gf} goles` },
+            { icon: '🛡️', title: 'Mejor defensa', value: minGolesRecibidos.nombre, detail: `${minGolesRecibidos.gc} goles en contra` },
+            { icon: '🤝', title: 'Rey del empate', value: maxEmpates.nombre, detail: `${maxEmpates.pe} empates` },
+            { icon: '📈', title: 'Mejor DG', value: mejorDG.nombre, detail: `${mejorDG.gf-mejorDG.gc} goles` },
+            { icon: '📉', title: 'Peor DG', value: peorDG.nombre, detail: `${peorDG.gf-peorDG.gc} goles` }
         ];
+        
+        // Agregar rachas destacadas
         const rachasLargas = Object.entries(avanzadas.rachas).map(([ch, r]) => ({ ch, ultimos: r.slice(-3) }));
         const rachaGanadora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'G'));
-        if (rachaGanadora) curiosidades.push(`🔥 **${rachaGanadora.ch}** viene con 3 victorias consecutivas.`);
+        if (rachaGanadora) {
+            curiosidadesList.push({ icon: '🔥', title: 'Racha ganadora', value: rachaGanadora.ch, detail: '3 victorias seguidas' });
+        }
         const rachaPerdedora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'P'));
-        if (rachaPerdedora) curiosidades.push(`⚠️ **${rachaPerdedora.ch}** lleva 3 derrotas seguidas.`);
-        return `<div class="curiosidad"><strong>🎲 Estadísticas divertidas:</strong><br>${curiosidades.join('<br>')}</div>`;
+        if (rachaPerdedora) {
+            curiosidadesList.push({ icon: '⚠️', title: 'Mala racha', value: rachaPerdedora.ch, detail: '3 derrotas seguidas' });
+        }
+        
+        // Generar HTML con tarjetas (grid responsiva)
+        let html = `<div class="curiosidades-container"><h4 class="subtitulo-estadisticas">🎲 Estadísticas divertidas</h4><div class="curiosidades-grid">`;
+        for (let item of curiosidadesList) {
+            html += `
+                <div class="curiosidad-card">
+                    <div class="curiosidad-icon">${item.icon}</div>
+                    <div class="curiosidad-title">${item.title}</div>
+                    <div class="curiosidad-value">${item.value}</div>
+                    <div class="curiosidad-detail">${item.detail}</div>
+                </div>
+            `;
+        }
+        html += `</div></div>`;
+        return html;
     }
 
     function compartirWhatsApp() {
         const tablaBody = document.getElementById('tabla-body-changos');
-        let texto = "🏆 *QUINIELA MUNDIAL 2026* 🏆\n\n📊 *TABLA DE POSICIONES:*\n";
+        let texto = "🏆 *QUINIELA MUNDIAL 2026* 🏆\n\n";
+        texto += "📊 *TABLA DE POSICIONES*\n";
+        
         const filas = tablaBody.querySelectorAll('tr');
         filas.forEach((row, idx) => {
             const celdas = row.querySelectorAll('td');
             if (celdas.length >= 7) {
                 const nombre = celdas[0].innerText.trim();
-                const pj = celdas[1].innerText, g = celdas[2].innerText, e = celdas[3].innerText, p = celdas[4].innerText, gf = celdas[5].innerText, dg = celdas[6].innerText, pts = celdas[7].innerText;
-                texto += `${idx+1}. ${nombre} → ${pts} pts (PJ:${pj} G:${g} E:${e} P:${p} GF:${gf} DG:${dg})\n`;
+                const pts = celdas[7].innerText.trim();
+                const pj = celdas[1].innerText.trim();
+                const gf = celdas[5].innerText.trim();
+                const dg = celdas[6].innerText.trim();
+                texto += `${idx+1}. ${nombre} → ${pts} pts (PJ:${pj} GF:${gf} DG:${dg})\n`;
             }
         });
+        
+        // Agregar estadísticas divertidas
         const curiosidadesDiv = document.getElementById('curiosidades-container');
         if (curiosidadesDiv) {
-            let curiosidadesTexto = curiosidadesDiv.innerText.replace('🎲 Estadísticas divertidas:', '').trim();
-            texto += `\n✨ *CURIOSIDADES:*\n${curiosidadesTexto}`;
+            // Obtener el texto plano de las curiosidades
+            let curiosidadesTexto = curiosidadesDiv.innerText;
+            // Eliminar el título "🎲 Estadísticas divertidas:" y espacios extras
+            curiosidadesTexto = curiosidadesTexto.replace('🎲 Estadísticas divertidas:', '').trim();
+            // Dividir por líneas y tomar solo las relevantes (máximo 6)
+            let lineas = curiosidadesTexto.split('\n').filter(l => l.trim().length > 0);
+            if (lineas.length > 0) {
+                texto += `\n✨ *ESTADÍSTICAS DESTACADAS*\n`;
+                lineas.slice(0, 6).forEach(linea => {
+                    texto += `• ${linea.trim()}\n`;
+                });
+            }
         }
-        texto += `\n\n#Mundial2026 #Quiniela`;
+        
+        texto += `\n#Mundial2026 #Quiniela`;
+        // Abrir WhatsApp con el texto predefinido
         window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
     }
 
