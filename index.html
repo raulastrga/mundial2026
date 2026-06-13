@@ -53,15 +53,17 @@
         <div class="tabs-principales">
             <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
             <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
-            <button class="m-tab" id="m-mijornada" onclick="setMain('mijornada')">⏳ Mi Jornada</button>
         </div>
     </div>
     
+    <!-- Sub-tabs para Calendarios (incluye General, Por Chango y Mi Jornada) -->
     <div class="sub-tabs" id="sub-calendarios">
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
         <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')">🐵 Por Chango</button>
+        <button class="s-tab" id="s-cal-mijornada" onclick="setSub('cal-mijornada')">📅 Mi Jornada</button>
     </div>
     
+    <!-- Sub-tabs para Resultados -->
     <div class="sub-tabs" id="sub-resultados" style="display: none;">
         <button class="s-tab active" id="s-res-grupos" onclick="setSub('res-grupos')">🎯 Grupos</button>
         <button class="s-tab" id="s-res-chango" onclick="setSub('res-chango')">📈 Por Chango</button>
@@ -70,8 +72,10 @@
 
 <div class="contenedor-vistas">
     
+    <!-- Vista General (Calendario) -->
     <div id="vista-cal-general" class="vista active"></div>
     
+    <!-- Vista Por Chango (Calendario) -->
     <div id="vista-cal-chango" class="vista">
         <details class="chango-seccion" id="sec-Jona"><summary>🐵 Jona (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Jona"></div></details>
         <details class="chango-seccion" id="sec-David"><summary>🦍 David (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-David"></div></details>
@@ -79,14 +83,29 @@
         <details class="chango-seccion" id="sec-Sergio"><summary>🐒 Sergio (18 Partidos)</summary><div class="lista-partidos-chango" id="lista-pers-Sergio"></div></details>
     </div>
     
+    <!-- Vista Mi Jornada (ahora como sub-vista de Calendarios) -->
+    <div id="vista-cal-mijornada" class="vista">
+        <div class="seccion-contenedor">
+            <h3 class="seccion-titulo">📅 Próximos partidos</h3>
+            <div class="selector-chango" id="selector-chango">
+                <button class="btn-chango" data-chango="Jona" onclick="seleccionarChango('Jona')">🐵 Jona</button>
+                <button class="btn-chango" data-chango="David" onclick="seleccionarChango('David')">🦍 David</button>
+                <button class="btn-chango" data-chango="Raúl" onclick="seleccionarChango('Raúl')">🦧 Raúl</button>
+                <button class="btn-chango" data-chango="Sergio" onclick="seleccionarChango('Sergio')">🐒 Sergio</button>
+            </div>
+            <div id="proximos-partidos-container" class="proximos-partidos"></div>
+        </div>
+    </div>
+    
+    <!-- Vista Grupos (Resultados) -->
     <div id="vista-res-grupos" class="vista"></div>
     
+    <!-- Vista Por Chango (Resultados) -->
     <div id="vista-res-chango" class="vista">
-        <!-- Contenedor con fondo para Rendimiento Global -->
         <div class="seccion-contenedor">
             <div class="flex-between">
                 <h3 class="seccion-titulo" style="margin-bottom:0;">🏆 Rendimiento Global (Puntos)
-                <button class="btn-wa" onclick="compartirWhatsApp()">
+                <button class="btn-wa" onclick="compartirWhatsApp()" style="margin-left: 20px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.8 5.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                     Compartir
                 </button>
@@ -110,18 +129,7 @@
         </div>
     </div>
     
-    <div id="vista-mijornada" class="vista">
-        <div class="seccion-contenedor">
-            <h3 class="seccion-titulo">📅 Próximos partidos</h3>
-            <div class="selector-chango" id="selector-chango">
-                <button class="btn-chango" data-chango="Jona" onclick="seleccionarChango('Jona')">🐵 Jona</button>
-                <button class="btn-chango" data-chango="David" onclick="seleccionarChango('David')">🦍 David</button>
-                <button class="btn-chango" data-chango="Raúl" onclick="seleccionarChango('Raúl')">🦧 Raúl</button>
-                <button class="btn-chango" data-chango="Sergio" onclick="seleccionarChango('Sergio')">🐒 Sergio</button>
-            </div>
-            <div id="proximos-partidos-container" class="proximos-partidos"></div>
-        </div>
-    </div>
+    <!-- Antigua vista Mi Jornada ya no se usa como principal, la reemplazamos por cal-mijornada -->
 </div>
 
 <script src="basedatosH2H.js"></script>
@@ -136,10 +144,10 @@
     let partidosPorChangoDetalle = {};
 
     // Variables para estado anterior de estadísticas (notificaciones)
-    let estadisticasAnteriores = null;      // copia de estadisticasChangos
-    let rachasAnteriores = null;            // copia de rachas por chango
-    let liderAnterior = null;               // nombre del chango líder anterior
-    let ultimoPartidoDelDia = {};           // para control de fin de jornada
+    let estadisticasAnteriores = null;
+    let rachasAnteriores = null;
+    let liderAnterior = null;
+    let ultimoPartidoDelDia = {};
 
     const firebaseConfig = {
         apiKey: "AIzaSyDwm3uLITtCHYmphoDBUgeNqCjU3yQsJ7A",
@@ -151,16 +159,13 @@
         measurementId: "G-DV2RNSV716"
     };
 
-    // Inicializar Firebase (solo si no está ya inicializado)
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
     const messaging = firebase.messaging();
 
-    // Registrar Service Worker
     let serviceWorkerRegistration = null;
 
-    // Función async para registrar el Service Worker
     async function registrarServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
@@ -172,8 +177,6 @@
             }
         }
     }
-
-    // Llamar a la función de registro (esto es seguro, no necesita await aquí)
     registrarServiceWorker();
 
     async function solicitarPermisoFCM() {
@@ -182,29 +185,20 @@
                 alert('Tu navegador no soporta notificaciones push.');
                 return;
             }
-            
             const permission = await Notification.requestPermission();
             if (permission !== 'granted') {
                 alert('Necesitas permitir las notificaciones para recibir alertas');
                 return;
             }
-            
-            // Esperar a que el Service Worker esté registrado (si aún no lo está)
             if (!serviceWorkerRegistration) {
-                // Si no hay registro, esperar un poco (por si la función async aún no terminó)
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 if (!serviceWorkerRegistration) {
                     alert('El Service Worker no está listo. Intenta de nuevo en unos segundos.');
                     return;
                 }
             }
-            
             const vapidKey = 'BJYFgBfPbfuj6CIrLfgoSACHMTMHamp2X15xWiBVugFh0E5iP7IDqiNpT4U6nrJ7i4prC0haHd54Dn0mtxN0j40';
-            const token = await messaging.getToken({ 
-                vapidKey: vapidKey,
-                serviceWorkerRegistration: serviceWorkerRegistration 
-            });
-            
+            const token = await messaging.getToken({ vapidKey, serviceWorkerRegistration });
             if (token) {
                 console.log('Token FCM:', token);
                 localStorage.setItem('fcm_token', token);
@@ -218,12 +212,9 @@
         }
     }
 
-    // Función para mostrar notificación local (cuando la página está abierta)
     function enviarNotificacionLocal(titulo, cuerpo, tipo = 'general') {
-        // Verificar si el navegador soporta notificaciones
         if (!('Notification' in window)) return;
         if (Notification.permission !== 'granted') return;
-        
         if (document.visibilityState === 'visible') {
             new Notification(titulo, { body: cuerpo, icon: 'https://flagcdn.com/w160/mx.png' });
         } else {
@@ -237,7 +228,6 @@
                     });
                 }).catch(err => console.error('Error con SW:', err));
             } else {
-                // Fallback a notificación normal
                 new Notification(titulo, { body: cuerpo });
             }
         }
@@ -247,7 +237,6 @@
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
-        // Actualizar todos los botones con clase 'dark-mode-toggle' (puede haber más de uno)
         document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
             btn.textContent = isDark ? '☀️' : '🌙';
         });
@@ -276,9 +265,7 @@
     }
 
     async function actualizarResultados(manual = false) {
-        // Guardar estado anterior para comparar
         const estadoAnterior = JSON.parse(JSON.stringify(resultadosEnVivo));
-        
         if (manual) {
             document.getElementById('cargando-overlay').style.display = 'flex';
         } else {
@@ -311,22 +298,16 @@
                 }
             }
             
-            // Detectar cambios y enviar notificaciones (con nombres de changos)
+            // Notificaciones de partidos
             for (const key in nuevosResultados) {
                 const anterior = estadoAnterior[key];
                 const actual = nuevosResultados[key];
                 if (anterior && actual) {
                     const [t1, t2] = key.split('-');
-                    // Obtener los changos dueños de cada equipo usando equiposDatos global
                     const chango1 = equiposDatos[t1]?.d || 'Desconocido';
                     const chango2 = equiposDatos[t2]?.d || 'Desconocido';
-                    
-                    // === GOL ===
-                    if (anterior.g1 !== undefined && actual.g1 !== undefined && 
-                        (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
-                        
-                        const nuevoGol = actual.g1 > (anterior.g1 || 0) ? t1 : 
-                                         (actual.g2 > (anterior.g2 || 0) ? t2 : null);
+                    if (anterior.g1 !== undefined && actual.g1 !== undefined && (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
+                        const nuevoGol = actual.g1 > (anterior.g1 || 0) ? t1 : (actual.g2 > (anterior.g2 || 0) ? t2 : null);
                         if (nuevoGol) {
                             const changoQueAnota = (nuevoGol === t1) ? chango1 : chango2;
                             const changoRival = (nuevoGol === t1) ? chango2 : chango1;
@@ -334,65 +315,46 @@
                             enviarNotificacionLocal('⚽ ¡GOL!', mensaje, 'gol');
                         }
                     }
-                    
-                    // === INICIO DE PARTIDO ===
                     if (anterior.status !== 'LIVE' && actual.status === 'LIVE') {
                         const mensaje = `🎺 Comienza ${t1} (${chango1}) vs ${t2} (${chango2})`;
                         enviarNotificacionLocal('🎺 Partido en vivo', mensaje, 'inicio');
                     }
-                    
-                    // === FINAL DEL PARTIDO ===
                     if (anterior.status !== 'FINISHED' && actual.status === 'FINISHED') {
                         const resultado = `${actual.g1} - ${actual.g2}`;
                         let mensaje = `🏁 Final: ${t1} ${resultado} ${t2}`;
-                        if (actual.g1 > actual.g2) {
-                            mensaje += ` – ¡Victoria para ${chango1}!`;
-                        } else if (actual.g2 > actual.g1) {
-                            mensaje += ` – ¡Victoria para ${chango2}!`;
-                        } else {
-                            mensaje += ` – Empate entre ${chango1} y ${chango2}`;
-                        }
+                        if (actual.g1 > actual.g2) mensaje += ` – ¡Victoria para ${chango1}!`;
+                        else if (actual.g2 > actual.g1) mensaje += ` – ¡Victoria para ${chango2}!`;
+                        else mensaje += ` – Empate entre ${chango1} y ${chango2}`;
                         enviarNotificacionLocal('🏁 Partido finalizado', mensaje, 'fin');
                     }
                 }
             }
 
-                        // ---- NOTIFICACIONES DE ESTADÍSTICAS (1,2,3,6,8) ----
-            // Calcular estadísticas actuales a partir de los nuevos resultados
             const nuevasStatsCompleto = calcularStatsDesdeResultados(nuevosResultados, equiposDatos, nuevosHorarios);
             const nuevasStats = nuevasStatsCompleto.stats;
             const nuevasRachas = nuevasStatsCompleto.rachas;
-            
-            // Ordenar changos por puntos para detectar líder
             const ordenStats = Object.values(nuevasStats).sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
             const nuevoLider = ordenStats[0]?.nombre;
             
-            // 1. Cambio de liderato
             if (liderAnterior && nuevoLider && liderAnterior !== nuevoLider) {
                 const nuevoPts = nuevasStats[nuevoLider].pts;
                 const anteriorPts = estadisticasAnteriores?.[liderAnterior]?.pts || 0;
                 enviarNotificacionLocal('🏆 ¡Nuevo líder!', `${nuevoLider} supera a ${liderAnterior} con ${nuevoPts} puntos (antes ${anteriorPts})`, 'general');
             }
-            
-            // 2. Rachas de victorias o derrotas (solo si hay estadísticas anteriores)
             if (rachasAnteriores) {
                 for (let chango of ['Jona','David','Raúl','Sergio']) {
                     const rachaActual = nuevasRachas[chango] || [];
                     const rachaAnterior = rachasAnteriores[chango] || [];
-                    // Detectar nueva racha de 3 victorias consecutivas
                     if (rachaActual.length >= 3 && rachaActual.slice(-3).every(r => r === 'G') &&
                         (!rachaAnterior.length || rachaAnterior.slice(-3).some(r => r !== 'G'))) {
                         enviarNotificacionLocal('🔥 ¡Racha imparable!', `${chango} lleva 3 victorias consecutivas`, 'general');
                     }
-                    // Detectar 2 derrotas consecutivas
                     if (rachaActual.length >= 2 && rachaActual.slice(-2).every(r => r === 'P') &&
                         (!rachaAnterior.length || rachaAnterior.slice(-2).some(r => r !== 'P'))) {
                         enviarNotificacionLocal('⚠️ Mala racha', `${chango} suma 2 derrotas seguidas`, 'general');
                     }
                 }
             }
-            
-            // 3. Hitos de goles (múltiplos de 5)
             if (estadisticasAnteriores) {
                 for (let chango of ['Jona','David','Raúl','Sergio']) {
                     const gfActual = nuevasStats[chango].gf;
@@ -402,15 +364,11 @@
                     }
                 }
             }
-            
-            // 6. Remontada en último minuto (detectar goles en partidos con minute > 85)
             for (const key in nuevosResultados) {
                 const anterior = estadoAnterior[key];
                 const actual = nuevosResultados[key];
                 if (anterior && actual && actual.isLive && actual.minute && actual.minute >= 85) {
-                    // Si hubo cambio de marcador y el resultado anterior no era victoria para el mismo equipo
-                    if (anterior.g1 !== undefined && actual.g1 !== undefined && 
-                        (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
+                    if (anterior.g1 !== undefined && actual.g1 !== undefined && (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
                         const [t1, t2] = key.split('-');
                         const ganaLocalActual = actual.g1 > actual.g2;
                         const ganaVisitanteActual = actual.g2 > actual.g1;
@@ -424,40 +382,30 @@
                     }
                 }
             }
-            
-            // 8. Fin de jornada: detectar si se acabó el último partido de un día
-            // Primero, recopilar partidos finalizados hoy (fecha del partido igual a hoy)
             const hoyStr = new Date().toDateString();
             const partidosHoy = [];
             for (const key in nuevosResultados) {
                 const partido = nuevosResultados[key];
                 if (partido.status === 'FINISHED') {
                     const fechaPartido = getHorario(key.split('-')[0], key.split('-')[1]);
-                    if (fechaPartido && fechaPartido.toDateString() === hoyStr) {
-                        partidosHoy.push(key);
-                    }
+                    if (fechaPartido && fechaPartido.toDateString() === hoyStr) partidosHoy.push(key);
                 }
             }
-            // Verificar si todos los partidos de hoy (según rawSchedule) ya finalizaron
-            // Para simplificar, comprobamos si no quedan partidos SCHEDULED o LIVE con fecha hoy
             let quedanPartidosHoy = false;
             for (const key in nuevosResultados) {
                 const partido = nuevosResultados[key];
                 const fechaPartido = getHorario(key.split('-')[0], key.split('-')[1]);
-                if (fechaPartido && fechaPartido.toDateString() === hoyStr && 
-                    (partido.status === 'SCHEDULED' || partido.status === 'LIVE')) {
+                if (fechaPartido && fechaPartido.toDateString() === hoyStr && (partido.status === 'SCHEDULED' || partido.status === 'LIVE')) {
                     quedanPartidosHoy = true;
                     break;
                 }
             }
             if (!quedanPartidosHoy && partidosHoy.length > 0 && (!ultimoPartidoDelDia[hoyStr] || ultimoPartidoDelDia[hoyStr] !== partidosHoy.length)) {
-                // Enviar resumen de la jornada
                 const totalGoles = Object.values(nuevosResultados).reduce((acc, p) => acc + (p.g1 || 0) + (p.g2 || 0), 0);
                 enviarNotificacionLocal('📆 Fin de la jornada', `Hoy hubo ${partidosHoy.length} partidos, ${totalGoles} goles. Líder: ${nuevoLider} (${nuevasStats[nuevoLider]?.pts} pts)`, 'general');
                 ultimoPartidoDelDia[hoyStr] = partidosHoy.length;
             }
             
-            // Actualizar variables de estado anterior
             estadisticasAnteriores = JSON.parse(JSON.stringify(nuevasStats));
             rachasAnteriores = JSON.parse(JSON.stringify(nuevasRachas));
             liderAnterior = nuevoLider;
@@ -481,8 +429,7 @@
         const revKey = `${t2}-${t1}`;
         if (resultadosEnVivo[revKey]) {
             const rev = resultadosEnVivo[revKey];
-            if (rev.g1 !== undefined && rev.g2 !== undefined)
-                return { ...rev, g1: rev.g2, g2: rev.g1, status: rev.status, minute: rev.minute, isLive: rev.isLive };
+            if (rev.g1 !== undefined && rev.g2 !== undefined) return { ...rev, g1: rev.g2, g2: rev.g1, status: rev.status, minute: rev.minute, isLive: rev.isLive };
             return rev;
         }
         return null;
@@ -496,16 +443,13 @@
         return null;
     }
 
-    // Calcula estadísticas de changos y rachas a partir de los resultados en vivo
     function calcularStatsDesdeResultados(resVivo, equiposData, horariosMap) {
-        // Inicializar estadísticas
         let stats = {
             Jona: { nombre: 'Jona', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 },
             David: { nombre: 'David', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 },
             Raúl: { nombre: 'Raúl', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 },
             Sergio: { nombre: 'Sergio', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 }
         };
-        // Recopilar partidos finalizados para rachas
         let partidosFinalizados = [];
         for (const key in resVivo) {
             const partido = resVivo[key];
@@ -516,26 +460,20 @@
             let c1 = equiposData[t1].d, c2 = equiposData[t2].d;
             let fecha = horariosMap[key] || horariosMap[`${t2}-${t1}`] || new Date();
             partidosFinalizados.push({ t1, t2, g1, g2, fecha, c1, c2 });
-            // acumular estadísticas
             stats[c1].pj++; stats[c1].gf += g1; stats[c1].gc += g2;
             stats[c2].pj++; stats[c2].gf += g2; stats[c2].gc += g1;
             if (g1 > g2) { stats[c1].pg++; stats[c1].pts += 3; stats[c2].pp++; }
             else if (g1 < g2) { stats[c2].pg++; stats[c2].pts += 3; stats[c1].pp++; }
             else { stats[c1].pe++; stats[c1].pts += 1; stats[c2].pe++; stats[c2].pts += 1; }
         }
-        // Calcular rachas (ordenar por fecha)
         let partidosPorChango = { Jona: [], David: [], Raúl: [], Sergio: [] };
         for (let p of partidosFinalizados) {
             partidosPorChango[p.c1].push({ chango: p.c1, resultado: p.g1 > p.g2 ? 'G' : (p.g1 < p.g2 ? 'P' : 'E'), fecha: p.fecha });
             partidosPorChango[p.c2].push({ chango: p.c2, resultado: p.g2 > p.g1 ? 'G' : (p.g2 < p.g1 ? 'P' : 'E'), fecha: p.fecha });
         }
-        for (let c in partidosPorChango) {
-            partidosPorChango[c].sort((a,b) => a.fecha - b.fecha);
-        }
+        for (let c in partidosPorChango) partidosPorChango[c].sort((a,b) => a.fecha - b.fecha);
         let rachas = {};
-        for (let c in partidosPorChango) {
-            rachas[c] = partidosPorChango[c].slice(-5).map(p => p.resultado);
-        }
+        for (let c in partidosPorChango) rachas[c] = partidosPorChango[c].slice(-5).map(p => p.resultado);
         return { stats, rachas };
     }
 
@@ -568,25 +506,13 @@
         return new Date(fechaISO).toLocaleDateString('es-MX', { day:'numeric', month:'short', timeZone:'America/Mazatlan' }).replace('.','');
     }
 
-    function toggleHistorial(t1, t2) {
-        const panel = document.getElementById(`h2h-${t1}-${t2}`);
-        if (panel.style.display === "none") {
-            panel.style.display = "block";
-        } else {
-            panel.style.display = "none";
-        }
-    }
-
     function obtenerHtmlHistorial(t1, t2) {
         let key = `${t1}-${t2}`;
         let matches = baseDatosH2H[key];
         if (!matches) { key = `${t2}-${t1}`; matches = baseDatosH2H[key]; }
-
-        // Cambiamos a 'h2h-inline-panel' y lo ponemos oculto por defecto
         let html = `<div class="h2h-inline-panel" id="h2h-${t1}-${t2}" style="display: none;">
                         <div class="h2h-titulo">⚔️ Historial Reciente (H2H)</div>
                         <div class="h2h-list">`;
-
         if (!matches || matches.length === 0) {
             html += `<div class="historial-item"><p class="historial-texto" style="text-align:center;">No hay enfrentamientos previos</p></div>`;
         } else {
@@ -607,7 +533,6 @@
         if (!yaSeleccionado) elemento.classList.add('seleccionado');
     }
 
-    // Estadísticas avanzadas
     function calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados) {
         let partidosPorChangoFecha = { Jona: [], David: [], Raúl: [], Sergio: [] };
         for (let res of resultadosFinalizados) {
@@ -641,7 +566,6 @@
     }
 
     function generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats) {
-        // Primero, las tarjetas individuales de cada chango (ya estaban bien)
         let html = '<div class="stats-grid changos-grid">';
         const changos = Object.values(estadisticasChangos).sort((a,b)=>b.pts - a.pts);
         for (let c of changos) {
@@ -651,9 +575,7 @@
             const mayorC = avanzadas.mayorGoleadaContra[c.nombre];
             html += `<div class="stat-card"><h4>🐒 ${c.nombre}</h4><div><strong>Racha:</strong> ${rachaHtml}</div><div><strong>Mayor goleada a favor:</strong> ${mayorF.dif>0 ? `${mayorF.dif} goles vs ${mayorF.rival}` : 'Ninguna'}</div><div><strong>Mayor goleada en contra:</strong> ${mayorC.dif>0 ? `${mayorC.dif} goles vs ${mayorC.rival}` : 'Ninguna'}</div></div>`;
         }
-        html += '</div>'; // cierra changos-grid
-
-        // Nueva sección: Rendimiento por Grupo (con tarjetas)
+        html += '</div>';
         html += '<div class="grupos-container"><h4 class="subtitulo-estadisticas">📊 Rendimiento por Grupo</h4><div class="grupos-grid">';
         for (let g in gruposStats) {
             const puntosPorChango = {};
@@ -663,12 +585,11 @@
                 puntosPorChango[dueño].pts += eq.pts;
                 puntosPorChango[dueño].pj += eq.pj;
             }
-            // Ordenar changos por puntos descendente para mostrar mejor
             const changosGrupo = Object.keys(puntosPorChango).sort((a,b) => puntosPorChango[b].pts - puntosPorChango[a].pts);
             html += `<div class="grupo-card"><div class="grupo-header">Grupo ${g}</div><div class="grupo-changos">`;
             for (let ch of changosGrupo) {
                 const datos = puntosPorChango[ch];
-                const colorClass = `d-${ch}`; // clase CSS para color de fondo
+                const colorClass = `d-${ch}`;
                 html += `<div class="chango-puntos"><span class="badge-chango ${colorClass}">${ch}</span> <strong>${datos.pts}</strong> pts <span class="pj-chango">(${datos.pj} PJ)</span></div>`;
             }
             html += `</div></div>`;
@@ -684,8 +605,6 @@
         const maxEmpates = changos.reduce((max, c) => c.pe > max.pe ? c : max, { pe: -1 });
         const mejorDG = changos.reduce((max, c) => (c.gf-c.gc) > (max.gf-max.gc) ? c : max, { gf:0, gc:0 });
         const peorDG = changos.reduce((min, c) => (c.gf-c.gc) < (min.gf-min.gc) ? c : min, { gf:0, gc:0 });
-        
-        // Array de curiosidades con icono, título y descripción
         const curiosidadesList = [
             { icon: '⚽', title: 'Máximo goleador', value: maxGoles.nombre, detail: `${maxGoles.gf} goles` },
             { icon: '🛡️', title: 'Mejor defensa', value: minGolesRecibidos.nombre, detail: `${minGolesRecibidos.gc} goles en contra` },
@@ -693,29 +612,14 @@
             { icon: '📈', title: 'Mejor DG', value: mejorDG.nombre, detail: `${mejorDG.gf-mejorDG.gc} goles` },
             { icon: '📉', title: 'Peor DG', value: peorDG.nombre, detail: `${peorDG.gf-peorDG.gc} goles` }
         ];
-        
-        // Agregar rachas destacadas
         const rachasLargas = Object.entries(avanzadas.rachas).map(([ch, r]) => ({ ch, ultimos: r.slice(-3) }));
         const rachaGanadora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'G'));
-        if (rachaGanadora) {
-            curiosidadesList.push({ icon: '🔥', title: 'Racha ganadora', value: rachaGanadora.ch, detail: '3 victorias seguidas' });
-        }
+        if (rachaGanadora) curiosidadesList.push({ icon: '🔥', title: 'Racha ganadora', value: rachaGanadora.ch, detail: '3 victorias seguidas' });
         const rachaPerdedora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'P'));
-        if (rachaPerdedora) {
-            curiosidadesList.push({ icon: '⚠️', title: 'Mala racha', value: rachaPerdedora.ch, detail: '3 derrotas seguidas' });
-        }
-        
-        // Generar HTML con tarjetas (grid responsiva)
+        if (rachaPerdedora) curiosidadesList.push({ icon: '⚠️', title: 'Mala racha', value: rachaPerdedora.ch, detail: '3 derrotas seguidas' });
         let html = `<div class="curiosidades-container"><h4 class="subtitulo-estadisticas">🎲 Estadísticas divertidas</h4><div class="curiosidades-grid">`;
         for (let item of curiosidadesList) {
-            html += `
-                <div class="curiosidad-card">
-                    <div class="curiosidad-icon">${item.icon}</div>
-                    <div class="curiosidad-title">${item.title}</div>
-                    <div class="curiosidad-value">${item.value}</div>
-                    <div class="curiosidad-detail">${item.detail}</div>
-                </div>
-            `;
+            html += `<div class="curiosidad-card"><div class="curiosidad-icon">${item.icon}</div><div class="curiosidad-title">${item.title}</div><div class="curiosidad-value">${item.value}</div><div class="curiosidad-detail">${item.detail}</div></div>`;
         }
         html += `</div></div>`;
         return html;
@@ -723,30 +627,22 @@
 
     function compartirWhatsApp() {
         const tablaBody = document.getElementById('tabla-body-changos');
-        let texto = "🏆 *QUINIELA MUNDIAL 2026* 🏆\n\n";
-        texto += "📊 *TABLA DE POSICIONES*\n";
-        
+        let texto = "🏆 *QUINIELA MUNDIAL 2026* 🏆\n\n📊 *TABLA DE POSICIONES*\n";
         const filas = tablaBody.querySelectorAll('tr');
         filas.forEach((row, idx) => {
             const celdas = row.querySelectorAll('td');
             if (celdas.length >= 7) {
-                // La primera celda contiene algo como "1 Jona" (número y nombre)
                 const primeraCelda = celdas[0].innerText.trim();
-                // Extraer número (primeros dígitos) y el resto como nombre
                 const numeroMatch = primeraCelda.match(/^(\d+)/);
                 const posicion = numeroMatch ? numeroMatch[1] : (idx+1).toString();
                 const nombre = primeraCelda.replace(/^\d+\s*/, '').trim();
-                
                 const pts = celdas[7].innerText.trim();
                 const pj = celdas[1].innerText.trim();
                 const gf = celdas[5].innerText.trim();
                 const dg = celdas[6].innerText.trim();
-                
                 texto += `${posicion}. ${nombre} → ${pts} pts (PJ:${pj} GF:${gf} DG:${dg})\n`;
             }
         });
-        
-        // Obtener estadísticas divertidas desde las tarjetas (estructura actual)
         const curiosidadesCards = document.querySelectorAll('.curiosidad-card');
         if (curiosidadesCards.length > 0) {
             texto += `\n✨ *ESTADÍSTICAS DESTACADAS*\n`;
@@ -755,29 +651,23 @@
                 const titulo = card.querySelector('.curiosidad-title')?.innerText || '';
                 const valor = card.querySelector('.curiosidad-value')?.innerText || '';
                 const detalle = card.querySelector('.curiosidad-detail')?.innerText || '';
-                // Formato: "⚽ Máximo goleador: David (6 goles)"
                 texto += `• ${icono} ${titulo}: ${valor} (${detalle})\n`;
             });
         } else {
-            // Fallback: si no encuentra las tarjetas, usa el texto plano antiguo (por si acaso)
             const curiosidadesDiv = document.getElementById('curiosidades-container');
             if (curiosidadesDiv) {
                 let rawText = curiosidadesDiv.innerText.replace('🎲 Estadísticas divertidas:', '').trim();
                 let lineas = rawText.split('\n').filter(l => l.trim().length > 0);
                 if (lineas.length) {
                     texto += `\n✨ *ESTADÍSTICAS DESTACADAS*\n`;
-                    lineas.slice(0, 8).forEach(linea => {
-                        texto += `• ${linea.trim()}\n`;
-                    });
+                    lineas.slice(0, 8).forEach(linea => { texto += `• ${linea.trim()}\n`; });
                 }
             }
         }
-        
         texto += `\n#Mundial2026 #Quiniela`;
         window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
     }
 
-    // Mi Jornada
     function renderizarMiJornada(changoSeleccionado) {
         const container = document.getElementById('proximos-partidos-container');
         if (!container) return;
@@ -786,16 +676,10 @@
         const proximos = partidos.filter(p => {
             if (p.finalizado) return false;
             if (!p.fechaObj) return false;
-            // Asegurar que fechaObj es un objeto Date válido
             if (!(p.fechaObj instanceof Date) || isNaN(p.fechaObj.getTime())) return false;
-            // Si la fecha es la de fallback (medianoche) y no es una fecha real de la API, ignorarla
-            // Fallback se asigna como new Date(2026, 5, día, 0, 0, 0)
-            if (p.fechaObj.getHours() === 0 && p.fechaObj.getMinutes() === 0 && p.fechaObj.getSeconds() === 0 && p.fechaObj.getFullYear() === 2026) {
-                return false;
-            }
+            if (p.fechaObj.getHours() === 0 && p.fechaObj.getMinutes() === 0 && p.fechaObj.getSeconds() === 0 && p.fechaObj.getFullYear() === 2026) return false;
             return p.fechaObj >= ahora;
         }).sort((a,b) => a.fechaObj - b.fechaObj).slice(0, 3);
-        
         if (proximos.length === 0) {
             container.innerHTML = `<div class="vacio-mi-jornada">🎉 No tienes partidos próximos con horario confirmado. ¡Vuelve más tarde!</div>`;
             return;
@@ -828,7 +712,6 @@
         renderizarMiJornada(chango);
     }
 
-    // Construcción principal
     function construirInterfaz() {
         let diasOrdenados = {};
         let partidosPorChango = { Jona: [], David: [], Raúl: [], Sergio: [] };
@@ -878,8 +761,7 @@
                 }
             }
         }
-        partidosPorChangoDetalle = partidosPorChango;  
-
+        partidosPorChangoDetalle = partidosPorChango;
         let resultadosFinalizados = [];
         for (let key in resultadosEnVivo) {
             const partido = resultadosEnVivo[key];
@@ -933,7 +815,7 @@
         }
         vGeneral.innerHTML = (htmlPasados !== '<details class="dias-pasados"><summary>📁 Días anteriores a hoy</summary>' ? htmlPasados + '</details>' : '') + htmlFuturos;
 
-        // Por Chango
+        // Por Chango (calendario)
         for (let c of ["Jona","David","Raúl","Sergio"]) {
             const div = document.getElementById('lista-pers-' + c);
             let html = '';
@@ -955,7 +837,7 @@
         let htmlGrupos = '';
         for (let g of Object.keys(gruposStats).sort()) {
             gruposStats[g].sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
-            htmlGrupos += `<div class="seccion-contenedor"><h3 class="seccion-titulo">🎯 Grupo ${g}</h3><div style="overflow-x:auto;"><table class="tabla-stats"><thead><tr><th style="text-align:left;">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>DG</th><th>Pts</th></tr></thead><tbody>`;
+            htmlGrupos += `<div class="seccion-contenedor"><h3 class="seccion-titulo">🎯 Grupo ${g}</h3><div style="overflow-x:auto;"><table class="tabla-stats"><thead><tr><th style="text-align:left;">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>DG</th><th>Pts</th></td></thead><tbody>`;
             gruposStats[g].forEach((eq, i) => {
                 let dg = eq.gf - eq.gc;
                 htmlGrupos += `<tr><td class="td-izq"><span style="color:#aaa;">${i+1}</span><img src="https://flagcdn.com/w160/${eq.bandera}.png"><div>${eq.equipo}<span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; margin-left:6px;">${eq.dueño}</span></div></td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pe}</td><td>${eq.pp}</td><td>${eq.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${eq.pts}</td></tr>`;
@@ -973,46 +855,52 @@
             let pct = (c.pts / maxPts) * 100;
             grafica += `<div class="barra-container"><div class="barra-header"><span>${c.nombre}</span><span>${c.pts} Pts</span></div><div class="barra-fondo"><div class="barra-progreso" style="width: ${Math.max(pct,2)}%; background-color: ${c.color};"></div></div></div>`;
             let dg = c.gf - c.gc;
-            tabla += `<tr><td class="td-izq"><span style="color:#aaa;">${i+1}</span><span class="t-dueño d-${c.nombre}">${c.nombre}</span></td><td>${c.pj}</td><td>${c.pg}</td><td>${c.pe}</td><td>${c.pp}</td><td>${c.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${c.pts}</td></tr>`;
+            tabla += `<table><td class="td-izq"><span style="color:#aaa;">${i+1}</span><span class="t-dueño d-${c.nombre}">${c.nombre}</span></td><td>${c.pj}</td><td>${c.pg}</td><td>${c.pe}</td><td>${c.pp}</td><td>${c.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${c.pts}</td></tr>`;
         });
         document.getElementById('grafica-changos').innerHTML = grafica;
         document.getElementById('tabla-body-changos').innerHTML = tabla;
 
-        // Estadísticas avanzadas
         const avanzadas = calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados);
         document.getElementById('stats-avanzadas-container').innerHTML = generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats);
         document.getElementById('curiosidades-container').innerHTML = generarCuriosidades(estadisticasChangos, avanzadas);
 
-        // Mi jornada
         const changoActivo = document.querySelector('.btn-chango.active')?.getAttribute('data-chango') || 'Jona';
         renderizarMiJornada(changoActivo);
     }
 
-    // Navegación
     function setMain(mainStr) {
         document.querySelectorAll('.m-tab').forEach(b => b.classList.remove('active'));
         document.getElementById('m-' + mainStr).classList.add('active');
-        if (mainStr === 'mijornada') {
-            document.getElementById('sub-calendarios').style.display = 'none';
+        if (mainStr === 'calendarios') {
+            document.getElementById('sub-calendarios').style.display = 'flex';
             document.getElementById('sub-resultados').style.display = 'none';
-        } else {
-            document.getElementById('sub-calendarios').style.display = mainStr === 'calendarios' ? 'flex' : 'none';
-            document.getElementById('sub-resultados').style.display = mainStr === 'resultados' ? 'flex' : 'none';
-        }
-        if (mainStr === 'calendarios') setSub('cal-general');
-        else if (mainStr === 'resultados') setSub('res-grupos');
-        else if (mainStr === 'mijornada') {
-            document.querySelectorAll('.vista').forEach(v => v.classList.remove('active'));
-            document.getElementById('vista-mijornada').classList.add('active');
-            const changoActivo = document.querySelector('.btn-chango.active')?.getAttribute('data-chango') || 'Jona';
-            renderizarMiJornada(changoActivo);
+            // Por defecto mostrar la primera sub-vista (general) si no hay una seleccionada
+            const activeSub = document.querySelector('#sub-calendarios .s-tab.active');
+            if (!activeSub) {
+                setSub('cal-general');
+            } else {
+                setSub(activeSub.id.replace('s-', ''));
+            }
+        } else if (mainStr === 'resultados') {
+            document.getElementById('sub-calendarios').style.display = 'none';
+            document.getElementById('sub-resultados').style.display = 'flex';
+            const activeSub = document.querySelector('#sub-resultados .s-tab.active');
+            if (!activeSub) {
+                setSub('res-grupos');
+            } else {
+                setSub(activeSub.id.replace('s-', ''));
+            }
         }
     }
+
     function setSub(subStr) {
         document.querySelectorAll('.s-tab').forEach(b => b.classList.remove('active'));
-        document.getElementById('s-' + subStr).classList.add('active');
+        const activeButton = document.getElementById('s-' + subStr);
+        if (activeButton) activeButton.classList.add('active');
         document.querySelectorAll('.vista').forEach(v => v.classList.remove('active'));
-        document.getElementById('vista-' + subStr).classList.add('active');
+        const vistaId = 'vista-' + subStr;
+        const targetVista = document.getElementById(vistaId);
+        if (targetVista) targetVista.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (subStr === 'res-chango') {
             setTimeout(() => {
@@ -1022,108 +910,72 @@
     }
 
     window.onload = async () => {
-        // Inicializar estadísticas anteriores (vacías)
         estadisticasAnteriores = null;
         rachasAnteriores = null;
         liderAnterior = null;
-
         if (!('Notification' in window)) {
             const notifBtn = document.querySelector('.fab-item.btn-notif-circle');
             if (notifBtn) notifBtn.style.display = 'none';
         }
-
         await registrarServiceWorker();
-        
         actualizarResultados()
             .catch(err => console.error("Error en carga inicial:", err))
             .finally(() => {
-                // Por si acaso, después de 5 segundos forzar ocultar overlay
                 setTimeout(() => {
                     const overlay = document.getElementById('cargando-overlay');
-                    if (overlay && overlay.style.display !== 'none') {
-                        overlay.style.display = 'none';
-                    }
+                    if (overlay && overlay.style.display !== 'none') overlay.style.display = 'none';
                 }, 5000);
             });
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
         document.querySelector('.btn-chango')?.classList.add('active');
 
-        // Detectar preferencia del sistema y aplicar modo oscuro si no hay preferencia guardada
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const savedDark = localStorage.getItem('darkMode');
-
         if (savedDark !== null) {
-        if (savedDark === 'true') {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
+            if (savedDark === 'true') document.body.classList.add('dark-mode');
+            else document.body.classList.remove('dark-mode');
         } else if (prefersDark) {
-        document.body.classList.add('dark-mode');
-        }
-
-        // Opcional: escuchar cambios en la preferencia del sistema
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        // Solo si el usuario no ha elegido manualmente (sin localStorage)
-        if (localStorage.getItem('darkMode') === null) {
-            if (e.matches) {
             document.body.classList.add('dark-mode');
-            } else {
-            document.body.classList.remove('dark-mode');
-            }
         }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (localStorage.getItem('darkMode') === null) {
+                if (e.matches) document.body.classList.add('dark-mode');
+                else document.body.classList.remove('dark-mode');
+            }
         });
 
-        let touchStartY = 0;
-        let touchStartTime = 0;
+        let touchStartY = 0, touchStartTime = 0;
         const pullToRefreshThreshold = 80;
-
         document.body.addEventListener('touchstart', (e) => {
-        if (window.scrollY === 0) {
-            touchStartY = e.touches[0].clientY;
-            touchStartTime = Date.now();
-        }
+            if (window.scrollY === 0) { touchStartY = e.touches[0].clientY; touchStartTime = Date.now(); }
         });
-
         document.body.addEventListener('touchmove', (e) => {
-        if (window.scrollY === 0 && touchStartY > 0) {
-            const diff = e.touches[0].clientY - touchStartY;
-            if (diff > pullToRefreshThreshold) {
-            // Evita el scroll mientras se tira
-            e.preventDefault();
+            if (window.scrollY === 0 && touchStartY > 0) {
+                const diff = e.touches[0].clientY - touchStartY;
+                if (diff > pullToRefreshThreshold) e.preventDefault();
             }
-        }
         });
-
         document.body.addEventListener('touchend', (e) => {
-        if (window.scrollY === 0 && touchStartY > 0) {
-            const diff = e.changedTouches[0].clientY - touchStartY;
-            if (diff > pullToRefreshThreshold && (Date.now() - touchStartTime) < 1000) {
-            // Ejecutar actualización
-            actualizarResultados(true);
-            // Pequeña vibración si soporta
-            if (window.navigator && window.navigator.vibrate) {
-                window.navigator.vibrate(50);
+            if (window.scrollY === 0 && touchStartY > 0) {
+                const diff = e.changedTouches[0].clientY - touchStartY;
+                if (diff > pullToRefreshThreshold && (Date.now() - touchStartTime) < 1000) {
+                    actualizarResultados(true);
+                    if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(50);
+                }
             }
-            }
-        }
-        touchStartY = 0;
+            touchStartY = 0;
         });
     };
+
     function toggleFabMenu() {
         const menu = document.getElementById('fabMenu');
         menu.classList.toggle('show');
     }
-
-    // Cerrar menú si se hace clic fuera de él
     document.addEventListener('click', function(event) {
         const container = document.querySelector('.fab-container');
         const menu = document.getElementById('fabMenu');
-        if (container && !container.contains(event.target)) {
-            menu.classList.remove('show');
-        }
+        if (container && !container.contains(event.target)) menu.classList.remove('show');
     });
-
 </script>
 
 <div class="fab-container">
