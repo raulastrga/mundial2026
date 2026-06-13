@@ -28,12 +28,11 @@
 
 <div class="nav-container">
     <div class="main-tabs">
-        <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
-        <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
-        <button class="m-tab" id="m-mijornada" onclick="setMain('mijornada')">📅 Mi Jornada</button>
-        <button class="btn-actualizar" onclick="actualizarResultados(true)" title="Actualizar">🔄</button>
-        <button class="btn-notif" onclick="solicitarPermisoFCM()">🔔 Activar Notif</button>
-        <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()">🌙</button>        
+        <div class="tabs-principales">
+            <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
+            <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
+            <button class="m-tab" id="m-mijornada" onclick="setMain('mijornada')">📅 Mi Jornada</button>
+        </div>
     </div>
     <div class="sub-tabs" id="sub-calendarios">
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
@@ -274,13 +273,18 @@
     // Dark mode
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
-        const btn = document.getElementById('darkModeToggle');
-        btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        const isDark = document.body.classList.contains('dark-mode');
+        // Actualizar todos los botones con clase 'dark-mode-toggle' (puede haber más de uno)
+        document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
+            btn.textContent = isDark ? '☀️' : '🌙';
+        });
+        localStorage.setItem('darkMode', isDark);
     }
     if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
-        document.getElementById('darkModeToggle').textContent = '☀️';
+        document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
+            btn.textContent = '☀️';
+        });
     }
 
     function mostrarLoaderParcial(mostrar) {
@@ -807,6 +811,29 @@
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
         document.querySelector('.btn-chango')?.classList.add('active');
     };
+    function toggleFabMenu() {
+        const menu = document.getElementById('fabMenu');
+        menu.classList.toggle('show');
+    }
+
+    // Cerrar menú si se hace clic fuera de él
+    document.addEventListener('click', function(event) {
+        const container = document.querySelector('.fab-container');
+        const menu = document.getElementById('fabMenu');
+        if (container && !container.contains(event.target)) {
+            menu.classList.remove('show');
+        }
+    });
+
 </script>
+
+<div class="fab-container">
+    <button class="fab-btn" id="fabBtn" onclick="toggleFabMenu()">⚙️</button>
+    <div class="fab-menu" id="fabMenu">
+        <button class="fab-item" onclick="actualizarResultados(true)" title="Actualizar">🔄</button>
+        <button class="fab-item btn-notif-circle" onclick="solicitarPermisoFCM()" title="Activar notificaciones">🔔</button>
+        <button class="fab-item dark-mode-toggle" onclick="toggleDarkMode()" title="Modo oscuro">🌙</button>
+    </div>
+</div>
 </body>
 </html>
