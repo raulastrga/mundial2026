@@ -348,7 +348,7 @@
         return nombreIngles;
     }
 
-        async function actualizarResultados(manual = false) {
+    async function actualizarResultados(manual = false) {
         // Guardar estado anterior para comparar
         const estadoAnterior = JSON.parse(JSON.stringify(resultadosEnVivo));
         
@@ -384,32 +384,47 @@
                 }
             }
             
-            // Detectar cambios y enviar notificaciones
+            // Detectar cambios y enviar notificaciones (con nombres de changos)
             for (const key in nuevosResultados) {
                 const anterior = estadoAnterior[key];
                 const actual = nuevosResultados[key];
                 if (anterior && actual) {
-                    // Gol: cambio en el marcador (solo si ambos tienen goles)
+                    const [t1, t2] = key.split('-');
+                    // Obtener los changos dueños de cada equipo usando equiposDatos global
+                    const chango1 = equiposDatos[t1]?.d || 'Desconocido';
+                    const chango2 = equiposDatos[t2]?.d || 'Desconocido';
+                    
+                    // === GOL ===
                     if (anterior.g1 !== undefined && actual.g1 !== undefined && 
                         (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
-                        const [t1, t2] = key.split('-');
+                        
                         const nuevoGol = actual.g1 > (anterior.g1 || 0) ? t1 : 
                                          (actual.g2 > (anterior.g2 || 0) ? t2 : null);
                         if (nuevoGol) {
-                            const mensaje = `⚽ ${nuevoGol} anotó en ${t1} vs ${t2}`;
+                            const changoQueAnota = (nuevoGol === t1) ? chango1 : chango2;
+                            const changoRival = (nuevoGol === t1) ? chango2 : chango1;
+                            const mensaje = `⚽ ${changoQueAnota} anotó con ${nuevoGol}! (vs ${changoRival})`;
                             enviarNotificacionLocal('⚽ ¡GOL!', mensaje, 'gol');
                         }
                     }
-                    // Inicio de partido en vivo
+                    
+                    // === INICIO DE PARTIDO ===
                     if (anterior.status !== 'LIVE' && actual.status === 'LIVE') {
-                        const [t1, t2] = key.split('-');
-                        const mensaje = `🎺 El partido ${t1} vs ${t2} ha comenzado`;
+                        const mensaje = `🎺 Comienza ${t1} (${chango1}) vs ${t2} (${chango2})`;
                         enviarNotificacionLocal('🎺 Partido en vivo', mensaje, 'inicio');
                     }
-                    // Finalización
+                    
+                    // === FINAL DEL PARTIDO ===
                     if (anterior.status !== 'FINISHED' && actual.status === 'FINISHED') {
-                        const [t1, t2] = key.split('-');
-                        const mensaje = `🏁 Finalizado: ${t1} ${actual.g1} - ${actual.g2} ${t2}`;
+                        const resultado = `${actual.g1} - ${actual.g2}`;
+                        let mensaje = `🏁 Final: ${t1} ${resultado} ${t2}`;
+                        if (actual.g1 > actual.g2) {
+                            mensaje += ` – ¡Victoria para ${chango1}!`;
+                        } else if (actual.g2 > actual.g1) {
+                            mensaje += ` – ¡Victoria para ${chango2}!`;
+                        } else {
+                            mensaje += ` – Empate entre ${chango1} y ${chango2}`;
+                        }
                         enviarNotificacionLocal('🏁 Partido finalizado', mensaje, 'fin');
                     }
                 }
