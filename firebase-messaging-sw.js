@@ -16,10 +16,28 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-// Manejar mensajes cuando la app está en segundo plano
+// ========== EVENTOS PARA PWA (instalación y fetch básico) ==========
+self.addEventListener('install', event => {
+  console.log('[SW] Instalado');
+  self.skipWaiting(); // Activa el SW inmediatamente
+});
+
+self.addEventListener('activate', event => {
+  console.log('[SW] Activado');
+  event.waitUntil(clients.claim()); // Toma el control de las páginas sin recargar
+});
+
+// Opcional: respuesta básica offline (muestra un mensaje si no hay red)
+self.addEventListener('fetch', event => {
+  // No hacemos caching por ahora, solo permitimos que la red funcione normalmente
+  // pero es necesario tener el evento fetch para que el SW sea considerado "activo"
+  // y la PWA se pueda instalar.
+  event.respondWith(fetch(event.request));
+});
+
+// ========== MANEJO DE NOTIFICACIONES EN SEGUNDO PLANO ==========
 messaging.onBackgroundMessage((payload) => {
-  console.log('[firebase-messaging-sw.js] Mensaje en segundo plano:', payload);
-  
+  console.log('[SW] Mensaje en segundo plano:', payload);
   const notificationTitle = payload.notification?.title || payload.data?.title || 'Novedad del Mundial';
   const notificationOptions = {
     body: payload.notification?.body || payload.data?.body || '',
@@ -28,14 +46,12 @@ messaging.onBackgroundMessage((payload) => {
     vibrate: [200, 100, 200],
     data: payload.data || {}
   };
-  
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-// Opcional: manejar clic en notificación
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   event.waitUntil(
-    clients.openWindow('/') // Abre tu página cuando se hace clic
+    clients.openWindow('/')
   );
 });
