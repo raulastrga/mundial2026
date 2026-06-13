@@ -2,7 +2,7 @@
   "name": "Quiniela Mundial 2026",
   "short_name": "Mundial 2026",
   "description": "Sigue los partidos, resultados y estadísticas de la quiniela del Mundial 2026",
-  "start_url": "/",
+  "start_url": "/mundial2026",
   "display": "standalone",
   "theme_color": "#0a2540",
   "background_color": "#0a2540",
