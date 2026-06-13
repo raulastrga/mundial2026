@@ -214,6 +214,12 @@
     let intervalAutoActualizar;
     let partidosPorChangoDetalle = {};
 
+    // Variables para estado anterior de estadísticas (notificaciones)
+    let estadisticasAnteriores = null;      // copia de estadisticasChangos
+    let rachasAnteriores = null;            // copia de rachas por chango
+    let liderAnterior = null;               // nombre del chango líder anterior
+    let ultimoPartidoDelDia = {};           // para control de fin de jornada
+
     const firebaseConfig = {
         apiKey: "AIzaSyDwm3uLITtCHYmphoDBUgeNqCjU3yQsJ7A",
         authDomain: "mundial2026-97d95.firebaseapp.com",
@@ -429,6 +435,111 @@
                     }
                 }
             }
+
+                        // ---- NOTIFICACIONES DE ESTADÍSTICAS (1,2,3,6,8) ----
+            // Calcular estadísticas actuales a partir de los nuevos resultados
+            const nuevasStatsCompleto = calcularStatsDesdeResultados(nuevosResultados, equiposDatos, nuevosHorarios);
+            const nuevasStats = nuevasStatsCompleto.stats;
+            const nuevasRachas = nuevasStatsCompleto.rachas;
+            
+            // Ordenar changos por puntos para detectar líder
+            const ordenStats = Object.values(nuevasStats).sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
+            const nuevoLider = ordenStats[0]?.nombre;
+            
+            // 1. Cambio de liderato
+            if (liderAnterior && nuevoLider && liderAnterior !== nuevoLider) {
+                const nuevoPts = nuevasStats[nuevoLider].pts;
+                const anteriorPts = estadisticasAnteriores?.[liderAnterior]?.pts || 0;
+                enviarNotificacionLocal('🏆 ¡Nuevo líder!', `${nuevoLider} supera a ${liderAnterior} con ${nuevoPts} puntos (antes ${anteriorPts})`, 'general');
+            }
+            
+            // 2. Rachas de victorias o derrotas (solo si hay estadísticas anteriores)
+            if (rachasAnteriores) {
+                for (let chango of ['Jona','David','Raúl','Sergio']) {
+                    const rachaActual = nuevasRachas[chango] || [];
+                    const rachaAnterior = rachasAnteriores[chango] || [];
+                    // Detectar nueva racha de 3 victorias consecutivas
+                    if (rachaActual.length >= 3 && rachaActual.slice(-3).every(r => r === 'G') &&
+                        (!rachaAnterior.length || rachaAnterior.slice(-3).some(r => r !== 'G'))) {
+                        enviarNotificacionLocal('🔥 ¡Racha imparable!', `${chango} lleva 3 victorias consecutivas`, 'general');
+                    }
+                    // Detectar 2 derrotas consecutivas
+                    if (rachaActual.length >= 2 && rachaActual.slice(-2).every(r => r === 'P') &&
+                        (!rachaAnterior.length || rachaAnterior.slice(-2).some(r => r !== 'P'))) {
+                        enviarNotificacionLocal('⚠️ Mala racha', `${chango} suma 2 derrotas seguidas`, 'general');
+                    }
+                }
+            }
+            
+            // 3. Hitos de goles (múltiplos de 5)
+            if (estadisticasAnteriores) {
+                for (let chango of ['Jona','David','Raúl','Sergio']) {
+                    const gfActual = nuevasStats[chango].gf;
+                    const gfAnterior = estadisticasAnteriores[chango]?.gf || 0;
+                    if (gfActual > gfAnterior && gfActual % 5 === 0 && gfActual !== gfAnterior) {
+                        enviarNotificacionLocal('🎯 Hito de goles', `${chango} alcanzó los ${gfActual} goles a favor`, 'general');
+                    }
+                }
+            }
+            
+            // 6. Remontada en último minuto (detectar goles en partidos con minute > 85)
+            for (const key in nuevosResultados) {
+                const anterior = estadoAnterior[key];
+                const actual = nuevosResultados[key];
+                if (anterior && actual && actual.isLive && actual.minute && actual.minute >= 85) {
+                    // Si hubo cambio de marcador y el resultado anterior no era victoria para el mismo equipo
+                    if (anterior.g1 !== undefined && actual.g1 !== undefined && 
+                        (anterior.g1 !== actual.g1 || anterior.g2 !== actual.g2)) {
+                        const [t1, t2] = key.split('-');
+                        const ganaLocalActual = actual.g1 > actual.g2;
+                        const ganaVisitanteActual = actual.g2 > actual.g1;
+                        const anteriorLocalGanaba = anterior.g1 > anterior.g2;
+                        const anteriorVisitanteGanaba = anterior.g2 > anterior.g1;
+                        if ((!anteriorLocalGanaba && ganaLocalActual) || (!anteriorVisitanteGanaba && ganaVisitanteActual)) {
+                            const equipoGanador = ganaLocalActual ? t1 : t2;
+                            const changoGanador = equiposDatos[equipoGanador]?.d || 'desconocido';
+                            enviarNotificacionLocal('⏱️ Remontada agónica', `${equipoGanador} (${changoGanador}) dio vuelta al partido en el minuto ${actual.minute}`, 'gol');
+                        }
+                    }
+                }
+            }
+            
+            // 8. Fin de jornada: detectar si se acabó el último partido de un día
+            // Primero, recopilar partidos finalizados hoy (fecha del partido igual a hoy)
+            const hoyStr = new Date().toDateString();
+            const partidosHoy = [];
+            for (const key in nuevosResultados) {
+                const partido = nuevosResultados[key];
+                if (partido.status === 'FINISHED') {
+                    const fechaPartido = getHorario(key.split('-')[0], key.split('-')[1]);
+                    if (fechaPartido && fechaPartido.toDateString() === hoyStr) {
+                        partidosHoy.push(key);
+                    }
+                }
+            }
+            // Verificar si todos los partidos de hoy (según rawSchedule) ya finalizaron
+            // Para simplificar, comprobamos si no quedan partidos SCHEDULED o LIVE con fecha hoy
+            let quedanPartidosHoy = false;
+            for (const key in nuevosResultados) {
+                const partido = nuevosResultados[key];
+                const fechaPartido = getHorario(key.split('-')[0], key.split('-')[1]);
+                if (fechaPartido && fechaPartido.toDateString() === hoyStr && 
+                    (partido.status === 'SCHEDULED' || partido.status === 'LIVE')) {
+                    quedanPartidosHoy = true;
+                    break;
+                }
+            }
+            if (!quedanPartidosHoy && partidosHoy.length > 0 && (!ultimoPartidoDelDia[hoyStr] || ultimoPartidoDelDia[hoyStr] !== partidosHoy.length)) {
+                // Enviar resumen de la jornada
+                const totalGoles = Object.values(nuevosResultados).reduce((acc, p) => acc + (p.g1 || 0) + (p.g2 || 0), 0);
+                enviarNotificacionLocal('📆 Fin de la jornada', `Hoy hubo ${partidosHoy.length} partidos, ${totalGoles} goles. Líder: ${nuevoLider} (${nuevasStats[nuevoLider]?.pts} pts)`, 'general');
+                ultimoPartidoDelDia[hoyStr] = partidosHoy.length;
+            }
+            
+            // Actualizar variables de estado anterior
+            estadisticasAnteriores = JSON.parse(JSON.stringify(nuevasStats));
+            rachasAnteriores = JSON.parse(JSON.stringify(nuevasRachas));
+            liderAnterior = nuevoLider;
             
             resultadosEnVivo = nuevosResultados;
             horariosJSON = nuevosHorarios;
@@ -462,6 +573,49 @@
         const revKey = `${t2}-${t1}`;
         if (horariosJSON[revKey]) return horariosJSON[revKey];
         return null;
+    }
+
+    // Calcula estadísticas de changos y rachas a partir de los resultados en vivo
+    function calcularStatsDesdeResultados(resVivo, equiposData, horariosMap) {
+        // Inicializar estadísticas
+        let stats = {
+            Jona: { nombre: 'Jona', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 },
+            David: { nombre: 'David', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 },
+            Raúl: { nombre: 'Raúl', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 },
+            Sergio: { nombre: 'Sergio', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0, pts:0 }
+        };
+        // Recopilar partidos finalizados para rachas
+        let partidosFinalizados = [];
+        for (const key in resVivo) {
+            const partido = resVivo[key];
+            if (partido.status !== 'FINISHED' || partido.g1 === undefined) continue;
+            let [t1, t2] = key.split('-');
+            if (!equiposData[t1] || !equiposData[t2]) continue;
+            let g1 = partido.g1, g2 = partido.g2;
+            let c1 = equiposData[t1].d, c2 = equiposData[t2].d;
+            let fecha = horariosMap[key] || horariosMap[`${t2}-${t1}`] || new Date();
+            partidosFinalizados.push({ t1, t2, g1, g2, fecha, c1, c2 });
+            // acumular estadísticas
+            stats[c1].pj++; stats[c1].gf += g1; stats[c1].gc += g2;
+            stats[c2].pj++; stats[c2].gf += g2; stats[c2].gc += g1;
+            if (g1 > g2) { stats[c1].pg++; stats[c1].pts += 3; stats[c2].pp++; }
+            else if (g1 < g2) { stats[c2].pg++; stats[c2].pts += 3; stats[c1].pp++; }
+            else { stats[c1].pe++; stats[c1].pts += 1; stats[c2].pe++; stats[c2].pts += 1; }
+        }
+        // Calcular rachas (ordenar por fecha)
+        let partidosPorChango = { Jona: [], David: [], Raúl: [], Sergio: [] };
+        for (let p of partidosFinalizados) {
+            partidosPorChango[p.c1].push({ chango: p.c1, resultado: p.g1 > p.g2 ? 'G' : (p.g1 < p.g2 ? 'P' : 'E'), fecha: p.fecha });
+            partidosPorChango[p.c2].push({ chango: p.c2, resultado: p.g2 > p.g1 ? 'G' : (p.g2 < p.g1 ? 'P' : 'E'), fecha: p.fecha });
+        }
+        for (let c in partidosPorChango) {
+            partidosPorChango[c].sort((a,b) => a.fecha - b.fecha);
+        }
+        let rachas = {};
+        for (let c in partidosPorChango) {
+            rachas[c] = partidosPorChango[c].slice(-5).map(p => p.resultado);
+        }
+        return { stats, rachas };
     }
 
     function renderizarInsigniaEstado(statusObj) {
@@ -858,11 +1012,18 @@
     }
 
     window.onload = async () => {
+        // Inicializar estadísticas anteriores (vacías)
+        estadisticasAnteriores = null;
+        rachasAnteriores = null;
+        liderAnterior = null;
+
         if (!('Notification' in window)) {
             const notifBtn = document.querySelector('.fab-item.btn-notif-circle');
             if (notifBtn) notifBtn.style.display = 'none';
         }
+
         await registrarServiceWorker();
+        
         actualizarResultados()
             .catch(err => console.error("Error en carga inicial:", err))
             .finally(() => {
