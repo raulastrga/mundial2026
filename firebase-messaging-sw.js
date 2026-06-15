@@ -2,40 +2,60 @@
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
 
-// 🔴 REEMPLAZA con tu configuración de Firebase 🔴
-const firebaseConfig = {
-  apiKey: "AIzaSyDwm3uLITtCHYmphoDBUgeNqCjU3yQsJ7A",
-  authDomain: "mundial2026-97d95.firebaseapp.com",
-  projectId: "mundial2026-97d95",
-  storageBucket: "mundial2026-97d95.firebasestorage.app",
-  messagingSenderId: "14676493794",
-  appId: "1:14676493794:web:edc237cefb306eb3f2e5bb",
-  measurementId: "G-DV2RNSV716"
-};
+// ========== DATOS OFUSCADOS (reemplaza con los valores que obtuviste) ==========
+const OBFUSCATED_CONFIG = "NksiHAg9ACpHWVAkPRtTY0tyViBaNiAoIhEQLTofFRwOdnJnUUQDGAAGNEUcAhYpRSRWTRBRR0JJCQYuDQgYR2lHDgcLEAhTXAAGE3tEelsFT1B9AwoAABYAQVVTRlFjCiwBQ1pHIxcMGAAXFXtUEAwDIBwtCAgXCWFVUURITVZWCQcUDW8aNwMTFwI2JxYRDhEVEAoQW1QjDSoNDURVYVNOS1IQWAceVF9TKAsiHwQFETwXAhUAWgBCQBAaAyAMMB8AEQw9AjAXCxAEQHlWFBtvWHdaVkBRalZUS1FWTRBRQkZoKUt5TlBMVGdTVERRTVIFCQYMVigLeQkFFVdgUgAXAxZSAgZXVBIrWyZZAxRHf0cOFwQHFEBVX1NPOSAnTltUIn4hNUA3OjJkBwMAAzA="; // string largo
+const SECRET_KEY = "MiClaveSecreta2026!";
 
-firebase.initializeApp(firebaseConfig);
+// Función de desofuscación
+function xorDecrypt(encryptedText, key) {
+  let result = '';
+  for (let i = 0; i < encryptedText.length; i++) {
+    const charCode = encryptedText.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+    result += String.fromCharCode(charCode);
+  }
+  return result;
+}
+
+function getFirebaseConfig() {
+  try {
+    // Decodificar Base64 -> texto cifrado
+    const encrypted = atob(OBFUSCATED_CONFIG);
+    // Descifrar XOR -> JSON string
+    const decrypted = xorDecrypt(encrypted, SECRET_KEY);
+    // Parsear objeto
+    return JSON.parse(decrypted);
+  } catch (error) {
+    console.error('Error al desofuscar la configuración:', error);
+    return null;
+  }
+}
+
+// ========== INICIALIZACIÓN ==========
+const firebaseConfig = getFirebaseConfig();
+if (firebaseConfig) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  console.error('No se pudo recuperar la configuración de Firebase');
+}
+
 const messaging = firebase.messaging();
 
-// ========== EVENTOS PARA PWA (instalación y fetch básico) ==========
+// ========== EVENTOS PARA PWA ==========
 self.addEventListener('install', event => {
   console.log('[SW] Instalado');
-  self.skipWaiting(); // Activa el SW inmediatamente
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   console.log('[SW] Activado');
-  event.waitUntil(clients.claim()); // Toma el control de las páginas sin recargar
+  event.waitUntil(clients.claim());
 });
 
-// Opcional: respuesta básica offline (muestra un mensaje si no hay red)
 self.addEventListener('fetch', event => {
-  // No hacemos caching por ahora, solo permitimos que la red funcione normalmente
-  // pero es necesario tener el evento fetch para que el SW sea considerado "activo"
-  // y la PWA se pueda instalar.
   event.respondWith(fetch(event.request));
 });
 
-// ========== MANEJO DE NOTIFICACIONES EN SEGUNDO PLANO ==========
+// ========== NOTIFICACIONES EN SEGUNDO PLANO ==========
 messaging.onBackgroundMessage((payload) => {
   console.log('[SW] Mensaje en segundo plano:', payload);
   const notificationTitle = payload.notification?.title || payload.data?.title || 'Novedad del Mundial';
@@ -51,7 +71,5 @@ messaging.onBackgroundMessage((payload) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow('/')
-  );
+  event.waitUntil(clients.openWindow('/'));
 });

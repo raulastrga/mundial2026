@@ -149,16 +149,34 @@
     let liderAnterior = null;
     let ultimoPartidoDelDia = {};
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDwm3uLITtCHYmphoDBUgeNqCjU3yQsJ7A",
-        authDomain: "mundial2026-97d95.firebaseapp.com",
-        projectId: "mundial2026-97d95",
-        storageBucket: "mundial2026-97d95.firebasestorage.app",
-        messagingSenderId: "14676493794",
-        appId: "1:14676493794:web:edc237cefb306eb3f2e5bb",
-        measurementId: "G-DV2RNSV716"
-    };
+    const OBFUSCATED_CONFIG = "NksiHAg9ACpHWVAkPRtTY0tyViBaNiAoIhEQLTofFRwOdnJnUUQDGAAGNEUcAhYpRSRWTRBRR0JJCQYuDQgYR2lHDgcLEAhTXAAGE3tEelsFT1B9AwoAABYAQVVTRlFjCiwBQ1pHIxcMGAAXFXtUEAwDIBwtCAgXCWFVUURITVZWCQcUDW8aNwMTFwI2JxYRDhEVEAoQW1QjDSoNDURVYVNOS1IQWAceVF9TKAsiHwQFETwXAhUAWgBCQBAaAyAMMB8AEQw9AjAXCxAEQHlWFBtvWHdaVkBRalZUS1FWTRBRQkZoKUt5TlBMVGdTVERRTVIFCQYMVigLeQkFFVdgUgAXAxZSAgZXVBIrWyZZAxRHf0cOFwQHFEBVX1NPOSAnTltUIn4hNUA3OjJkBwMAAzA="; // string largo
+    const SECRET_KEY = "MiClaveSecreta2026!";
 
+    // Función de desofuscación
+    function xorDecrypt(encryptedText, key) {
+        let result = '';
+        for (let i = 0; i < encryptedText.length; i++) {
+            const charCode = encryptedText.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            result += String.fromCharCode(charCode);
+        }
+        return result;
+    }
+
+    function getFirebaseConfig() {
+        try {
+            // Decodificar Base64 -> texto cifrado
+            const encrypted = atob(OBFUSCATED_CONFIG);
+            // Descifrar XOR -> JSON string
+            const decrypted = xorDecrypt(encrypted, SECRET_KEY);
+            // Parsear objeto
+            return JSON.parse(decrypted);
+        } catch (error) {
+            console.error('Error al desofuscar la configuración:', error);
+            return null;
+        }
+    }
+
+    const firebaseConfig = getFirebaseConfig();
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
