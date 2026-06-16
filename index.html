@@ -24,6 +24,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -103,15 +104,22 @@
     <!-- Vista Por Chango (Resultados) -->
     <div id="vista-res-chango" class="vista">
         <div class="seccion-contenedor">
-            <div class="flex-between">
-                <h3 class="seccion-titulo" style="margin-bottom:0;">🏆 Rendimiento Global (Puntos)
-                <button class="btn-wa" onclick="compartirWhatsApp()" style="margin-left: 20px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.8 5.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                    Compartir
-                </button>
-                </h3>
+            <h3 class="seccion-titulo">📈 Evolución de Puntos</h3>
+            <div style="height: 300px; position: relative;">
+                <canvas id="chart-evolucion"></canvas>
             </div>
-            <div id="grafica-changos"></div>
+        </div>
+        <div class="seccion-grid-charts">
+            <div class="seccion-contenedor">
+                <h3 class="seccion-titulo">⚽ Balance de Goles</h3>
+                <div style="height: 250px; position: relative;">
+                    <canvas id="chart-goles"></canvas>
+                </div>
+            </div>
+            <div class="seccion-contenedor">
+                <h3 class="seccion-titulo">🏆 Rendimiento Global</h3>
+                <div id="grafica-changos"></div>
+            </div>
         </div>
         <div class="seccion-contenedor">
             <h3 class="seccion-titulo">📊 Tabla General</h3>
@@ -140,7 +148,10 @@
     // ==================== LÓGICA PRINCIPAL ====================
     let resultadosEnVivo = {};
     let horariosJSON = {};
+    let sedesJSON = {};
     let intervalAutoActualizar;
+    let chartEvolucion = null;
+    let chartGoles = null;
     let partidosPorChangoDetalle = {};
 
     // Variables para estado anterior de estadísticas (notificaciones)
@@ -282,6 +293,108 @@
         return nombreIngles;
     }
 
+    function renderizarGraficas(resultadosFinalizados, equiposDatos) {
+        const changos = ['Jona', 'David', 'Raúl', 'Sergio'];
+        
+        // Colores que coinciden con style.css
+        const colores = {
+            'Jona': '#ef4444',   // Rojo
+            'David': '#10b981',  // Esmeralda
+            'Raúl': '#3b82f6',   // Azul
+            'Sergio': '#f59e0b'  // Ámbar
+        };
+
+        // 1. Evolución de Puntos
+        const resOrdenados = [...resultadosFinalizados].sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+        let puntosAcumulados = { Jona: [0], David: [0], Raúl: [0], Sergio: [0] };
+
+        resOrdenados.forEach(res => {
+            const c1 = equiposDatos[res.t1]?.d;
+            const c2 = equiposDatos[res.t2]?.d;
+            
+            const lastPts = {
+                Jona: puntosAcumulados.Jona[puntosAcumulados.Jona.length - 1],
+                David: puntosAcumulados.David[puntosAcumulados.David.length - 1],
+                Raúl: puntosAcumulados.Raúl[puntosAcumulados.Raúl.length - 1],
+                Sergio: puntosAcumulados.Sergio[puntosAcumulados.Sergio.length - 1]
+            };
+
+            puntosAcumulados.Jona.push(lastPts.Jona + (c1 === 'Jona' ? (res.g1 > res.g2 ? 3 : res.g1 === res.g2 ? 1 : 0) : (c2 === 'Jona' ? (res.g2 > res.g1 ? 3 : res.g1 === res.g2 ? 1 : 0) : 0)));
+            puntosAcumulados.David.push(lastPts.David + (c1 === 'David' ? (res.g1 > res.g2 ? 3 : res.g1 === res.g2 ? 1 : 0) : (c2 === 'David' ? (res.g2 > res.g1 ? 3 : res.g1 === res.g2 ? 1 : 0) : 0)));
+            puntosAcumulados.Raúl.push(lastPts.Raúl + (c1 === 'Raúl' ? (res.g1 > res.g2 ? 3 : res.g1 === res.g2 ? 1 : 0) : (c2 === 'Raúl' ? (res.g2 > res.g1 ? 3 : res.g1 === res.g2 ? 1 : 0) : 0)));
+            puntosAcumulados.Sergio.push(lastPts.Sergio + (c1 === 'Sergio' ? (res.g1 > res.g2 ? 3 : res.g1 === res.g2 ? 1 : 0) : (c2 === 'Sergio' ? (res.g2 > res.g1 ? 3 : res.g1 === res.g2 ? 1 : 0) : 0)));
+        });
+
+        const labels = puntosAcumulados.Jona.map((_, i) => i === 0 ? 'Ini' : `P${i}`);
+
+        if (chartEvolucion) chartEvolucion.destroy();
+        const ctxEvol = document.getElementById('chart-evolucion').getContext('2d');
+        chartEvolucion = new Chart(ctxEvol, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: changos.map(ch => ({
+                    label: ch,
+                    data: puntosAcumulados[ch],
+                    borderColor: colores[ch],
+                    backgroundColor: colores[ch] + '22',
+                    tension: 0.3,
+                    pointRadius: 2
+                }))
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } },
+                scales: { 
+                    y: { beginAtZero: true, ticks: { stepSize: 3, font: { size: 10 } } },
+                    x: { ticks: { font: { size: 9 } } }
+                }
+            }
+        });
+
+        // 2. Balance de Goles
+        let golesFavor = { Jona: 0, David: 0, Raúl: 0, Sergio: 0 };
+        let golesContra = { Jona: 0, David: 0, Raúl: 0, Sergio: 0 };
+
+        resultadosFinalizados.forEach(res => {
+            const c1 = equiposDatos[res.t1]?.d;
+            const c2 = equiposDatos[res.t2]?.d;
+            if (c1) { golesFavor[c1] += res.g1; golesContra[c1] += res.g2; }
+            if (c2) { golesFavor[c2] += res.g2; golesContra[c2] += res.g1; }
+        });
+
+        if (chartGoles) chartGoles.destroy();
+        const ctxGoles = document.getElementById('chart-goles').getContext('2d');
+        chartGoles = new Chart(ctxGoles, {
+            type: 'bar',
+            data: {
+                labels: changos,
+                datasets: [
+                    {
+                        label: 'Favor',
+                        data: changos.map(ch => golesFavor[ch]),
+                        backgroundColor: '#10b981'
+                    },
+                    {
+                        label: 'Contra',
+                        data: changos.map(ch => golesContra[ch]),
+                        backgroundColor: '#ef4444'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } },
+                scales: { 
+                    y: { beginAtZero: true, ticks: { font: { size: 10 } } },
+                    x: { ticks: { font: { size: 10 } } }
+                }
+            }
+        });
+    }
+
     async function actualizarResultados(manual = false) {
         const estadoAnterior = JSON.parse(JSON.stringify(resultadosEnVivo));
         if (manual) {
@@ -295,6 +408,7 @@
             const data = await response.json();
             const nuevosResultados = {};
             const nuevosHorarios = {};
+            const sedesJSON_tmp = {};
             for (const ronda of data) {
                 if (!ronda.tournaments || !Array.isArray(ronda.tournaments)) continue;
                 for (const m of ronda.tournaments) {
@@ -306,6 +420,7 @@
                     const isLive = ['PLAYING', 'LIVE', 'IN_PROGRESS'].includes(status);
                     const key = `${local}-${visita}`;
                     if (m.date) nuevosHorarios[key] = new Date(m.date);
+                    if (m.venueCity) sedesJSON_tmp[key] = m.venueCity;
                     if (isComplete) {
                         nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'FINISHED', minute: null, isLive: false };
                     } else if (isLive && m.homeScore !== null && m.awayScore !== null) {
@@ -430,6 +545,7 @@
             
             resultadosEnVivo = nuevosResultados;
             horariosJSON = nuevosHorarios;
+            sedesJSON = sedesJSON_tmp;
             construirInterfaz();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
@@ -491,7 +607,7 @@
         }
         for (let c in partidosPorChango) partidosPorChango[c].sort((a,b) => a.fecha - b.fecha);
         let rachas = {};
-        for (let c in partidosPorChango) rachas[c] = partidosPorChango[c].slice(-5).map(p => p.resultado);
+        for (let c in partidosPorChango) rachas[c] = partidosPorChango[c].map(p => p.resultado);
         return { stats, rachas };
     }
 
@@ -561,7 +677,7 @@
         }
         for (let c in partidosPorChangoFecha) partidosPorChangoFecha[c].sort((a,b) => a.fecha - b.fecha);
         let rachas = {};
-        for (let c in partidosPorChangoFecha) rachas[c] = partidosPorChangoFecha[c].slice(-5).map(p => p.resultado);
+        for (let c in partidosPorChangoFecha) rachas[c] = partidosPorChangoFecha[c].map(p => p.resultado);
         let mayorGoleadaFavor = {}, mayorGoleadaContra = {};
         for (let c in estadisticasChangos) {
             mayorGoleadaFavor[c] = { dif: 0, rival: '' };
@@ -587,32 +703,27 @@
         let html = '<div class="stats-grid changos-grid">';
         const changos = Object.values(estadisticasChangos).sort((a,b)=>b.pts - a.pts);
         for (let c of changos) {
-            const racha = avanzadas.rachas[c.nombre] || [];
-            const rachaHtml = `<div class="rachas">${racha.map(r => `<span class="racha-item ${r==='G'?'racha-win':r==='E'?'racha-draw':'racha-loss'}">${r==='G'?'✅':r==='E'?'➖':'❌'}</span>`).join('')}${racha.length===0?'—':''}</div>`;
+            const rachaCompleta = avanzadas.rachas[c.nombre] || [];
+            const rachaUltimos5 = rachaCompleta.slice(-5);
+            const rachaAnterior = rachaCompleta.slice(0, -5);
+            
+            let rachaHtml = `<div class="rachas">${rachaUltimos5.map(r => `<span class="racha-item ${r==='G'?'racha-win':r==='E'?'racha-draw':'racha-loss'}">${r==='G'?'✅':r==='E'?'➖':'❌'}</span>`).join('')}${rachaUltimos5.length===0?'—':''}</div>`;
+            
+            if (rachaAnterior.length > 0) {
+                rachaHtml += `
+                <details class="historial-racha-details">
+                    <summary>Ver historial completo</summary>
+                    <div class="rachas rachas-full">
+                        ${rachaAnterior.map(r => `<span class="racha-item ${r==='G'?'racha-win':r==='E'?'racha-draw':'racha-loss'}">${r==='G'?'✅':r==='E'?'➖':'❌'}</span>`).join('')}
+                    </div>
+                </details>`;
+            }
+
             const mayorF = avanzadas.mayorGoleadaFavor[c.nombre];
             const mayorC = avanzadas.mayorGoleadaContra[c.nombre];
-            html += `<div class="stat-card"><h4>🐒 ${c.nombre}</h4><div><strong>Racha:</strong> ${rachaHtml}</div><div><strong>Mayor goleada a favor:</strong> ${mayorF.dif>0 ? `${mayorF.dif} goles vs ${mayorF.rival}` : 'Ninguna'}</div><div><strong>Mayor goleada en contra:</strong> ${mayorC.dif>0 ? `${mayorC.dif} goles vs ${mayorC.rival}` : 'Ninguna'}</div></div>`;
+            html += `<div class="stat-card"><h4>🐒 ${c.nombre}</h4><div><strong>Racha (últimos 5):</strong> ${rachaHtml}</div><div><strong>Mayor goleada a favor:</strong> ${mayorF.dif>0 ? `${mayorF.dif} goles vs ${mayorF.rival}` : 'Ninguna'}</div><div><strong>Mayor goleada en contra:</strong> ${mayorC.dif>0 ? `${mayorC.dif} goles vs ${mayorC.rival}` : 'Ninguna'}</div></div>`;
         }
         html += '</div>';
-        html += '<div class="grupos-container"><h4 class="subtitulo-estadisticas">📊 Rendimiento por Grupo</h4><div class="grupos-grid">';
-        for (let g in gruposStats) {
-            const puntosPorChango = {};
-            for (let eq of gruposStats[g]) {
-                const dueño = eq.dueño;
-                if (!puntosPorChango[dueño]) puntosPorChango[dueño] = { pts: 0, pj: 0 };
-                puntosPorChango[dueño].pts += eq.pts;
-                puntosPorChango[dueño].pj += eq.pj;
-            }
-            const changosGrupo = Object.keys(puntosPorChango).sort((a,b) => puntosPorChango[b].pts - puntosPorChango[a].pts);
-            html += `<div class="grupo-card"><div class="grupo-header">Grupo ${g}</div><div class="grupo-changos">`;
-            for (let ch of changosGrupo) {
-                const datos = puntosPorChango[ch];
-                const colorClass = `d-${ch}`;
-                html += `<div class="chango-puntos"><span class="badge-chango ${colorClass}">${ch}</span> <strong>${datos.pts}</strong> pts <span class="pj-chango">(${datos.pj} PJ)</span></div>`;
-            }
-            html += `</div></div>`;
-        }
-        html += `</div></div>`;
         return html;
     }
 
@@ -818,13 +929,17 @@
                 let res = getResult(pt.t1, pt.t2);
                 let estadoInsignia = renderizarInsigniaEstado(res);
                 let scoreHtml = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div class="score">${res.g1} - ${res.g2}</div>` : '<div class="vs">VS</div>';
+
+                let sede = sedesJSON[`${pt.t1}-${pt.t2}`] || sedesJSON[`${pt.t2}-${pt.t1}`] || "";
+                let sedeHtml = sede ? `<div class="partido-sede">📍 ${sede}</div>` : '';
+
                 let clsAd = '';
                 if (pt.finalizado) clsAd = 'partido-pasado';
                 else if (pt.isLive) clsAd = 'partido-vivo';
                 else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) { clsAd = 'proximo-partido'; encontroProximo = true; }
                 let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${h2hHtml}</div>`;
+                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${sedeHtml}${h2hHtml}</div>`;
             }
             gridHTML += '</div>';
             let header = `<div class="fecha-header">🗓️ ${dia} 2026</div>`;
@@ -881,6 +996,7 @@
         const avanzadas = calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados);
         document.getElementById('stats-avanzadas-container').innerHTML = generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats);
         document.getElementById('curiosidades-container').innerHTML = generarCuriosidades(estadisticasChangos, avanzadas);
+        renderizarGraficas(resultadosFinalizados, equiposDatos);
 
         const changoActivo = document.querySelector('.btn-chango.active')?.getAttribute('data-chango') || 'Jona';
         renderizarMiJornada(changoActivo);

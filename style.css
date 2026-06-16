@@ -222,6 +222,25 @@ h1 {
     padding-bottom: 10px;
     font-weight: 600;
 }
+
+.partido-sede {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #475569;
+    background: rgba(0,0,0,0.03);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-style: italic;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+body.dark-mode .partido-sede {
+    color: #94a3b8;
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.1);
+}
+
 .p-teams {
     display: flex;
     align-items: center;
@@ -672,6 +691,40 @@ body.dark-mode .p-mini-fecha {
 .racha-draw { background: #f59e0b; color: white; }
 .racha-loss { background: #ef4444; color: white; }
 
+/* Estilos para el historial de racha expandible */
+.historial-racha-details {
+    margin-top: 8px;
+}
+.historial-racha-details summary {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #6366f1;
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+}
+.historial-racha-details summary:hover {
+    color: #4f46e5;
+}
+.historial-racha-details summary::before {
+    content: "📁";
+    font-size: 0.8rem;
+}
+.historial-racha-details[open] summary::before {
+    content: "📂";
+}
+.historial-racha-details[open] summary {
+    margin-bottom: 8px;
+}
+.rachas-full {
+    margin: 0 !important;
+    padding: 4px !important;
+    background: rgba(0,0,0,0.02) !important;
+}
+
 /* Mejorar el texto de "Mayor goleada..." */
 .stat-card div {
     font-size: 0.85rem;
@@ -689,6 +742,15 @@ body.dark-mode .stat-card h4 {
 }
 body.dark-mode .rachas {
     background: rgba(255,255,255,0.05);
+}
+body.dark-mode .historial-racha-details summary {
+    color: #818cf8;
+}
+body.dark-mode .historial-racha-details summary:hover {
+    color: #a5b4fc;
+}
+body.dark-mode .rachas-full {
+    background: rgba(255,255,255,0.02) !important;
 }
 body.dark-mode .racha-item {
     background: #1e293b;
@@ -761,6 +823,17 @@ body.dark-mode .racha-loss { background: #ef4444; color: white; }
     color: #64748b;
     margin-left: auto;
 }
+.seccion-grid-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+@media (max-width: 600px) {
+    .seccion-grid-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
 .curiosidades-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
