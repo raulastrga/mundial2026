@@ -683,6 +683,9 @@
             mayorGoleadaFavor[c] = { dif: 0, rival: '' };
             mayorGoleadaContra[c] = { dif: 0, rival: '' };
         }
+        let mayorPaliza = { dif: -1, t1: '', t2: '', g1: 0, g2: 0, d1: '', d2: '' };
+        let partidoMasGoles = { total: -1, t1: '', t2: '', g1: 0, g2: 0, d1: '', d2: '' };
+
         for (let res of resultadosFinalizados) {
             const c1 = equiposDatos[res.t1]?.d, c2 = equiposDatos[res.t2]?.d;
             if (c1) {
@@ -695,8 +698,36 @@
                 if (dif > mayorGoleadaFavor[c2].dif) { mayorGoleadaFavor[c2].dif = dif; mayorGoleadaFavor[c2].rival = res.t1; }
                 if (-dif > mayorGoleadaContra[c2].dif) { mayorGoleadaContra[c2].dif = -dif; mayorGoleadaContra[c2].rival = res.t1; }
             }
+
+            // Mayor paliza del torneo (diferencia de goles)
+            let difAbs = Math.abs(res.g1 - res.g2);
+            if (difAbs > mayorPaliza.dif || (difAbs === mayorPaliza.dif && (res.g1 + res.g2) > (mayorPaliza.g1 + mayorPaliza.g2))) {
+                mayorPaliza = {
+                    dif: difAbs,
+                    t1: res.t1,
+                    t2: res.t2,
+                    g1: res.g1,
+                    g2: res.g2,
+                    d1: c1 || '?',
+                    d2: c2 || '?'
+                };
+            }
+
+            // Partido con más goles del torneo
+            let totalGoles = res.g1 + res.g2;
+            if (totalGoles > partidoMasGoles.total) {
+                partidoMasGoles = {
+                    total: totalGoles,
+                    t1: res.t1,
+                    t2: res.t2,
+                    g1: res.g1,
+                    g2: res.g2,
+                    d1: c1 || '?',
+                    d2: c2 || '?'
+                };
+            }
         }
-        return { rachas, mayorGoleadaFavor, mayorGoleadaContra };
+        return { rachas, mayorGoleadaFavor, mayorGoleadaContra, mayorPaliza, partidoMasGoles };
     }
 
     function generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats) {
@@ -734,21 +765,109 @@
         const maxEmpates = changos.reduce((max, c) => c.pe > max.pe ? c : max, { pe: -1 });
         const mejorDG = changos.reduce((max, c) => (c.gf-c.gc) > (max.gf-max.gc) ? c : max, { gf:0, gc:0 });
         const peorDG = changos.reduce((min, c) => (c.gf-c.gc) < (min.gf-min.gc) ? c : min, { gf:0, gc:0 });
+        
         const curiosidadesList = [
-            { icon: '⚽', title: 'Máximo goleador', value: maxGoles.nombre, detail: `${maxGoles.gf} goles` },
-            { icon: '🛡️', title: 'Mejor defensa', value: minGolesRecibidos.nombre, detail: `${minGolesRecibidos.gc} goles en contra` },
-            { icon: '🤝', title: 'Rey del empate', value: maxEmpates.nombre, detail: `${maxEmpates.pe} empates` },
-            { icon: '📈', title: 'Mejor DG', value: mejorDG.nombre, detail: `${mejorDG.gf-mejorDG.gc} goles` },
-            { icon: '📉', title: 'Peor DG', value: peorDG.nombre, detail: `${peorDG.gf-peorDG.gc} goles` }
+            { icon: '⚽', title: 'Máximo goleador', value: maxGoles.nombre, detail: `${maxGoles.gf} goles`, desc: "Suma de todos los goles a favor anotados por los equipos de este participante." },
+            { icon: '🛡️', title: 'Mejor defensa', value: minGolesRecibidos.nombre, detail: `${minGolesRecibidos.gc} goles en contra`, desc: "Suma de todos los goles en contra recibidos por los equipos de este participante." },
+            { icon: '🤝', title: 'Rey del empate', value: maxEmpates.nombre, detail: `${maxEmpates.pe} empates`, desc: "Suma total de empates obtenidos por todos los equipos del participante." },
+            { icon: '📈', title: 'Mejor DG', value: mejorDG.nombre, detail: `${mejorDG.gf-mejorDG.gc} goles`, desc: "Diferencia total de goles (anotados menos recibidos) de sus equipos." },
+            { icon: '📉', title: 'Peor DG', value: peorDG.nombre, detail: `${peorDG.gf-peorDG.gc} goles`, desc: "Diferencia total de goles (anotados menos recibidos) de sus equipos." }
         ];
+
+        const changosConPartidos = changos.filter(c => c.pj > 0);
+        if (changosConPartidos.length > 0) {
+            const maxOfensivo = changosConPartidos.reduce((max, c) => (c.gf / c.pj) > (max.gf / max.pj) ? c : max, changosConPartidos[0]);
+            curiosidadesList.push({
+                icon: '🚀',
+                title: 'Súper Ofensivo',
+                value: maxOfensivo.nombre,
+                detail: `${(maxOfensivo.gf / maxOfensivo.pj).toFixed(2)} goles anotados/partido`,
+                desc: "Promedio más alto de goles a favor por cada partido jugado por sus equipos."
+            });
+
+            const mejorDefensaPromedio = changosConPartidos.reduce((min, c) => (c.gc / c.pj) < (min.gc / min.pj) ? c : min, changosConPartidos[0]);
+            curiosidadesList.push({
+                icon: '🚌',
+                title: 'El Autobús',
+                value: mejorDefensaPromedio.nombre,
+                detail: `${(mejorDefensaPromedio.gc / mejorDefensaPromedio.pj).toFixed(2)} goles recibidos/partido`,
+                desc: "Promedio más bajo de goles recibidos por cada partido jugado por sus equipos."
+            });
+
+            const maxEspectaculo = changosConPartidos.reduce((max, c) => ((c.gf + c.gc) / c.pj) > ((max.gf + max.gc) / max.pj) ? c : max, changosConPartidos[0]);
+            curiosidadesList.push({
+                icon: '🍿',
+                title: 'Espectáculo garantizado',
+                value: maxEspectaculo.nombre,
+                detail: `${((maxEspectaculo.gf + maxEspectaculo.gc) / maxEspectaculo.pj).toFixed(2)} goles totales/partido`,
+                desc: "Mayor promedio de goles totales (favor + contra) en los partidos de sus equipos. ¡Festival asegurado!"
+            });
+
+            const minEspectaculo = changosConPartidos.reduce((min, c) => ((c.gf + c.gc) / c.pj) < ((min.gf + min.gc) / min.pj) ? c : min, changosConPartidos[0]);
+            curiosidadesList.push({
+                icon: '💤',
+                title: 'El Somnífero',
+                value: minEspectaculo.nombre,
+                detail: `${((minEspectaculo.gf + minEspectaculo.gc) / minEspectaculo.pj).toFixed(2)} goles totales/partido`,
+                desc: "Menor promedio de goles totales (favor + contra) en los partidos de sus equipos. Partidos cerrados o aburridos."
+            });
+
+            const maxEfectividad = changosConPartidos.reduce((max, c) => (c.pts / c.pj) > (max.pts / max.pj) ? c : max, changosConPartidos[0]);
+            curiosidadesList.push({
+                icon: '⚡',
+                title: 'Pura Efectividad',
+                value: maxEfectividad.nombre,
+                detail: `${(maxEfectividad.pts / maxEfectividad.pj).toFixed(2)} puntos/partido`,
+                desc: "Mayor promedio de puntos obtenidos por partido jugado por sus equipos (PG: 3 pts, PE: 1 pt)."
+            });
+        }
+
+        if (avanzadas.mayorPaliza && avanzadas.mayorPaliza.dif >= 0) {
+            const mp = avanzadas.mayorPaliza;
+            curiosidadesList.push({
+                icon: '🥊',
+                title: 'La mayor paliza',
+                value: `${mp.t1} ${mp.g1} - ${mp.g2} ${mp.t2}`,
+                detail: `${mp.d1} vs ${mp.d2} (Dif: ${mp.dif} goles)`,
+                desc: "El partido finalizado del torneo con la mayor diferencia de goles registrada."
+            });
+        }
+
+        if (avanzadas.partidoMasGoles && avanzadas.partidoMasGoles.total >= 0) {
+            const pmg = avanzadas.partidoMasGoles;
+            curiosidadesList.push({
+                icon: '🎉',
+                title: 'Festival de goles',
+                value: `${pmg.t1} ${pmg.g1} - ${pmg.g2} ${pmg.t2}`,
+                detail: `${pmg.d1} vs ${pmg.d2} (Total: ${pmg.total} goles)`,
+                desc: "El partido finalizado del torneo que acumuló la mayor cantidad de goles totales."
+            });
+        }
+
         const rachasLargas = Object.entries(avanzadas.rachas).map(([ch, r]) => ({ ch, ultimos: r.slice(-3) }));
         const rachaGanadora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'G'));
-        if (rachaGanadora) curiosidadesList.push({ icon: '🔥', title: 'Racha ganadora', value: rachaGanadora.ch, detail: '3 victorias seguidas' });
+        if (rachaGanadora) curiosidadesList.push({ icon: '🔥', title: 'Racha ganadora', value: rachaGanadora.ch, detail: '3 victorias seguidas', desc: "Este participante acumula 3 victorias seguidas en sus últimos partidos jugados." });
         const rachaPerdedora = rachasLargas.find(r => r.ultimos.length===3 && r.ultimos.every(u => u === 'P'));
-        if (rachaPerdedora) curiosidadesList.push({ icon: '⚠️', title: 'Mala racha', value: rachaPerdedora.ch, detail: '3 derrotas seguidas' });
+        if (rachaPerdedora) curiosidadesList.push({ icon: '⚠️', title: 'Mala racha', value: rachaPerdedora.ch, detail: '3 derrotas seguidas', desc: "Este participante acumula 3 derrotas seguidas en sus últimos partidos jugados." });
+
         let html = `<div class="curiosidades-container"><h4 class="subtitulo-estadisticas">🎲 Estadísticas divertidas</h4><div class="curiosidades-grid">`;
         for (let item of curiosidadesList) {
-            html += `<div class="curiosidad-card"><div class="curiosidad-icon">${item.icon}</div><div class="curiosidad-title">${item.title}</div><div class="curiosidad-value">${item.value}</div><div class="curiosidad-detail">${item.detail}</div></div>`;
+            const valueStyle = item.value.length > 12 ? ' style="font-size: 0.85rem;"' : '';
+            html += `
+            <div class="curiosidad-card" onclick="this.classList.toggle('flipped')">
+                <div class="curiosidad-inner">
+                    <div class="curiosidad-front">
+                        <div class="curiosidad-icon">${item.icon}</div>
+                        <div class="curiosidad-title">${item.title}</div>
+                        <div class="curiosidad-value"${valueStyle}>${item.value}</div>
+                        <div class="curiosidad-detail">${item.detail}</div>
+                    </div>
+                    <div class="curiosidad-back">
+                        <div class="curiosidad-back-title">💡 ¿De qué trata?</div>
+                        <div class="curiosidad-desc">${item.desc || ''}</div>
+                    </div>
+                </div>
+            </div>`;
         }
         html += `</div></div>`;
         return html;
