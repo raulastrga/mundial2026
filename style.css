@@ -116,7 +116,6 @@ h1 {
 
 .sub-tabs {
     display: flex;
-    flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
     margin: 18px 0;
@@ -134,7 +133,6 @@ h1 {
     flex: 0 1 auto;             /* En lugar de flex:1, que se adapte al contenido */
     text-align: center;
     white-space: nowrap;
-    flex: 1 1 calc(50% - 8px);
 }
 @media (max-width: 480px) {
     .s-tab {

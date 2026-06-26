@@ -53,6 +53,7 @@
     <div class="main-tabs">
         <div class="tabs-principales">
             <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
+            <button class="m-tab" id="m-eliminatorias" onclick="setMain('eliminatorias')">🏆 Eliminatorias</button>
             <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
         </div>
     </div>
@@ -62,7 +63,6 @@
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
         <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')">🐵 Por Chango</button>
         <button class="s-tab" id="s-cal-mijornada" onclick="setSub('cal-mijornada')">📅 Mi Jornada</button>
-        <button class="s-tab" id="s-cal-eliminatorias" onclick="setSub('cal-eliminatorias')">🏆 Eliminatorias</button>
     </div>
     
     <!-- Sub-tabs para Resultados -->
@@ -1411,6 +1411,12 @@
             } else {
                 setSub(activeSub.id.replace('s-', ''));
             }
+        } else if (mainStr === 'eliminatorias') {
+            document.getElementById('sub-calendarios').style.display = 'none';
+            document.getElementById('sub-resultados').style.display = 'none';
+            document.querySelectorAll('.vista').forEach(v => v.classList.remove('active'));
+            document.getElementById('vista-cal-eliminatorias').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
 
