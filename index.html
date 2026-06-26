@@ -316,12 +316,12 @@
                     <div class="bracket-match">
                         <div class="bracket-team">
                             ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${p.home}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                            <span>${p.homeOrig}</span> ${badge1}
+                            <span>${p.home}</span> ${badge1}
                             <span class="bracket-score ${clsW1}">${scr1}</span>
                         </div>
                         <div class="bracket-team">
                             ${b2 ? `<img src="https://flagcdn.com/w40/${b2}.png" class="bracket-flag" alt="${p.away}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                            <span>${p.awayOrig}</span> ${badge2}
+                            <span>${p.away}</span> ${badge2}
                             <span class="bracket-score ${clsW2}">${scr2}</span>
                         </div>
                         ${p.isLive ? '<div class="bracket-info" style="color:var(--jona); font-weight:bold;">🔴 EN VIVO</div>' : ''}
