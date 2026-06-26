@@ -1,0 +1,74 @@
+[
+  {
+    "id": 4,
+    "status": "scheduled",
+    "startDate": "2026-06-28T20:00:00+01:00",
+    "endDate": "2026-07-04T04:30:00+01:00",
+    "tournaments": [
+      {
+        "id": 73,
+        "period": "pre_match",
+        "minutes": 0,
+        "extraMinutes": 0,
+        "venueName": "Sofi Stadium",
+        "venueCity": "Inglewood, California",
+        "venueNameTranslationKey": null,
+        "venueCityTranslationKey": null,
+        "venueId": 4,
+        "date": "2026-06-28T20:00:00+01:00",
+        "status": "scheduled",
+        "isSuspended": false,
+        "homeSquadId": 40,
+        "awaySquadId": 9,
+        "homeSquadName": "South Africa",
+        "awaySquadName": "Canada",
+        "homeSquadAbbr": "RSA",
+        "awaySquadAbbr": "CAN",
+        "homeScore": null,
+        "homePenaltyScore": null,
+        "homeGoalScorersAssists": null,
+        "awayScore": null,
+        "awayPenaltyScore": null,
+        "awayGoalScorersAssists": null
+      }
+    ],
+    "stage": "R32",
+    "isLockoutFinished": false
+  },
+  {
+    "id": 5,
+    "status": "scheduled",
+    "startDate": "2026-07-04T18:00:00+01:00",
+    "endDate": "2026-07-07T23:00:00+01:00",
+    "tournaments": [],
+    "stage": "R16",
+    "isLockoutFinished": false
+  },
+  {
+    "id": 6,
+    "status": "scheduled",
+    "startDate": "2026-07-09T21:00:00+01:00",
+    "endDate": "2026-07-12T04:00:00+01:00",
+    "tournaments": [],
+    "stage": "QF",
+    "isLockoutFinished": false
+  },
+  {
+    "id": 7,
+    "status": "scheduled",
+    "startDate": "2026-07-14T20:00:00+01:00",
+    "endDate": "2026-07-15T22:00:00+01:00",
+    "tournaments": [],
+    "stage": "SF",
+    "isLockoutFinished": false
+  },
+  {
+    "id": 8,
+    "status": "scheduled",
+    "startDate": "2026-07-18T22:00:00+01:00",
+    "endDate": "2026-07-19T22:00:00+01:00",
+    "tournaments": [],
+    "stage": "F",
+    "isLockoutFinished": false
+  }
+]

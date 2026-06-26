@@ -62,6 +62,7 @@
         <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
         <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')">🐵 Por Chango</button>
         <button class="s-tab" id="s-cal-mijornada" onclick="setSub('cal-mijornada')">📅 Mi Jornada</button>
+        <button class="s-tab" id="s-cal-eliminatorias" onclick="setSub('cal-eliminatorias')">🏆 Eliminatorias</button>
     </div>
     
     <!-- Sub-tabs para Resultados -->
@@ -95,6 +96,13 @@
                 <button class="btn-chango" data-chango="Sergio" onclick="seleccionarChango('Sergio')">🐒 Sergio</button>
             </div>
             <div id="proximos-partidos-container" class="proximos-partidos"></div>
+        </div>
+    </div>
+    
+    <!-- Vista Eliminatorias -->
+    <div id="vista-cal-eliminatorias" class="vista">
+        <div class="bracket-wrapper" id="bracket-wrapper">
+            <!-- Bracket generado por JS -->
         </div>
     </div>
     
@@ -149,6 +157,7 @@
     let resultadosEnVivo = {};
     let horariosJSON = {};
     let sedesJSON = {};
+    let eliminatoriasDatos = { R32: [], R16: [], QF: [], SF: [], F: [] };
     let intervalAutoActualizar;
     let chartEvolucion = null;
     let chartGoles = null;
@@ -256,7 +265,93 @@
             }
         });
     }
+    
+    // --- Lógica del Bracket de Eliminatorias ---
+    function renderizarBracket() {
+        const wrapper = document.getElementById('bracket-wrapper');
+        if (!wrapper) return;
+        
+        const columnas = [
+            { id: 'R32', nombre: '16vos (Izq)', numPartidos: 8, clase: 'bracket-col-left', slice: [0, 8] },
+            { id: 'R16', nombre: '8vos (Izq)', numPartidos: 4, clase: 'bracket-col-left', slice: [0, 4] },
+            { id: 'QF', nombre: '4tos (Izq)', numPartidos: 2, clase: 'bracket-col-left', slice: [0, 2] },
+            { id: 'SF', nombre: 'Semi (Izq)', numPartidos: 1, clase: 'bracket-col-left bracket-col-last', slice: [0, 1] },
+            { id: 'F', nombre: 'FINAL', numPartidos: 1, clase: 'bracket-col-center', slice: [0, 1] },
+            { id: 'SF', nombre: 'Semi (Der)', numPartidos: 1, clase: 'bracket-col-right bracket-col-last', slice: [1, 2] },
+            { id: 'QF', nombre: '4tos (Der)', numPartidos: 2, clase: 'bracket-col-right', slice: [2, 4] },
+            { id: 'R16', nombre: '8vos (Der)', numPartidos: 4, clase: 'bracket-col-right', slice: [4, 8] },
+            { id: 'R32', nombre: '16vos (Der)', numPartidos: 8, clase: 'bracket-col-right', slice: [8, 16] }
+        ];
 
+        let html = '';
+
+        columnas.forEach(col => {
+            html += `<div class="bracket-column ${col.clase}">
+                        <div class="bracket-column-title">${col.nombre}</div>`;
+            
+            const partidosGuardados = eliminatoriasDatos[col.id] || [];
+            
+            for (let i = col.slice[0]; i < col.slice[1]; i++) {
+                let p = partidosGuardados[i];
+                if (p) {
+                    // Partido con datos de la API
+                    const c1 = equiposDatos[p.home] ? equiposDatos[p.home].d : '';
+                    const c2 = equiposDatos[p.away] ? equiposDatos[p.away].d : '';
+                    const b1 = equiposDatos[p.home] ? equiposDatos[p.home].c : '';
+                    const b2 = equiposDatos[p.away] ? equiposDatos[p.away].c : '';
+                    
+                    const scr1 = p.hScore !== null ? p.hScore : '-';
+                    const scr2 = p.aScore !== null ? p.aScore : '-';
+                    
+                    let varColor1 = c1 ? c1.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
+                    let varColor2 = c2 ? c2.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
+                    
+                    let badge1 = c1 ? `<span class="bracket-chango-badge" style="background-color: var(--${varColor1})">${c1}</span>` : '';
+                    let badge2 = c2 ? `<span class="bracket-chango-badge" style="background-color: var(--${varColor2})">${c2}</span>` : '';
+                    
+                    let clsW1 = p.hScore > p.aScore && ['FINISHED','COMPLETE'].includes(p.status) ? 'winner' : '';
+                    let clsW2 = p.aScore > p.hScore && ['FINISHED','COMPLETE'].includes(p.status) ? 'winner' : '';
+
+                    html += `
+                    <div class="bracket-match">
+                        <div class="bracket-team">
+                            ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${p.home}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
+                            <span>${p.homeOrig}</span> ${badge1}
+                            <span class="bracket-score ${clsW1}">${scr1}</span>
+                        </div>
+                        <div class="bracket-team">
+                            ${b2 ? `<img src="https://flagcdn.com/w40/${b2}.png" class="bracket-flag" alt="${p.away}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
+                            <span>${p.awayOrig}</span> ${badge2}
+                            <span class="bracket-score ${clsW2}">${scr2}</span>
+                        </div>
+                        ${p.isLive ? '<div class="bracket-info" style="color:var(--jona); font-weight:bold;">🔴 EN VIVO</div>' : ''}
+                    </div>`;
+                } else {
+                    // Placeholder
+                    html += `
+                    <div class="bracket-match">
+                        <div class="bracket-team">
+                            <div class="bracket-flag" style="background:#eee"></div>
+                            <span style="color:#999">Por definir</span>
+                        </div>
+                        <div class="bracket-team">
+                            <div class="bracket-flag" style="background:#eee"></div>
+                            <span style="color:#999">Por definir</span>
+                        </div>
+                    </div>`;
+                }
+            }
+            html += `</div>`;
+        });
+        
+        wrapper.innerHTML = html;
+        
+        setTimeout(() => {
+            wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
+        }, 100);
+    }
+
+    // Inicialización
     // Variables para estado anterior de estadísticas (notificaciones)
     let estadisticasAnteriores = null;
     let rachasAnteriores = null;
@@ -512,6 +607,7 @@
             const nuevosResultados = {};
             const nuevosHorarios = {};
             const sedesJSON_tmp = {};
+            const nuevosEliminatorias = { R32: [], R16: [], QF: [], SF: [], F: [] };
             for (const ronda of data) {
                 if (!ronda.tournaments || !Array.isArray(ronda.tournaments)) continue;
                 for (const m of ronda.tournaments) {
@@ -530,6 +626,21 @@
                         nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'LIVE', minute: m.minutes || 0, isLive: true };
                     } else {
                         nuevosResultados[key] = { status: 'SCHEDULED', isLive: false };
+                    }
+                    
+                    // Almacenar datos para la llave de eliminatorias
+                    if (['R32', 'R16', 'QF', 'SF', 'F'].includes(ronda.stage)) {
+                        nuevosEliminatorias[ronda.stage].push({
+                            id: m.id,
+                            home: local || 'TBD',
+                            homeOrig: m.homeSquadName || 'TBD',
+                            away: visita || 'TBD',
+                            awayOrig: m.awaySquadName || 'TBD',
+                            hScore: m.homeScore,
+                            aScore: m.awayScore,
+                            status: status,
+                            isLive: isLive
+                        });
                     }
                 }
             }
@@ -649,7 +760,9 @@
             resultadosEnVivo = nuevosResultados;
             horariosJSON = nuevosHorarios;
             sedesJSON = sedesJSON_tmp;
+            eliminatoriasDatos = nuevosEliminatorias;
             construirInterfaz();
+            renderizarBracket();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
             if (!manual) alert("No se pudo actualizar. Revisa tu conexión.");
@@ -1102,6 +1215,47 @@
             partidosPorChango[objPartido.d1].push(objPartido);
             partidosPorChango[objPartido.d2].push(objPartido);
         });
+        
+        // Inyectar partidos de eliminatorias en los calendarios
+        for (let etapa in eliminatoriasDatos) {
+            let etiqueta = '';
+            if (etapa === 'R32') etiqueta = '16vos';
+            else if (etapa === 'R16') etiqueta = '8vos';
+            else if (etapa === 'QF') etiqueta = '4tos';
+            else if (etapa === 'SF') etiqueta = 'Semi';
+            else if (etapa === 'F') etiqueta = 'FINAL';
+            
+            eliminatoriasDatos[etapa].forEach(m => {
+                // Solo si ya están definidos los equipos, o si se quiere mostrar el placeholder
+                // Es mejor mostrarlo solo si al menos uno está definido o si se desea mostrar todos. 
+                // Los mostraremos si al menos tienen fecha y equipos conocidos.
+                if (m.home !== 'TBD' && m.away !== 'TBD') {
+                    let objPartido = {
+                        t1: m.home, t2: m.away, 
+                        d1: equiposDatos[m.home] ? equiposDatos[m.home].d : '', 
+                        d2: equiposDatos[m.away] ? equiposDatos[m.away].d : '',
+                        c1: equiposDatos[m.home] ? equiposDatos[m.home].c : '', 
+                        c2: equiposDatos[m.away] ? equiposDatos[m.away].c : '', 
+                        gr: etiqueta, // Reutilizamos 'gr' para la etiqueta
+                        finalizado: m.status === 'FINISHED' || m.status === 'COMPLETE', 
+                        isLive: m.isLive
+                    };
+                    const fechaReal = getHorario(m.home, m.away);
+                    if (fechaReal) {
+                        objPartido.fechaObj = fechaReal;
+                        objPartido.hora = formatearHoraLocal(fechaReal);
+                        objPartido.fecha = formatearFechaLocal(fechaReal);
+                        objPartido.yaPaso = esFechaPasada(fechaReal);
+                        
+                        if (!diasOrdenados[objPartido.fecha]) diasOrdenados[objPartido.fecha] = [];
+                        diasOrdenados[objPartido.fecha].push(objPartido);
+                        if (objPartido.d1) partidosPorChango[objPartido.d1].push(objPartido);
+                        if (objPartido.d2) partidosPorChango[objPartido.d2].push(objPartido);
+                    }
+                }
+            });
+        }
+        
         for (let dia in diasOrdenados) diasOrdenados[dia].sort((a,b)=> (a.hora||"").localeCompare(b.hora||""));
         for (let dia in diasOrdenados) {
             for (let pt of diasOrdenados[dia]) {
@@ -1170,7 +1324,8 @@
                 else if (!encontroProximo && !pt.finalizado && !pt.isLive && !pt.yaPaso) { clsAd = 'proximo-partido'; encontroProximo = true; }
                 let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>Grupo ${pt.gr}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${sedeHtml}${h2hHtml}</div>`;
+                let grLabel = pt.gr.length > 1 ? pt.gr : `Grupo ${pt.gr}`;
+                gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>${grLabel}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${sedeHtml}${h2hHtml}</div>`;
             }
             gridHTML += '</div>';
             let header = `<div class="fecha-header">🗓️ ${dia} 2026</div>`;

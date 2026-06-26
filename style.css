@@ -1315,3 +1315,222 @@ body.dark-mode .clima-badge-item {
     color: #fef3c7;
 }
 
+
+/* ==================== BRACKET STYLES ==================== */
+.bracket-wrapper {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    margin-top: 15px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 40px;
+}
+
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-width: 250px;
+}
+
+.bracket-column-title {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--card-bg);
+    padding: 5px 0;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+.bracket-match {
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bracket-match:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.bracket-team {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.bracket-team:first-child {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bracket-flag {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-right: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.bracket-score {
+    margin-left: auto;
+    font-weight: 700;
+    color: var(--text-color);
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.bracket-score.winner {
+    color: var(--accent-color);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.bracket-chango-badge {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+/* Connecting Lines (Left Side) */
+.bracket-col-left .bracket-match::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    width: 20px;
+    border-top: 2px solid var(--border-color);
+}
+
+.bracket-col-left.bracket-col-last .bracket-match::after {
+    display: none;
+}
+
+.bracket-col-left .bracket-match::before {
+    content: '';
+    position: absolute;
+    right: -20px;
+    height: 50%;
+    border-right: 2px solid var(--border-color);
+}
+
+.bracket-col-left .bracket-match:nth-child(odd)::before {
+    top: 50%;
+}
+.bracket-col-left .bracket-match:nth-child(even)::before {
+    bottom: 50%;
+}
+
+.bracket-col-left.bracket-col-last .bracket-match::before {
+    display: none;
+}
+
+/* Connecting Lines (Right Side) */
+.bracket-col-right .bracket-match::after {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 20px;
+    border-top: 2px solid var(--border-color);
+}
+
+.bracket-col-right.bracket-col-last .bracket-match::after {
+    display: none;
+}
+
+.bracket-col-right .bracket-match::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    height: 50%;
+    border-left: 2px solid var(--border-color);
+}
+
+.bracket-col-right .bracket-match:nth-child(odd)::before {
+    top: 50%;
+}
+.bracket-col-right .bracket-match:nth-child(even)::before {
+    bottom: 50%;
+}
+
+.bracket-col-right.bracket-col-last .bracket-match::before {
+    display: none;
+}
+
+.bracket-info {
+    font-size: 0.7rem;
+    text-align: center;
+    color: var(--text-muted);
+    padding: 4px;
+    background: rgba(0,0,0,0.02);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+body.dark-mode .bracket-wrapper {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .bracket-match {
+    background-color: #0f172a;
+    border-color: #334155;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .bracket-column-title {
+    color: #cbd5e1;
+    background-color: #1e293b; /* Para ocultar líneas al hacer scroll (sticky) */
+    padding: 5px 0;
+    border-radius: 4px;
+}
+
+body.dark-mode .bracket-team span {
+    color: #cbd5e1;
+}
+
+body.dark-mode .bracket-score {
+    color: #f8fafc;
+    background: rgba(255,255,255,0.1);
+}
+
+body.dark-mode .bracket-score.winner {
+    color: #10b981;
+    background: rgba(16,185,129,0.2);
+}
+
+body.dark-mode .bracket-info {
+    color: #94a3b8;
+    background: rgba(255,255,255,0.05);
+}
+
+body.dark-mode .bracket-col-left .bracket-match::before,
+body.dark-mode .bracket-col-left .bracket-match::after,
+body.dark-mode .bracket-col-right .bracket-match::before,
+body.dark-mode .bracket-col-right .bracket-match::after {
+    border-color: #475569;
+}
+
+body.dark-mode .bracket-team .bracket-flag[style*="background:#eee"] {
+    background: #334155 !important;
+}
