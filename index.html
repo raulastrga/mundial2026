@@ -660,15 +660,18 @@
                     const status = (m.status || '').toUpperCase();
                     const isComplete = ['COMPLETE', 'FINISHED', 'PLAYED'].includes(status);
                     const isLive = ['PLAYING', 'LIVE', 'IN_PROGRESS'].includes(status);
+                    const isKnockout = ['R32', 'R16', 'QF', 'SF', 'F'].includes(ronda.stage); // Identificador de fase eliminatoria
                     const key = `${local}-${visita}`;
+
                     if (m.date) nuevosHorarios[key] = new Date(m.date);
                     if (m.venueCity) sedesJSON_tmp[key] = m.venueCity;
+
                     if (isComplete) {
-                        nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'FINISHED', minute: null, isLive: false };
+                        nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'FINISHED', minute: null, isLive: false, isKnockout: isKnockout };
                     } else if (isLive && m.homeScore !== null && m.awayScore !== null) {
-                        nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'LIVE', minute: m.minutes || 0, isLive: true };
+                        nuevosResultados[key] = { g1: parseInt(m.homeScore,10), g2: parseInt(m.awayScore,10), status: 'LIVE', minute: m.minutes || 0, isLive: true, isKnockout: isKnockout };
                     } else {
-                        nuevosResultados[key] = { status: 'SCHEDULED', isLive: false };
+                        nuevosResultados[key] = { status: 'SCHEDULED', isLive: false, isKnockout: isKnockout };
                     }
                     
                     // Almacenar datos para la llave de eliminatorias
@@ -846,7 +849,7 @@
         let partidosFinalizados = [];
         for (const key in resVivo) {
             const partido = resVivo[key];
-            if (partido.status !== 'FINISHED' || partido.g1 === undefined) continue;
+            if (partido.status !== 'FINISHED' || partido.g1 === undefined || partido.isKnockout) continue;
             let [t1, t2] = key.split('-');
             if (!equiposData[t1] || !equiposData[t2]) continue;
             let g1 = partido.g1, g2 = partido.g2;
@@ -1313,7 +1316,7 @@
         let resultadosFinalizados = [];
         for (let key in resultadosEnVivo) {
             const partido = resultadosEnVivo[key];
-            if (partido.status !== 'FINISHED' || partido.g1 === undefined) continue;
+            if (partido.status !== 'FINISHED' || partido.g1 === undefined || partido.isKnockout) continue;
             let [t1, t2] = key.split('-');
             if (!equiposDatos[t1] || !equiposDatos[t2]) continue;
             let g1 = partido.g1, g2 = partido.g2;
