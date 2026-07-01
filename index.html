@@ -266,132 +266,110 @@
         });
     }
     
-    // --- Lógica del Bracket de Eliminatorias ---
-    // --- Lógica del Bracket de Eliminatorias ---
-    function renderizarBracket() {
+    function renderizarBracketDefinitivo() {
         const wrapper = document.getElementById('bracket-wrapper');
         if (!wrapper) return;
-        
-        // MAPEO VISUAL DE LA FIFA 2026:
-        // Reordena el índice del partido devuelto por la API hacia su posición en el diseño.
-        const mapeoVisual = {
-            'R32': [
-                // --- LLAVE IZQUIERDA (Alimentan a la izquierda de 8vos) ---
-                1, 4,   // W74 vs W77 (Alimentan al Match 89)
-                0, 2,   // W73 vs W75 (Alimentan al Match 90)
-                10, 11, // W83 vs W84 (Alimentan al Match 93)
-                8, 9,   // W81 vs W82 (Alimentan al Match 94)
-                
-                // --- LLAVE DERECHA (Alimentan a la derecha de 8vos) ---
-                3, 5,   // W76 vs W78 (Alimentan al Match 91)
-                6, 7,   // W79 vs W80 (Alimentan al Match 92)
-                13, 15, // W86 vs W88 (Alimentan al Match 95)
-                12, 14  // W85 vs W87 (Alimentan al Match 96)
-            ],
-            'R16': [
-                // --- LLAVE IZQUIERDA ---
-                0, 1,   // M89, M90 (Alimentan al M97)
-                4, 5,   // M93, M94 (Alimentan al M98)
-                
-                // --- LLAVE DERECHA ---
-                2, 3,   // M91, M92 (Alimentan al M99)
-                6, 7    // M95, M96 (Alimentan al M100)
-            ],
-            'QF': [
-                0, 1,   // M97, M98 (Izquierda, van al M101)
-                2, 3    // M99, M100 (Derecha, van al M102)
-            ],
-            'SF': [
-                0,      // M101 (Izquierda)
-                1       // M102 (Derecha)
-            ],
-            'F': [
-                0       // M104 (Final en el centro)
-            ]
-        };
 
-        const columnas = [
-            { id: 'R32', nombre: '16vos (Izq)', numPartidos: 8, clase: 'bracket-col-left', slice: [0, 8] },
-            { id: 'R16', nombre: '8vos (Izq)', numPartidos: 4, clase: 'bracket-col-left', slice: [0, 4] },
-            { id: 'QF', nombre: '4tos (Izq)', numPartidos: 2, clase: 'bracket-col-left', slice: [0, 2] },
-            { id: 'SF', nombre: 'Semi (Izq)', numPartidos: 1, clase: 'bracket-col-left bracket-col-last', slice: [0, 1] },
-            { id: 'F', nombre: 'FINAL', numPartidos: 1, clase: 'bracket-col-center', slice: [0, 1] },
-            { id: 'SF', nombre: 'Semi (Der)', numPartidos: 1, clase: 'bracket-col-right bracket-col-last', slice: [1, 2] },
-            { id: 'QF', nombre: '4tos (Der)', numPartidos: 2, clase: 'bracket-col-right', slice: [2, 4] },
-            { id: 'R16', nombre: '8vos (Der)', numPartidos: 4, clase: 'bracket-col-right', slice: [4, 8] },
-            { id: 'R32', nombre: '16vos (Der)', numPartidos: 8, clase: 'bracket-col-right', slice: [8, 16] }
+        // EL MAPA MAESTRO: Completamente infalible.
+        // Usamos los números oficiales (MatchNumber) agrupados exactamente como la FIFA los cruza.
+        const layout = [
+            { nombre: '16vos (Izq)', clase: 'bracket-col-left', partidos: [74, 77, 73, 75, 83, 84, 81, 82] },
+            { nombre: '8vos (Izq)',  clase: 'bracket-col-left', partidos: [89, 90, 93, 94] },
+            { nombre: '4tos (Izq)',  clase: 'bracket-col-left', partidos: [97, 98] },
+            { nombre: 'Semi (Izq)',  clase: 'bracket-col-left bracket-col-last', partidos: [101] },
+            { nombre: 'FINAL',       clase: 'bracket-col-center', partidos: [104] },
+            { nombre: 'Semi (Der)',  clase: 'bracket-col-right bracket-col-last', partidos: [102] },
+            { nombre: '4tos (Der)',  clase: 'bracket-col-right', partidos: [99, 100] },
+            { nombre: '8vos (Der)',  clase: 'bracket-col-right', partidos: [91, 92, 95, 96] },
+            { nombre: '16vos (Der)', clase: 'bracket-col-right', partidos: [76, 78, 79, 80, 86, 88, 85, 87] }
         ];
 
         let html = '';
 
-        columnas.forEach(col => {
+        layout.forEach(col => {
             html += `<div class="bracket-column ${col.clase}">
                         <div class="bracket-column-title">${col.nombre}</div>`;
-            
-            const partidosGuardados = eliminatoriasDatos[col.id] || [];
-            
-            for (let i = col.slice[0]; i < col.slice[1]; i++) {
-                
-                // MAGIA AQUÍ: Buscamos el índice que le corresponde visualmente y lo extraemos de la API
-                let realIndex = mapeoVisual[col.id] ? mapeoVisual[col.id][i] : i;
-                let p = partidosGuardados[realIndex];
-                
+
+            col.partidos.forEach(matchNum => {
+                const p = eliminatoriasPorMatchNumber[matchNum];
+
                 if (p) {
-                    // Partido con datos de la API
-                    const c1 = equiposDatos[p.home] ? equiposDatos[p.home].d : '';
-                    const c2 = equiposDatos[p.away] ? equiposDatos[p.away].d : '';
-                    const b1 = equiposDatos[p.home] ? equiposDatos[p.home].c : '';
-                    const b2 = equiposDatos[p.away] ? equiposDatos[p.away].c : '';
-                    
+                    // Si el equipo ya clasificó, mostramos su nombre. Si no, mostramos el código (Ej. 1A, W73)
+                    const t1 = p.home || p.phA || 'TBD';
+                    const t2 = p.away || p.phB || 'TBD';
+
+                    // Buscamos a los dueños y las banderas (funcionará perfecto porque 't1' ya viene en español)
+                    function buscarEquipo(nombre) {
+                        if (equiposDatos[nombre]) return equiposDatos[nombre];
+                        // Intenta buscar ignorando acentos o variaciones leves
+                        const claveNormalizada = Object.keys(equiposDatos).find(key => 
+                            key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === 
+                            nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                        );
+                        return equiposDatos[claveNormalizada] || null;
+                    }
+
+                    const t1Normal = traducirEquipo(t1);
+                    const t2Normal = traducirEquipo(t2);
+
+                    // Dentro del bucle de partidos:
+                    const eq1 = buscarEquipo(t1Normal);
+                    const eq2 = buscarEquipo(t2Normal);
+
+                    const c1 = eq1 ? eq1.d : '';
+                    const c2 = eq2 ? eq2.d : '';
+                    const b1 = eq1 ? eq1.c : '';
+                    const b2 = eq2 ? eq2.c : '';
+
                     const scr1 = p.hScore !== null ? p.hScore : '-';
                     const scr2 = p.aScore !== null ? p.aScore : '-';
-                    
-                    let varColor1 = c1 ? c1.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
-                    let varColor2 = c2 ? c2.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
-                    
-                    let badge1 = c1 ? `<span class="bracket-chango-badge" style="background-color: var(--${varColor1})">${c1}</span>` : '';
-                    let badge2 = c2 ? `<span class="bracket-chango-badge" style="background-color: var(--${varColor2})">${c2}</span>` : '';
-                    
-                    let clsW1 = p.hScore > p.aScore && ['FINISHED','COMPLETE'].includes(p.status) ? 'winner' : '';
-                    let clsW2 = p.aScore > p.hScore && ['FINISHED','COMPLETE'].includes(p.status) ? 'winner' : '';
+
+                    // Aprovechamos tus clases CSS nativas (d-Jona, d-David, etc.)
+                    let badge1 = c1 ? `<span class="bracket-chango-badge d-${c1}" style="font-size:0.6rem; padding:2px 4px; border-radius:4px; margin-left:5px;">${c1}</span>` : '';
+                    let badge2 = c2 ? `<span class="bracket-chango-badge d-${c2}" style="font-size:0.6rem; padding:2px 4px; border-radius:4px; margin-left:5px;">${c2}</span>` : '';
+
+                    let clsW1 = (p.hScore > p.aScore && p.status === 'FINISHED') ? 'winner' : '';
+                    let clsW2 = (p.aScore > p.hScore && p.status === 'FINISHED') ? 'winner' : '';
+
+                    // Agregamos la lógica para mostrar penales si existieron
+                    let penalesHtml = '';
+                    if (p.hPen !== null && p.aPen !== null) {
+                        penalesHtml = `<div style="font-size:0.65rem; color:#888; text-align:center; margin-top:2px;">(Penales: ${p.hPen} - ${p.aPen})</div>`;
+                        if (p.hPen > p.aPen) { clsW1 = 'winner'; clsW2 = ''; }
+                        else if (p.aPen > p.hPen) { clsW2 = 'winner'; clsW1 = ''; }
+                    }
 
                     html += `
                     <div class="bracket-match">
                         <div class="bracket-team">
-                            ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${p.home}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                            <span>${p.home}</span> ${badge1}
+                            ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${t1}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
+                            <span style="${!p.home ? 'color:#999; font-size:0.85rem;' : ''}">${t1}</span> ${badge1}
                             <span class="bracket-score ${clsW1}">${scr1}</span>
                         </div>
                         <div class="bracket-team">
-                            ${b2 ? `<img src="https://flagcdn.com/w40/${b2}.png" class="bracket-flag" alt="${p.away}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                            <span>${p.away}</span> ${badge2}
+                            ${b2 ? `<img src="https://flagcdn.com/w40/${b2}.png" class="bracket-flag" alt="${t2}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
+                            <span style="${!p.away ? 'color:#999; font-size:0.85rem;' : ''}">${t2}</span> ${badge2}
                             <span class="bracket-score ${clsW2}">${scr2}</span>
                         </div>
-                        ${p.isLive ? '<div class="bracket-info" style="color:var(--jona); font-weight:bold;">🔴 EN VIVO</div>' : ''}
+                        ${penalesHtml}
+                        ${p.status === 'LIVE' ? '<div class="bracket-info" style="color:#ef4444; font-weight:bold; font-size:0.75rem; text-align:center; margin-top:4px;">🔴 EN VIVO</div>' : ''}
                     </div>`;
                 } else {
-                    // Placeholder
+                    // Placeholder base de carga
                     html += `
                     <div class="bracket-match">
-                        <div class="bracket-team">
-                            <div class="bracket-flag" style="background:#eee"></div>
-                            <span style="color:#999">Por definir</span>
-                        </div>
-                        <div class="bracket-team">
-                            <div class="bracket-flag" style="background:#eee"></div>
-                            <span style="color:#999">Por definir</span>
-                        </div>
+                        <div class="bracket-team"><div class="bracket-flag" style="background:#eee"></div><span style="color:#999">...</span></div>
+                        <div class="bracket-team"><div class="bracket-flag" style="background:#eee"></div><span style="color:#999">...</span></div>
                     </div>`;
                 }
-            }
+            });
             html += `</div>`;
         });
-        
+
         wrapper.innerHTML = html;
         
-        setTimeout(() => {
-            wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
-        }, 100);
+        // Centramos el scroll hacia la Gran Final automáticamente
+        setTimeout(() => wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2, 100);
     }
 
     // Inicialización
@@ -808,7 +786,7 @@
             sedesJSON = sedesJSON_tmp;
             eliminatoriasDatos = nuevosEliminatorias;
             construirInterfaz();
-            renderizarBracket();
+            renderizarBracketDefinitivo();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
             if (!manual) alert("No se pudo actualizar. Revisa tu conexión.");
@@ -816,6 +794,40 @@
             const overlay = document.getElementById('cargando-overlay');
             if (overlay) overlay.style.display = 'none';
             mostrarLoaderParcial(false);
+        }
+    }
+
+    let eliminatoriasPorMatchNumber = {};
+
+    async function cargarBracketOficial() {
+        try {
+            const response = await fetch("https://api.fifa.com/api/v3/seasonbracket/season/285023?language=es");
+            const data = await response.json();
+
+            if (data.KnockoutStages) {
+                data.KnockoutStages.forEach(stage => {
+                    if (stage.Matches) {
+                        stage.Matches.forEach(m => {
+                            eliminatoriasPorMatchNumber[m.MatchNumber] = {
+                                // Extraemos el nombre en español directo de la API
+                                home: m.HomeTeam ? m.HomeTeam.TeamName[0].Description : null,
+                                away: m.AwayTeam ? m.AwayTeam.TeamName[0].Description : null,
+                                hScore: m.HomeTeamScore,
+                                aScore: m.AwayTeamScore,
+                                hPen: m.HomeTeamPenaltyScore, // ¡La API trae los penales!
+                                aPen: m.AwayTeamPenaltyScore,
+                                // Status: 0 = Finalizado
+                                status: m.MatchStatus === 0 ? 'FINISHED' : (m.MatchTimeStatus === 3 ? 'LIVE' : 'SCHEDULED'),
+                                phA: m.PlaceHolderA, // Ej. "W74" o "1L"
+                                phB: m.PlaceHolderB  // Ej. "W77" o "3EHIJK"
+                            };
+                        });
+                    }
+                });
+            }
+            renderizarBracketDefinitivo();
+        } catch(error) {
+            console.error("Error al cargar el bracket oficial de la FIFA:", error);
         }
     }
 
@@ -1491,6 +1503,8 @@
             if (notifBtn) notifBtn.style.display = 'none';
         }
         await registrarServiceWorker();
+        await cargarBracketOficial();
+
         actualizarResultados()
             .then(() => cargarClimaSedes())
             .catch(err => console.error("Error en carga inicial:", err))
