@@ -1319,6 +1319,8 @@ body.dark-mode .clima-badge-item {
 /* ==================== BRACKET STYLES ==================== */
 .bracket-wrapper {
     display: flex;
+    align-items: stretch;
+    min-height: 600px;
     overflow-x: auto;
     padding: 20px;
     background-color: var(--card-bg);
@@ -1327,38 +1329,44 @@ body.dark-mode .clima-badge-item {
     margin-top: 15px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    gap: 40px;
+    gap: 40px; /* Excelente para separar cada fase */
 }
 
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-around; /* Repartición matemática perfecta */
     min-width: 250px;
+    position: relative; /* CLAVE: Ancla al título absoluto */
+    padding-top: 40px; /* Crea el hueco en la parte superior para que viva el título */
 }
 
 .bracket-column-title {
     text-align: center;
     font-weight: 700;
-    margin-bottom: 20px;
     color: var(--primary-color);
     font-size: 1.1rem;
-    position: sticky;
-    top: 0;
     background-color: var(--card-bg);
     padding: 5px 0;
     border-radius: 4px;
     z-index: 2;
+    /* --- CORRECCIÓN ESTRUCTURAL --- */
+    position: absolute; /* Lo sacamos del cálculo de espacio de Flexbox */
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin-bottom: 0; /* Eliminado para no estorbar */
 }
 
 .bracket-match {
     background-color: var(--bg-color);
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; <- ELIMINADO: Dejamos que space-around haga su magia */
     position: relative;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 8px; /* Asegura que el contenido interno respire */
 }
 
 .bracket-match:hover {
