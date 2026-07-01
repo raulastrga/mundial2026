@@ -163,6 +163,7 @@
     let chartGoles = null;
     let partidosPorChangoDetalle = {};
     let climaSedes = {};
+    let equiposEliminadosGlobal = new Set();
 
     const coordenadasCiudades = {
         "mexico city": { lat: 19.4326, lon: -99.1332, name: "Mexico City" },
@@ -193,6 +194,28 @@
         "miami": { lat: 25.9420, lon: -80.2456, name: "Miami" },
         "miami gardens": { lat: 25.9420, lon: -80.2456, name: "Miami" }
     };
+
+    function calcularEquiposEliminados() {
+        console.log('ok')
+        equiposEliminadosGlobal.clear();
+        
+        Object.values(eliminatoriasPorMatchNumber).forEach(p => {
+            if (p.status === 'FINISHED' && p.home && p.away) {
+                const t1Normal = p.home;
+                const t2Normal = p.away;
+                
+                // Verificamos si hubo penales
+                if (p.hPen !== null && p.aPen !== null) {
+                    if (p.hPen > p.aPen) equiposEliminadosGlobal.add(t2Normal);
+                    else if (p.aPen > p.hPen) equiposEliminadosGlobal.add(t1Normal);
+                } else {
+                    // Verificamos goles regulares o prórroga
+                    if (p.hScore > p.aScore) equiposEliminadosGlobal.add(t2Normal);
+                    else if (p.aScore > p.hScore) equiposEliminadosGlobal.add(t1Normal);
+                }
+            }
+        });
+    }
 
     function buscarCoordenadas(ciudad) {
         if (!ciudad) return null;
@@ -339,16 +362,21 @@
                         else if (p.aPen > p.hPen) { clsW2 = 'winner'; clsW1 = ''; }
                     }
 
+                    const classElim1 = equiposEliminadosGlobal.has(t1Normal) ? 'equipo-eliminado' : '';
+                    const classElim2 = equiposEliminadosGlobal.has(t2Normal) ? 'equipo-eliminado' : '';
+
+                    console.log(equiposEliminadosGlobal);
+
                     html += `
                     <div class="bracket-match">
-                        <div class="bracket-team">
+                        <div class="bracket-team ${classElim1}">
                             ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${t1}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                            <span style="${!p.home ? 'color:#999; font-size:0.85rem;' : ''}">${t1}</span> ${badge1}
+                            <span style="${!p.home ? 'color:#999; font-size:0.85rem;' : ''}">${traducirEquipo(t1)}</span> ${badge1}
                             <span class="bracket-score ${clsW1}">${scr1}</span>
                         </div>
-                        <div class="bracket-team">
+                        <div class="bracket-team ${classElim2}">
                             ${b2 ? `<img src="https://flagcdn.com/w40/${b2}.png" class="bracket-flag" alt="${t2}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                            <span style="${!p.away ? 'color:#999; font-size:0.85rem;' : ''}">${t2}</span> ${badge2}
+                            <span style="${!p.away ? 'color:#999; font-size:0.85rem;' : ''}">${traducirEquipo(t2)}</span> ${badge2}
                             <span class="bracket-score ${clsW2}">${scr2}</span>
                         </div>
                         ${penalesHtml}
@@ -825,6 +853,7 @@
                     }
                 });
             }
+            calcularEquiposEliminados();
             renderizarBracketDefinitivo();
         } catch(error) {
             console.error("Error al cargar el bracket oficial de la FIFA:", error);
@@ -887,12 +916,30 @@
 
     function renderizarInsigniaEstado(statusObj) {
         if (!statusObj || !statusObj.status) return '';
-        if (statusObj.status === 'LIVE') {
-            const min = statusObj.minute ? ` ${statusObj.minute}'` : '';
-            return `<div class="status-container"><span class="badge-estado b-vivo">🔴 EN VIVO${min}</span></div>`;
-        } else if (statusObj.status === 'FINISHED') {
+        
+        // 1. Si el partido terminó (FINISHED)
+        if (statusObj.status === 'FINISHED') {
+            // Revisamos si trae info de penales desde el bracket
+            if (statusObj.hPen !== undefined && statusObj.hPen !== null) {
+                 return `<div class="status-container"><span class="badge-estado b-penales">🎯 Penales: ${statusObj.hPen} - ${statusObj.aPen}</span></div>`;
+            }
             return `<div class="status-container"><span class="badge-estado b-fin">✅ Finalizado</span></div>`;
         }
+        
+        // 2. Si el partido está EN VIVO (LIVE)
+        if (statusObj.status === 'LIVE') {
+            const minutoRaw = statusObj.minute ? String(statusObj.minute).replace("'", "") : "0";
+            const minutoInt = parseInt(minutoRaw, 10);
+            const extra = statusObj.minute ? ` ${statusObj.minute}'` : '';
+            
+            // Si el minuto es mayor a 90, automáticamente es Prórroga
+            if (minutoInt > 90) {
+                return `<div class="status-container"><span class="badge-estado b-prorroga">⏳ PRÓRROGA${extra}</span></div>`;
+            }
+            // Tiempo regular
+            return `<div class="status-container"><span class="badge-estado b-vivo">🔴 EN VIVO${extra}</span></div>`;
+        }
+        
         return '';
     }
 

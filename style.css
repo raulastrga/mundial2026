@@ -1534,3 +1534,24 @@ body.dark-mode .bracket-col-right .bracket-match::after {
 body.dark-mode .bracket-team .bracket-flag[style*="background:#eee"] {
     background: #334155 !important;
 }
+
+/* ☠️ EFECTO: FUNDIDO A NEGRO (Equipos Eliminados) */
+.equipo-eliminado {
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transition: all 0.5s ease;
+}
+.equipo-eliminado span {
+    text-decoration: line-through;
+}
+
+/* ⏳ INSIGNIAS: PRÓRROGA Y PENALES */
+.badge-estado.b-prorroga {
+    background: linear-gradient(135deg, #f59e0b, #d97706); /* Naranja/Ámbar */
+    color: white;
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+.badge-estado.b-penales {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9); /* Morado intenso */
+    color: white;
+}
