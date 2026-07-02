@@ -208,8 +208,11 @@
         
         Object.values(eliminatoriasPorMatchNumber).forEach(p => {
             if (p.status === 'FINISHED' && p.home && p.away) {
-                const t1Normal = p.home;
-                const t2Normal = p.away;
+                const t1Normal = traducirEquipo(p.home);
+                const t2Normal = traducirEquipo(p.away);
+
+                console.log(t1Normal);
+                console.log(t2Normal);
                 
                 // Verificamos si hubo penales
                 if (p.hPen !== null && p.aPen !== null) {
