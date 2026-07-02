@@ -101,10 +101,17 @@
     
     <!-- Vista Eliminatorias -->
     <div id="vista-cal-eliminatorias" class="vista">
+        <!-- Bracket (arriba) -->
         <div class="bracket-wrapper" id="bracket-wrapper">
             <!-- Bracket generado por JS -->
         </div>
+        <!-- Estadísticas (abajo) -->
+        <div class="seccion-contenedor" id="estadisticas-eliminatorias" style="margin-top: 25px;">
+            <h3 class="seccion-titulo">📊 Equipos por Chango en Eliminatorias</h3>
+            <div id="eliminatorias-stats-container"></div>
+        </div>
     </div>
+
     
     <!-- Vista Grupos (Resultados) -->
     <div id="vista-res-grupos" class="vista"></div>
@@ -398,6 +405,104 @@
         
         // Centramos el scroll hacia la Gran Final automáticamente
         setTimeout(() => wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2, 100);
+    }
+
+    // ========== ESTADÍSTICAS DE ELIMINATORIAS POR CHANGO ==========
+    function renderizarEstadisticasEliminatorias() {
+        const container = document.getElementById('eliminatorias-stats-container');
+        if (!container) return;
+
+        // Definir etapas y rangos de MatchNumber
+        const etapas = [
+            { nombre: 'R32', min: 73, max: 88, label: '16vos' },
+            { nombre: 'R16', min: 89, max: 96, label: '8vos' },
+            { nombre: 'QF', min: 97, max: 100, label: '4tos' },
+            { nombre: 'SF', min: 101, max: 102, label: 'Semi' },
+            { nombre: 'F', min: 104, max: 104, label: 'Final' }
+        ];
+
+        const changos = ['Jona', 'David', 'Raúl', 'Sergio'];
+        const emojis = { 'Jona': '🐵', 'David': '🦍', 'Raúl': '🦧', 'Sergio': '🐒' };
+
+        // Inicializar estadísticas
+        let stats = {};
+        changos.forEach(ch => {
+            stats[ch] = {};
+            etapas.forEach(etapa => {
+                stats[ch][etapa.nombre] = { vivos: 0, total: 0 };
+            });
+        });
+
+        // Función auxiliar para buscar equipo
+        function buscarEquipoElim(nombre) {
+            if (equiposDatos[nombre]) return equiposDatos[nombre];
+            const claveNormalizada = Object.keys(equiposDatos).find(key => 
+                key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === 
+                nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            );
+            return equiposDatos[claveNormalizada] || null;
+        }
+
+        // Recorrer todos los partidos de eliminatorias
+        for (let matchNum in eliminatoriasPorMatchNumber) {
+            const p = eliminatoriasPorMatchNumber[matchNum];
+            if (!p) continue;
+            const num = parseInt(matchNum, 10);
+            // Determinar etapa por número de partido
+            let etapaNombre = null;
+            for (let e of etapas) {
+                if (num >= e.min && num <= e.max) {
+                    etapaNombre = e.nombre;
+                    break;
+                }
+            }
+            if (!etapaNombre) continue;
+
+            // Equipos involucrados en el partido
+            const equipos = [];
+            if (p.home) equipos.push(p.home);
+            if (p.away) equipos.push(p.away);
+
+            equipos.forEach(equipo => {
+                const eqInfo = buscarEquipoElim(equipo);
+                if (!eqInfo) return;
+                const chango = eqInfo.d;
+                if (!chango || !stats[chango]) return;
+                // Incrementar total
+                stats[chango][etapaNombre].total++;
+                // Si no está eliminado, contar como vivo
+                if (!equiposEliminadosGlobal.has(equipo)) {
+                    stats[chango][etapaNombre].vivos++;
+                }
+            });
+        }
+
+        // Generar HTML
+        let html = `<div class="eliminatorias-stats-grid">`;
+
+        // Cabecera
+        html += `<div class="eliminatorias-stats-header">
+                    <span>Chango</span>
+                    ${etapas.map(e => `<span class="ronda-header">${e.label}</span>`).join('')}
+                </div>`;
+
+        // Filas por chango
+        changos.forEach(ch => {
+            html += `<div class="eliminatorias-stats-row">`;
+            html += `<span class="eliminatorias-chango"><span class="chango-emoji">${emojis[ch]}</span> ${ch}</span>`;
+            etapas.forEach(etapa => {
+                const data = stats[ch][etapa.nombre];
+                const vivos = data.vivos;
+                const total = data.total;
+                // Si total es 0, mostrar un guion
+                const display = total > 0 ? `<span class="vivos">${vivos}</span><span class="total">/${total}</span>` : '—';
+                html += `<span class="eliminatorias-count">${display}</span>`;
+            });
+            html += `</div>`;
+        });
+
+        html += `</div>`;
+        container.innerHTML = html;
     }
 
     // Inicialización
@@ -815,6 +920,7 @@
             eliminatoriasDatos = nuevosEliminatorias;
             construirInterfaz();
             renderizarBracketDefinitivo();
+            renderizarEstadisticasEliminatorias();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
             if (!manual) alert("No se pudo actualizar. Revisa tu conexión.");
@@ -1551,6 +1657,7 @@
         }
         await registrarServiceWorker();
         await cargarBracketOficial();
+        renderizarEstadisticasEliminatorias();
 
         actualizarResultados()
             .then(() => cargarClimaSedes())

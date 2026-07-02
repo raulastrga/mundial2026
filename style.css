@@ -1632,3 +1632,91 @@ body.dark-mode .bracket-team .bracket-flag[style*="background:#eee"] {
     background: linear-gradient(135deg, #8b5cf6, #6d28d9); /* Morado intenso */
     color: white;
 }
+
+/* ========== ESTADÍSTICAS DE ELIMINATORIAS ========== */
+.eliminatorias-stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 10px;
+}
+.eliminatorias-stats-header,
+.eliminatorias-stats-row {
+    display: grid;
+    grid-template-columns: 80px repeat(5, 1fr);
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.eliminatorias-stats-header {
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+}
+/* Alinear los encabezados de las rondas a la derecha */
+.eliminatorias-stats-header span:not(:first-child) {
+    text-align: right;
+}
+/* Alinear los números de las filas a la derecha */
+.eliminatorias-stats-row span:not(:first-child) {
+    text-align: right;
+}
+.eliminatorias-chango {
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.eliminatorias-chango .chango-emoji {
+    font-size: 1.2rem;
+}
+.eliminatorias-count {
+    font-weight: 600;
+    color: var(--primary);
+    /* Eliminamos el text-align: center y usamos el heredado de :not(:first-child) */
+}
+.eliminatorias-count .vivos {
+    color: #10b981;
+}
+.eliminatorias-count .total {
+    color: #94a3b8;
+}
+
+/* Modo oscuro */
+body.dark-mode .eliminatorias-stats-grid {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+body.dark-mode .eliminatorias-stats-header {
+    color: #f8fafc;
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+body.dark-mode .eliminatorias-chango {
+    color: #e2e8f0;
+}
+body.dark-mode .eliminatorias-count {
+    color: #cbd5e1;
+}
+body.dark-mode .eliminatorias-count .total {
+    color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .eliminatorias-stats-header,
+    .eliminatorias-stats-row {
+        grid-template-columns: 60px repeat(5, 1fr);
+        font-size: 0.75rem;
+        padding: 6px 0;
+    }
+    .eliminatorias-chango .chango-emoji {
+        font-size: 1rem;
+    }
+}
