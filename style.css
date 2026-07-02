@@ -1320,7 +1320,9 @@ body.dark-mode .clima-badge-item {
 .bracket-wrapper {
     display: flex;
     align-items: stretch;
-    min-height: 600px;
+    height: auto; /* Altura fija indispensable para estabilizar las matemáticas de las líneas */
+    min-height: 800px;
+    padding-bottom: 50px;
     overflow-x: auto;
     padding: 20px;
     background-color: var(--card-bg);
@@ -1329,16 +1331,17 @@ body.dark-mode .clima-badge-item {
     margin-top: 15px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    gap: 40px; /* Excelente para separar cada fase */
+    gap: 40px; /* Espacio exacto entre columnas donde vivirán los conectores */
 }
 
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* Repartición matemática perfecta */
+    justify-content: space-around; /* Cambiamos de space-around a center */
     min-width: 250px;
-    position: relative; /* CLAVE: Ancla al título absoluto */
-    padding-top: 40px; /* Crea el hueco en la parte superior para que viva el título */
+    position: relative;
+    padding-top: 50px;
+    gap:10px;
 }
 
 .bracket-column-title {
@@ -1350,23 +1353,88 @@ body.dark-mode .clima-badge-item {
     padding: 5px 0;
     border-radius: 4px;
     z-index: 2;
-    /* --- CORRECCIÓN ESTRUCTURAL --- */
-    position: absolute; /* Lo sacamos del cálculo de espacio de Flexbox */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    margin-bottom: 0; /* Eliminado para no estorbar */
+    margin-bottom: 0;
 }
 
 .bracket-match {
     background-color: var(--bg-color);
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    /* margin-bottom: 15px; <- ELIMINADO: Dejamos que space-around haga su magia */
     position: relative;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding: 8px; /* Asegura que el contenido interno respire */
+    padding: 8px;
+    z-index: 1;
+}
+
+/* Conector común horizontal base */
+.col-8-izq .bracket-match::after,
+.col-4-izq .bracket-match::after,
+.col-2-izq .bracket-match::after,
+.col-8-der .bracket-match::after,
+.col-4-der .bracket-match::after,
+.col-2-der .bracket-match::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    /* Agregamos un color gris por defecto por si falla tu variable */
+    background-color: var(--border-color, #94a3b8); 
+    z-index: -1; /* Lo manda detrás de la tarjeta */
+}
+
+/* Conectores del lado izquierdo */
+.col-8-izq .bracket-match::after,
+.col-4-izq .bracket-match::after,
+.col-2-izq .bracket-match::after {
+    left: -20px;
+}
+
+/* Conectores del lado derecho */
+.col-8-der .bracket-match::after,
+.col-4-der .bracket-match::after,
+.col-2-der .bracket-match::after {
+    right: -20px;
+}
+
+/* Ramificaciones verticales mecánicas (Corchetes) */
+.col-8-izq .bracket-match::before,
+.col-4-izq .bracket-match::before,
+.col-2-izq .bracket-match::before,
+.col-8-der .bracket-match::before,
+.col-4-der .bracket-match::before,
+.col-2-der .bracket-match::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    /* Agregamos el color gris de respaldo aquí también */
+    border: 2px solid var(--border-color, #94a3b8);
+    z-index: -1; /* Detrás de las tarjetas */
+}
+
+/* Corchetes Izquierdos (abren hacia la izquierda, quitamos borde izquierdo) */
+.col-8-izq .bracket-match::before { left: -40px; top: calc(50% - 48px); height: 96px; border-left: none; }
+.col-4-izq .bracket-match::before { left: -40px; top: calc(50% - 96px); height: 192px; border-left: none; }
+.col-2-izq .bracket-match::before { left: -40px; top: calc(50% - 192px); height: 384px; border-left: none; }
+
+/* Corchetes Derechos (abren hacia la derecha, quitamos borde derecho) */
+.col-8-der .bracket-match::before { right: -40px; top: calc(50% - 48px); height: 96px; border-right: none; }
+.col-4-der .bracket-match::before { right: -40px; top: calc(50% - 96px); height: 192px; border-right: none; }
+.col-2-der .bracket-match::before { right: -40px; top: calc(50% - 192px); height: 384px; border-right: none; }
+
+/* Conexiones directas para la Gran Final */
+.col-final .bracket-match::before {
+    content: ""; position: absolute; top: 50%; left: -40px; width: 40px; height: 2px;
+    background-color: var(--border-color, #94a3b8); z-index: -1;
+}
+.col-final .bracket-match::after {
+    content: ""; position: absolute; top: 50%; right: -40px; width: 40px; height: 2px;
+    background-color: var(--border-color, #94a3b8); z-index: -1;
 }
 
 .bracket-match:hover {
@@ -1376,8 +1444,9 @@ body.dark-mode .clima-badge-item {
 
 .bracket-team {
     display: flex;
+    font-size: 0.85rem;
     align-items: center;
-    padding: 8px 12px;
+    padding: 2px 0;
     font-size: 0.9rem;
     font-weight: 500;
 }
