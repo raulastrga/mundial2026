@@ -1863,3 +1863,54 @@ body.dark-mode .grad-oro .celebracion-content h2 #cel-titulo-texto {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+/* ========== MODAL DE ESPERANZA ========== */
+.modal-esperanza .celebracion-content {
+    background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(0,0,0,0.98));
+    box-shadow: 0 0 50px rgba(0, 104, 71, 0.4), inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+.modal-esperanza .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #94a3b8, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    animation: none;
+}
+.modal-esperanza .y-si-si {
+    display: block;
+    font-size: 4rem;
+    padding-bottom: 5px;
+    font-weight: 900;
+    margin-top: 15px;
+    background: linear-gradient(45deg, #006847, #ffffff, #ce1126);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: heartbeat 2s infinite, gradientText 3s linear infinite;
+    text-shadow: 0 10px 30px rgba(0, 104, 71, 0.5);
+    line-height: 1.1;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.1); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+    60% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+.modal-esperanza .cel-btn-cerrar {
+    background: linear-gradient(135deg, #006847, #004d35);
+    box-shadow: 0 10px 25px rgba(0, 104, 71, 0.4);
+}
+.modal-esperanza .cel-btn-cerrar:hover {
+    box-shadow: 0 15px 35px rgba(0, 104, 71, 0.6);
+}
+
+body.dark-mode .modal-esperanza .celebracion-content {
+    background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(0,0,0,0.98));
+    box-shadow: 0 0 50px rgba(0, 104, 71, 0.4), inset 0 0 0 1px rgba(255,255,255,0.1);
+}

@@ -1735,11 +1735,10 @@
     let animationFrameId = null;
 
     function verificarCelebraciones() {
-        if (sessionStorage.getItem('celebracionMostrada')) return;
-
         let celebracionEncontrada = null;
 
-        const finalMatch = eliminatoriasPorMatchNumber[104];
+        if (!sessionStorage.getItem('celebracionMostrada')) {
+            const finalMatch = eliminatoriasPorMatchNumber[104];
         if (finalMatch && finalMatch.status === 'FINISHED' && finalMatch.home && finalMatch.away) {
             let ganador = null;
             if (finalMatch.hPen !== null && finalMatch.aPen !== null) {
@@ -1796,10 +1795,36 @@
                 }
             }
         }
+        }
+
+        if (!celebracionEncontrada && !sessionStorage.getItem('esperanzaMostrada')) {
+            const hoyStr = new Date().toDateString();
+            for (const key in resultadosEnVivo) {
+                const partido = resultadosEnVivo[key];
+                const [t1, t2] = key.split('-');
+                if (traducirEquipo(t1) === 'México' || traducirEquipo(t2) === 'México') {
+                    const fechaObj = getHorario(t1, t2);
+                    if (fechaObj && fechaObj.toDateString() === hoyStr && partido.status !== 'FINISHED') {
+                        celebracionEncontrada = {
+                            tipo: 'esperanza',
+                            tituloTexto: 'Tú y yo sabemos que no, pero...',
+                            tituloEmoji: ' 🇲🇽🥺',
+                            mensaje: '<span class="y-si-si">¿Y si sí?</span>',
+                            animacion: 'esperanza'
+                        };
+                        break;
+                    }
+                }
+            }
+        }
 
         if (celebracionEncontrada) {
             mostrarCelebracionAnimada(celebracionEncontrada);
-            /* sessionStorage.setItem('celebracionMostrada', 'true'); */
+            if (celebracionEncontrada.tipo === 'esperanza') {
+                sessionStorage.setItem('esperanzaMostrada', 'true');
+            } else {
+                sessionStorage.setItem('celebracionMostrada', 'true');
+            }
         }
     }
 
@@ -1809,8 +1834,33 @@
         document.getElementById('cel-titulo-emoji').innerHTML = cel.tituloEmoji;
         document.getElementById('cel-mensaje').innerHTML = cel.mensaje;
         
-        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro');
+        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro', 'modal-esperanza');
         
+        if (cel.tipo === 'esperanza') {
+            modal.classList.add('modal-esperanza');
+            modal.classList.add('show');
+            
+            // Animación de "brasas de esperanza" (Embers mágicos flotando hacia arriba)
+            (function frameEsperanza() {
+                confetti({
+                    particleCount: 2,
+                    startVelocity: 3,
+                    angle: 90,
+                    spread: 360,
+                    origin: { x: Math.random(), y: Math.random() * 0.2 + 1 }, // Nacen desde abajo
+                    colors: ['#006847', '#ffffff', '#ce1126', '#fcd34d'], // Verde, blanco, rojo y toques dorados
+                    shapes: ['circle'],
+                    gravity: -0.5, // Gravedad negativa para que floten hacia arriba
+                    scalar: Math.random() * 0.6 + 0.4,
+                    drift: Math.random() * 1 - 0.5,
+                    ticks: 400,
+                    zIndex: 100000
+                });
+                animationFrameId = requestAnimationFrame(frameEsperanza);
+            }());
+            return;
+        }
+
         let colors = ['#bb0000', '#ffffff'];
         if (cel.animacion === 'confetti-mex') {
             colors = ['#006847', '#ffffff', '#ce1126'];
