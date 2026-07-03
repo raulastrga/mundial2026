@@ -43,6 +43,9 @@
 <div id="celebracion-modal" class="celebracion-overlay">
     <div class="celebracion-content">
         <h2 id="cel-titulo"><span id="cel-titulo-texto"></span> <span id="cel-titulo-emoji"></span></h2>
+        <div class="cel-sticker-container">
+            <img id="cel-sticker" src="" alt="Celebration Sticker" style="display: none;">
+        </div>
         <p id="cel-mensaje"></p>
         <button class="cel-btn-cerrar" onclick="cerrarCelebracion()">¡Genial!</button>
     </div>
@@ -1753,7 +1756,8 @@
                     tituloTexto: '¡CAMPEÓN DEL MUNDO!',
                     tituloEmoji: '🏆',
                     mensaje: `¡Felicidades ${ganadorTraducido}! 🌍`,
-                    animacion: 'confetti-oro'
+                    animacion: 'confetti-oro',
+                    sticker: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ251M2x1a3JxcWJ0N3B4OXpkanBveXR5Mzd2Z25xOWo3Mnd2Y3JnNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/g0dg3sm93HXQFaSkZe/giphy.gif'
                 };
             }
         }
@@ -1761,9 +1765,9 @@
         if (!celebracionEncontrada) {
             const hoyStr = new Date().toDateString();
             const equiposEspeciales = {
-                'México': { tituloTexto: '¡VIVA MÉXICO!', tituloEmoji: '🇲🇽', msj: '¡El Tri avanza a la siguiente fase!', animacion: 'confetti-mex' },
-                'Portugal': { tituloTexto: '¡SIIIUUU!', tituloEmoji: '🇵🇹', msj: '¡Felicidades al Bicho! Portugal avanza.', animacion: 'confetti-por' },
-                'Argentina': { tituloTexto: '¡VAMOS ARGENTINA!', tituloEmoji: '🇦🇷', msj: '¡Felicidades Messi! La Albiceleste avanza.', animacion: 'confetti-arg' }
+                'México': { tituloTexto: '¡VIVA MÉXICO!', tituloEmoji: '🇲🇽', msj: '¡El Tri avanza a la siguiente fase!', animacion: 'confetti-mex', sticker: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjhveDJteTNyNXZ3ZXJqdHo3YmY4bnU5ajU2Z2EwaTQyNmxocjQ4YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/iZWukU2Yvf7isy0KPr/giphy.gif' },
+                'Portugal': { tituloTexto: '¡SIIIUUU!', tituloEmoji: '🇵🇹', msj: '¡Felicidades al Bicho! Portugal avanza.', animacion: 'confetti-por', sticker: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXoybXVja21yNGthcDcycG9sY3Z3bGZ3dHBubWR3bGxjdWtkN3dyZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/GQ1O6WLEcQzCknJg0J/giphy.gif' },
+                'Argentina': { tituloTexto: '¡VAMOS ARGENTINA!', tituloEmoji: '🇦🇷', msj: '¡Felicidades Messi! La Albiceleste avanza.', animacion: 'confetti-arg', sticker: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3MzbWNkZ29hdmJjcXIyM3Q1ZGRpbzUyY254YzIzbXUxMzlvemZiNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Nxmv14BgtXZoL6RQgc/giphy.gif' }
             };
 
             for (let matchNum in eliminatoriasPorMatchNumber) {
@@ -1787,7 +1791,8 @@
                                 tituloTexto: equiposEspeciales[ganador].tituloTexto,
                                 tituloEmoji: equiposEspeciales[ganador].tituloEmoji,
                                 mensaje: equiposEspeciales[ganador].msj,
-                                animacion: equiposEspeciales[ganador].animacion
+                                animacion: equiposEspeciales[ganador].animacion,
+                                sticker: equiposEspeciales[ganador].sticker
                             };
                             break;
                         }
@@ -1810,7 +1815,8 @@
                             tituloTexto: 'Tú y yo sabemos que no, pero...',
                             tituloEmoji: ' 🇲🇽🥺',
                             mensaje: '<span class="y-si-si">¿Y si sí?</span>',
-                            animacion: 'esperanza'
+                            animacion: 'esperanza',
+                            sticker: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGI1ZjA1YzRqZGg3eHJ4YjJsYmI3MWw1NXIxb2VqNjZkcGk2NnpvZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3zQ5Tq5udoooPA3n7M/giphy.gif'
                         };
                         break;
                     }
@@ -1820,11 +1826,11 @@
 
         if (celebracionEncontrada) {
             mostrarCelebracionAnimada(celebracionEncontrada);
-            if (celebracionEncontrada.tipo === 'esperanza') {
+            /* if (celebracionEncontrada.tipo === 'esperanza') {
                 sessionStorage.setItem('esperanzaMostrada', 'true');
             } else {
                 sessionStorage.setItem('celebracionMostrada', 'true');
-            }
+            } */
         }
     }
 
@@ -1834,6 +1840,14 @@
         document.getElementById('cel-titulo-emoji').innerHTML = cel.tituloEmoji;
         document.getElementById('cel-mensaje').innerHTML = cel.mensaje;
         
+        const stickerImg = document.getElementById('cel-sticker');
+        if (cel.sticker) {
+            stickerImg.src = cel.sticker;
+            stickerImg.style.display = 'inline-block';
+        } else {
+            stickerImg.style.display = 'none';
+        }
+
         modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro', 'modal-esperanza');
         
         if (cel.tipo === 'esperanza') {

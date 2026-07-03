@@ -1772,6 +1772,24 @@ body.dark-mode .eliminatorias-count .total {
     animation: gradientText 3s linear infinite;
 }
 
+.cel-sticker-container {
+    margin: 10px 0 20px 0;
+    text-align: center;
+}
+.cel-sticker-container img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 12px;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+    animation: floatSticker 3s ease-in-out infinite;
+}
+
+@keyframes floatSticker {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
 .grad-mex .celebracion-content h2 #cel-titulo-texto {
     background: linear-gradient(45deg, #006847, #ce1126, #006847);
     background-size: 200% auto;
