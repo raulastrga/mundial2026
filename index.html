@@ -25,6 +25,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -37,6 +38,14 @@
 <div id="cargando-overlay">
     <div class="spinner"></div>
     <div class="loading-text">Cargando datos del Mundial 2026...</div>
+</div>
+
+<div id="celebracion-modal" class="celebracion-overlay">
+    <div class="celebracion-content">
+        <h2 id="cel-titulo"><span id="cel-titulo-texto"></span> <span id="cel-titulo-emoji"></span></h2>
+        <p id="cel-mensaje"></p>
+        <button class="cel-btn-cerrar" onclick="cerrarCelebracion()">¡Genial!</button>
+    </div>
 </div>
 
 <div id="partialLoader" class="partial-loader">
@@ -1664,6 +1673,7 @@
 
         actualizarResultados()
             .then(() => cargarClimaSedes())
+            .then(() => verificarCelebraciones())
             .catch(err => console.error("Error en carga inicial:", err))
             .finally(() => {
                 setTimeout(() => {
@@ -1721,6 +1731,132 @@
         const menu = document.getElementById('fabMenu');
         if (container && !container.contains(event.target)) menu.classList.remove('show');
     });
+
+    let animationFrameId = null;
+
+    function verificarCelebraciones() {
+        if (sessionStorage.getItem('celebracionMostrada')) return;
+
+        let celebracionEncontrada = null;
+
+        const finalMatch = eliminatoriasPorMatchNumber[104];
+        if (finalMatch && finalMatch.status === 'FINISHED' && finalMatch.home && finalMatch.away) {
+            let ganador = null;
+            if (finalMatch.hPen !== null && finalMatch.aPen !== null) {
+                ganador = finalMatch.hPen > finalMatch.aPen ? finalMatch.home : finalMatch.away;
+            } else {
+                ganador = finalMatch.hScore > finalMatch.aScore ? finalMatch.home : finalMatch.away;
+            }
+            if (ganador) {
+                const ganadorTraducido = traducirEquipo(ganador);
+                celebracionEncontrada = {
+                    tipo: 'campeon',
+                    tituloTexto: '¡CAMPEÓN DEL MUNDO!',
+                    tituloEmoji: '🏆',
+                    mensaje: `¡Felicidades ${ganadorTraducido}! 🌍`,
+                    animacion: 'confetti-oro'
+                };
+            }
+        }
+
+        if (!celebracionEncontrada) {
+            const hoyStr = new Date().toDateString();
+            const equiposEspeciales = {
+                'México': { tituloTexto: '¡VIVA MÉXICO!', tituloEmoji: '🇲🇽', msj: '¡El Tri avanza a la siguiente fase!', animacion: 'confetti-mex' },
+                'Portugal': { tituloTexto: '¡SIIIUUU!', tituloEmoji: '🇵🇹', msj: '¡Felicidades al Bicho! Portugal avanza.', animacion: 'confetti-por' },
+                'Argentina': { tituloTexto: '¡VAMOS ARGENTINA!', tituloEmoji: '🇦🇷', msj: '¡Felicidades Messi! La Albiceleste avanza.', animacion: 'confetti-arg' }
+            };
+
+            for (let matchNum in eliminatoriasPorMatchNumber) {
+                const m = eliminatoriasPorMatchNumber[matchNum];
+                if (m.status === 'FINISHED' && m.home && m.away) {
+                    const t1Normal = traducirEquipo(m.home);
+                    const t2Normal = traducirEquipo(m.away);
+                    const fechaObj = getHorario(t1Normal, t2Normal);
+                    
+                    if (fechaObj && fechaObj.toDateString() === hoyStr) {
+                        let ganador = null;
+                        if (m.hPen !== null && m.aPen !== null) {
+                            ganador = m.hPen > m.aPen ? t1Normal : t2Normal;
+                        } else {
+                            ganador = m.hScore > m.aScore ? t1Normal : (m.aScore > m.hScore ? t2Normal : null);
+                        }
+                        
+                        if (ganador && equiposEspeciales[ganador]) {
+                            celebracionEncontrada = {
+                                tipo: 'eliminatoria',
+                                tituloTexto: equiposEspeciales[ganador].tituloTexto,
+                                tituloEmoji: equiposEspeciales[ganador].tituloEmoji,
+                                mensaje: equiposEspeciales[ganador].msj,
+                                animacion: equiposEspeciales[ganador].animacion
+                            };
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (celebracionEncontrada) {
+            mostrarCelebracionAnimada(celebracionEncontrada);
+            sessionStorage.setItem('celebracionMostrada', 'true');
+        }
+    }
+
+    function mostrarCelebracionAnimada(cel) {
+        const modal = document.getElementById('celebracion-modal');
+        document.getElementById('cel-titulo-texto').innerHTML = cel.tituloTexto;
+        document.getElementById('cel-titulo-emoji').innerHTML = cel.tituloEmoji;
+        document.getElementById('cel-mensaje').innerHTML = cel.mensaje;
+        
+        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro');
+        
+        let colors = ['#bb0000', '#ffffff'];
+        if (cel.animacion === 'confetti-mex') {
+            colors = ['#006847', '#ffffff', '#ce1126'];
+            modal.classList.add('grad-mex');
+        } else if (cel.animacion === 'confetti-por') {
+            colors = ['#ff0000', '#006600', '#ffff00'];
+            modal.classList.add('grad-por');
+        } else if (cel.animacion === 'confetti-arg') {
+            colors = ['#75aadb', '#ffffff', '#f6b40e'];
+            modal.classList.add('grad-arg');
+        } else if (cel.animacion === 'confetti-oro') {
+            colors = ['#ffd700', '#ffb300', '#ffffff'];
+            modal.classList.add('grad-oro');
+        }
+
+        modal.classList.add('show');
+        
+        (function frame() {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: colors,
+                zIndex: 100000
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: colors,
+                zIndex: 100000
+            });
+
+            animationFrameId = requestAnimationFrame(frame);
+        }());
+    }
+
+    function cerrarCelebracion() {
+        document.getElementById('celebracion-modal').classList.remove('show');
+        if (animationFrameId !== null) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+    }
 </script>
 
 <div class="fab-container">
