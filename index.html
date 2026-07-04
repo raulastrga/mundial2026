@@ -215,16 +215,12 @@
     };
 
     function calcularEquiposEliminados() {
-        console.log('ok')
         equiposEliminadosGlobal.clear();
         
         Object.values(eliminatoriasPorMatchNumber).forEach(p => {
             if (p.status === 'FINISHED' && p.home && p.away) {
                 const t1Normal = traducirEquipo(p.home);
                 const t2Normal = traducirEquipo(p.away);
-
-                console.log(t1Normal);
-                console.log(t2Normal);
                 
                 // Verificamos si hubo penales
                 if (p.hPen !== null && p.aPen !== null) {
@@ -386,8 +382,6 @@
 
                     const classElim1 = equiposEliminadosGlobal.has(t1Normal) ? 'equipo-eliminado' : '';
                     const classElim2 = equiposEliminadosGlobal.has(t2Normal) ? 'equipo-eliminado' : '';
-
-                    console.log(equiposEliminadosGlobal);
 
                     html += `
                     <div class="bracket-match">
@@ -1675,8 +1669,8 @@
         renderizarEstadisticasEliminatorias();
 
         actualizarResultados()
-            .then(() => cargarClimaSedes())
             .then(() => verificarCelebraciones())
+            .then(() => cargarClimaSedes())
             .catch(err => console.error("Error en carga inicial:", err))
             .finally(() => {
                 setTimeout(() => {
