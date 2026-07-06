@@ -35,10 +35,7 @@
     <div class="orb orb-3"></div>
 </div>
 
-<div id="cargando-overlay">
-    <div class="spinner"></div>
-    <div class="loading-text">Cargando datos del Mundial 2026...</div>
-</div>
+<!-- Overlay de carga eliminado en favor de Skeleton Screens -->
 
 <div id="celebracion-modal" class="celebracion-overlay">
     <div class="celebracion-content">
@@ -87,7 +84,15 @@
 <div class="contenedor-vistas">
     
     <!-- Vista General (Calendario) -->
-    <div id="vista-cal-general" class="vista active"></div>
+    <div id="vista-cal-general" class="vista active">
+        <div class="skeleton-wrapper">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+    </div>
     
     <!-- Vista Por Chango (Calendario) -->
     <div id="vista-cal-chango" class="vista">
@@ -264,6 +269,18 @@
     }
 
     async function cargarClimaSedes() {
+        const cached = localStorage.getItem('climaSedesCache');
+        if (cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                if (Date.now() - parsed.timestamp < 30 * 60 * 1000) { // 30 minutos
+                    Object.assign(climaSedes, parsed.data);
+                    actualizarBadgesClima();
+                    return;
+                }
+            } catch (e) {}
+        }
+
         const ciudadesUnicasMap = {};
         for (let key in coordenadasCiudades) {
             const c = coordenadasCiudades[key];
@@ -290,6 +307,7 @@
                     };
                 }
             });
+            localStorage.setItem('climaSedesCache', JSON.stringify({ timestamp: Date.now(), data: climaSedes }));
             actualizarBadgesClima();
         } catch (error) {
             console.error("Error al cargar clima:", error);
@@ -756,17 +774,23 @@
         });
     }
 
-    async function actualizarResultados(manual = false) {
+    async function actualizarResultados(manual = false, fromCache = false, rawData = null) {
         const estadoAnterior = JSON.parse(JSON.stringify(resultadosEnVivo));
         if (manual) {
-            document.getElementById('cargando-overlay').style.display = 'flex';
-        } else {
+            mostrarLoaderParcial(true);
+        } else if (!fromCache) {
             mostrarLoaderParcial(true);
         }
         try {
-            const response = await fetch("https://play.fifa.com/json/fantasy/rounds.json");
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
+            let data;
+            if (fromCache && rawData) {
+                data = rawData;
+            } else {
+                const response = await fetch("https://play.fifa.com/json/fantasy/rounds.json");
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                data = await response.json();
+                localStorage.setItem('fifaRoundsCache', JSON.stringify(data));
+            }
             const nuevosResultados = {};
             const nuevosHorarios = {};
             const sedesJSON_tmp = {};
@@ -932,20 +956,24 @@
             renderizarEstadisticasEliminatorias();
         } catch (error) {
             console.error("Error al obtener datos FIFA:", error);
-            if (!manual) alert("No se pudo actualizar. Revisa tu conexión.");
+            if (!manual && !fromCache && !localStorage.getItem('fifaRoundsCache')) alert("No se pudo actualizar. Revisa tu conexión.");
         } finally {
-            const overlay = document.getElementById('cargando-overlay');
-            if (overlay) overlay.style.display = 'none';
-            mostrarLoaderParcial(false);
+            if (!fromCache) mostrarLoaderParcial(false);
         }
     }
 
     let eliminatoriasPorMatchNumber = {};
 
-    async function cargarBracketOficial() {
+    async function cargarBracketOficial(fromCache = false, rawData = null) {
         try {
-            const response = await fetch("https://api.fifa.com/api/v3/seasonbracket/season/285023?language=es");
-            const data = await response.json();
+            let data;
+            if (fromCache && rawData) {
+                data = rawData;
+            } else {
+                const response = await fetch("https://api.fifa.com/api/v3/seasonbracket/season/285023?language=es");
+                data = await response.json();
+                localStorage.setItem('fifaBracketCache', JSON.stringify(data));
+            }
 
             if (data.KnockoutStages) {
                 data.KnockoutStages.forEach(stage => {
@@ -1554,55 +1582,58 @@
         }
         vGeneral.innerHTML = (htmlPasados !== '<details class="dias-pasados"><summary>📁 Días anteriores a hoy</summary>' ? htmlPasados + '</details>' : '') + htmlFuturos;
 
-        // Por Chango (calendario)
-        for (let c of ["Jona","David","Raúl","Sergio"]) {
-            const div = document.getElementById('lista-pers-' + c);
-            let html = '';
-            partidosPorChango[c].sort((a,b)=> (a.fechaObj||0) - (b.fechaObj||0));
-            for (let pt of partidosPorChango[c]) {
-                let esLocal = (pt.d1 === c);
-                let res = getResult(pt.t1, pt.t2);
-                let estado = renderizarInsigniaEstado(res);
-                let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` : `<span style="color:#aaa; font-weight:bold;">VS</span>`;
-                let clasePasado = pt.finalizado ? 'partido-pasado' : '';
-                let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c1 : pt.c2}.png"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div>${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c2 : pt.c1}.png"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
+        // Lazy Rendering para componentes pesados
+        setTimeout(() => {
+            // Por Chango (calendario)
+            for (let c of ["Jona","David","Raúl","Sergio"]) {
+                const div = document.getElementById('lista-pers-' + c);
+                let html = '';
+                partidosPorChango[c].sort((a,b)=> (a.fechaObj||0) - (b.fechaObj||0));
+                for (let pt of partidosPorChango[c]) {
+                    let esLocal = (pt.d1 === c);
+                    let res = getResult(pt.t1, pt.t2);
+                    let estado = renderizarInsigniaEstado(res);
+                    let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` : `<span style="color:#aaa; font-weight:bold;">VS</span>`;
+                    let clasePasado = pt.finalizado ? 'partido-pasado' : '';
+                    let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
+                    html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c1 : pt.c2}.png"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div>${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c2 : pt.c1}.png"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
+                }
+                div.innerHTML = html;
             }
-            div.innerHTML = html;
-        }
 
-        // Tabla grupos
-        const vGrupos = document.getElementById('vista-res-grupos');
-        let htmlGrupos = '';
-        for (let g of Object.keys(gruposStats).sort()) {
-            gruposStats[g].sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
-            htmlGrupos += `<div class="seccion-contenedor"><h3 class="seccion-titulo">🎯 Grupo ${g}</h3><div style="overflow-x:auto;"><table class="tabla-stats"><thead><tr><th style="text-align:left;">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>DG</th><th>Pts</th></td></thead><tbody>`;
-            gruposStats[g].forEach((eq, i) => {
-                let dg = eq.gf - eq.gc;
-                htmlGrupos += `<tr><td class="td-izq"><span style="color:#aaa;">${i+1}</span><img src="https://flagcdn.com/w160/${eq.bandera}.png"><div>${eq.equipo}<span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; margin-left:6px;">${eq.dueño}</span></div></td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pe}</td><td>${eq.pp}</td><td>${eq.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${eq.pts}</td></tr>`;
+            // Tabla grupos
+            const vGrupos = document.getElementById('vista-res-grupos');
+            let htmlGrupos = '';
+            for (let g of Object.keys(gruposStats).sort()) {
+                gruposStats[g].sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
+                htmlGrupos += `<div class="seccion-contenedor"><h3 class="seccion-titulo">🎯 Grupo ${g}</h3><div style="overflow-x:auto;"><table class="tabla-stats"><thead><tr><th style="text-align:left;">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>DG</th><th>Pts</th></td></thead><tbody>`;
+                gruposStats[g].forEach((eq, i) => {
+                    let dg = eq.gf - eq.gc;
+                    htmlGrupos += `<tr><td class="td-izq"><span style="color:#aaa;">${i+1}</span><img src="https://flagcdn.com/w160/${eq.bandera}.png"><div>${eq.equipo}<span class="t-dueño d-${eq.dueño}" style="font-size:0.6rem; margin-left:6px;">${eq.dueño}</span></div></td><td>${eq.pj}</td><td>${eq.pg}</td><td>${eq.pe}</td><td>${eq.pp}</td><td>${eq.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${eq.pts}</td></tr>`;
+                });
+                htmlGrupos += `</tbody></table></div></div>`;
+            }
+            vGrupos.innerHTML = htmlGrupos;
+
+            // Tabla changos
+            let arrChangos = Object.values(estadisticasChangos);
+            arrChangos.sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
+            let maxPts = Math.max(...arrChangos.map(c=>c.pts),1);
+            let grafica = '', tabla = '';
+            arrChangos.forEach((c, i) => {
+                let pct = (c.pts / maxPts) * 100;
+                grafica += `<div class="barra-container"><div class="barra-header"><span>${c.nombre}</span><span>${c.pts} Pts</span></div><div class="barra-fondo"><div class="barra-progreso" style="width: ${Math.max(pct,2)}%; background-color: ${c.color};"></div></div></div>`;
+                let dg = c.gf - c.gc;
+                tabla += `<table><td class="td-izq"><span style="color:#aaa;">${i+1}</span><span class="t-dueño d-${c.nombre}">${c.nombre}</span></td><td>${c.pj}</td><td>${c.pg}</td><td>${c.pe}</td><td>${c.pp}</td><td>${c.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${c.pts}</td></tr>`;
             });
-            htmlGrupos += `</tbody></table></div></div>`;
-        }
-        vGrupos.innerHTML = htmlGrupos;
+            document.getElementById('grafica-changos').innerHTML = grafica;
+            document.getElementById('tabla-body-changos').innerHTML = tabla;
 
-        // Tabla changos
-        let arrChangos = Object.values(estadisticasChangos);
-        arrChangos.sort((a,b) => b.pts - a.pts || (b.gf-b.gc) - (a.gf-a.gc) || b.gf - a.gf);
-        let maxPts = Math.max(...arrChangos.map(c=>c.pts),1);
-        let grafica = '', tabla = '';
-        arrChangos.forEach((c, i) => {
-            let pct = (c.pts / maxPts) * 100;
-            grafica += `<div class="barra-container"><div class="barra-header"><span>${c.nombre}</span><span>${c.pts} Pts</span></div><div class="barra-fondo"><div class="barra-progreso" style="width: ${Math.max(pct,2)}%; background-color: ${c.color};"></div></div></div>`;
-            let dg = c.gf - c.gc;
-            tabla += `<table><td class="td-izq"><span style="color:#aaa;">${i+1}</span><span class="t-dueño d-${c.nombre}">${c.nombre}</span></td><td>${c.pj}</td><td>${c.pg}</td><td>${c.pe}</td><td>${c.pp}</td><td>${c.gf}</td><td>${dg>0?'+':''}${dg}</td><td style="font-weight:900;">${c.pts}</td></tr>`;
-        });
-        document.getElementById('grafica-changos').innerHTML = grafica;
-        document.getElementById('tabla-body-changos').innerHTML = tabla;
-
-        const avanzadas = calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados);
-        document.getElementById('stats-avanzadas-container').innerHTML = generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats);
-        document.getElementById('curiosidades-container').innerHTML = generarCuriosidades(estadisticasChangos, avanzadas);
-        renderizarGraficas(resultadosFinalizados, equiposDatos);
+            const avanzadas = calcularEstadisticasAvanzadas(estadisticasChangos, equiposDatos, resultadosFinalizados);
+            document.getElementById('stats-avanzadas-container').innerHTML = generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats);
+            document.getElementById('curiosidades-container').innerHTML = generarCuriosidades(estadisticasChangos, avanzadas);
+            renderizarGraficas(resultadosFinalizados, equiposDatos);
+        }, 100);
 
         const changoActivo = document.querySelector('.btn-chango.active')?.getAttribute('data-chango') || 'Jona';
         renderizarMiJornada(changoActivo);
@@ -1665,19 +1696,25 @@
             if (notifBtn) notifBtn.style.display = 'none';
         }
         await registrarServiceWorker();
-        await cargarBracketOficial();
+
+        // 1. Stale-While-Revalidate: Cargar desde localStorage si existe para renderizado inmediato
+        const cachedBracket = localStorage.getItem('fifaBracketCache');
+        const cachedRounds = localStorage.getItem('fifaRoundsCache');
+        if (cachedBracket) {
+            try { await cargarBracketOficial(true, JSON.parse(cachedBracket)); } catch(e) {}
+        }
+        if (cachedRounds) {
+            try { await actualizarResultados(false, true, JSON.parse(cachedRounds)); } catch(e) {}
+        }
+        
         renderizarEstadisticasEliminatorias();
 
+        // 2. Fetch de datos frescos en segundo plano
+        await cargarBracketOficial();
         actualizarResultados()
             .then(() => verificarCelebraciones())
             .then(() => cargarClimaSedes())
-            .catch(err => console.error("Error en carga inicial:", err))
-            .finally(() => {
-                setTimeout(() => {
-                    const overlay = document.getElementById('cargando-overlay');
-                    if (overlay && overlay.style.display !== 'none') overlay.style.display = 'none';
-                }, 5000);
-            });
+            .catch(err => console.error("Error en carga inicial:", err));
         intervalAutoActualizar = setInterval(() => actualizarResultados(false), 60000);
         document.querySelector('.btn-chango')?.classList.add('active');
 
