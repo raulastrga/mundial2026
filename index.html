@@ -491,14 +491,14 @@
             if (p.away) equipos.push(p.away);
 
             equipos.forEach(equipo => {
-                const eqInfo = buscarEquipoElim(equipo);
+                const eqInfo = buscarEquipoElim(traducirEquipo(equipo));
                 if (!eqInfo) return;
                 const chango = eqInfo.d;
                 if (!chango || !stats[chango]) return;
                 // Incrementar total
                 stats[chango][etapaNombre].total++;
                 // Si no está eliminado, contar como vivo
-                if (!equiposEliminadosGlobal.has(equipo)) {
+                if (!equiposEliminadosGlobal.has(traducirEquipo(equipo))) {
                     stats[chango][etapaNombre].vivos++;
                 }
             });
