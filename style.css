@@ -1789,7 +1789,18 @@ body.dark-mode .eliminatorias-count .total {
     50% { transform: translateY(-8px); }
     100% { transform: translateY(0px); }
 }
-
+.grad-esp .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #AD1519, #aeaeae, #FABD00);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.grad-fra .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #013896, #aeaeae, #cf142b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .grad-mex .celebracion-content h2 #cel-titulo-texto {
     background: linear-gradient(45deg, #006847, #ce1126, #006847);
     background-size: 200% auto;
@@ -1861,6 +1872,17 @@ body.dark-mode .celebracion-content h2 #cel-titulo-texto {
     animation: gradientText 3s linear infinite;
 }
 /* Re-aplicar colores de equipos en modo oscuro para que prevalezcan */
+
+body.dark-mode .grad-esp .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #AD1519, #aeaeae, #FABD00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+body.dark-mode .grad-fra .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #013896, #f1f1f1, #cf142b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 body.dark-mode .grad-mex .celebracion-content h2 #cel-titulo-texto {
     background: linear-gradient(45deg, #006847, #ce1126, #006847);
     -webkit-background-clip: text;

@@ -1798,7 +1798,9 @@
             const equiposEspeciales = {
                 'México': { tituloTexto: '¡VIVA MÉXICO!', tituloEmoji: '🇲🇽', msj: '¡El Tri avanza a la siguiente fase!', animacion: 'confetti-mex', sticker: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjhveDJteTNyNXZ3ZXJqdHo3YmY4bnU5ajU2Z2EwaTQyNmxocjQ4YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/iZWukU2Yvf7isy0KPr/giphy.gif' },
                 'Portugal': { tituloTexto: '¡SIIIUUU!', tituloEmoji: '🇵🇹', msj: '¡Felicidades al Bicho! Portugal avanza.', animacion: 'confetti-por', sticker: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXoybXVja21yNGthcDcycG9sY3Z3bGZ3dHBubWR3bGxjdWtkN3dyZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/GQ1O6WLEcQzCknJg0J/giphy.gif' },
-                'Argentina': { tituloTexto: '¡VAMOS ARGENTINA!', tituloEmoji: '🇦🇷', msj: '¡Felicidades Messi! La Albiceleste avanza.', animacion: 'confetti-arg', sticker: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3MzbWNkZ29hdmJjcXIyM3Q1ZGRpbzUyY254YzIzbXUxMzlvemZiNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Nxmv14BgtXZoL6RQgc/giphy.gif' }
+                'Argentina': { tituloTexto: '¡VAMOS ARGENTINA!', tituloEmoji: '🇦🇷', msj: '¡Felicidades Messi! La Albiceleste avanza.', animacion: 'confetti-arg', sticker: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3MzbWNkZ29hdmJjcXIyM3Q1ZGRpbzUyY254YzIzbXUxMzlvemZiNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Nxmv14BgtXZoL6RQgc/giphy.gif' },
+                'Francia': { tituloTexto: '¡ALLEZ LES BLEUS!', tituloEmoji: '🇫🇷', msj: '¡El Dictador Mbappé da la orden de avanzar!', animacion: 'confetti-fra', sticker: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExajRqYjI3NXN5MGRsa3g4empkMzhzbTI5OW93MHVyMWwwNGVuamZoZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5Y4RoHHNkHXt1lCQup/giphy.gif' },
+                'España': { tituloTexto: '¡VIVA ESPAÑA VIVA EL REY!', tituloEmoji: '🇪🇸', msj: '¡Felicidades Lamine! España avanza', animacion: 'confetti-esp', sticker: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWxyODBhdThwZ2Y5YXhqZ3Q1eWx5b2l4aWl6ZmdwZHRtODdxcjVsNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/luNlX7DgEpcIqMOQWU/giphy.gif' }
             };
 
             for (let matchNum in eliminatoriasPorMatchNumber) {
@@ -1879,7 +1881,7 @@
             stickerImg.style.display = 'none';
         }
 
-        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro', 'modal-esperanza');
+        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro', 'grad-fra', 'grad-esp', 'modal-esperanza');
         
         if (cel.tipo === 'esperanza') {
             modal.classList.add('modal-esperanza');
@@ -1919,6 +1921,12 @@
         } else if (cel.animacion === 'confetti-oro') {
             colors = ['#ffd700', '#ffb300', '#ffffff'];
             modal.classList.add('grad-oro');
+        } else if (cel.animacion === 'confetti-fra') {
+            colors = ['#002395', '#ffffff', '#ed2939'];
+            modal.classList.add('grad-fra');
+        } else if (cel.animacion === 'confetti-esp') {
+            colors = ['#AD1519', '#ffffff', '#FABD00'];
+            modal.classList.add('grad-esp');
         }
 
         modal.classList.add('show');
