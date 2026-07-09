@@ -336,7 +336,7 @@
             { nombre: '8vos (Izq)',  clase: 'col-8-izq',  partidos: [89, 90, 93, 94] },
             { nombre: '4tos (Izq)',  clase: 'col-4-izq',  partidos: [97, 98] },
             { nombre: 'Semi (Izq)',  clase: 'col-2-izq',  partidos: [101] },
-            { nombre: 'FINAL',       clase: 'col-final',  partidos: [104] },
+            { nombre: 'FINAL',       clase: 'col-final',  partidos: [104, 103] },
             { nombre: 'Semi (Der)',  clase: 'col-2-der',  partidos: [102] },
             { nombre: '4tos (Der)',  clase: 'col-4-der',  partidos: [99, 100] },
             { nombre: '8vos (Der)',  clase: 'col-8-der',  partidos: [91, 92, 95, 96] },
@@ -350,6 +350,9 @@
                         <div class="bracket-column-title">${col.nombre}</div>`;
 
             col.partidos.forEach(matchNum => {
+                if (matchNum === 103) {
+                    html += `<div style="text-align:center; font-size:0.7rem; font-weight:bold; color:#666; margin: 15px 0 5px 0; text-transform: uppercase;">3er Lugar</div>`;
+                }
                 const p = eliminatoriasPorMatchNumber[matchNum];
 
                 if (p) {
@@ -401,9 +404,9 @@
                     const classElim1 = equiposEliminadosGlobal.has(t1Normal) ? 'equipo-eliminado' : '';
                     const classElim2 = equiposEliminadosGlobal.has(t2Normal) ? 'equipo-eliminado' : '';
 
-                    html += `
-                    <div class="bracket-match">
-                        <div class="bracket-team ${classElim1}">
+                     html += `
+                     <div class="bracket-match" id="bracket-match-${matchNum}">
+                         <div class="bracket-team ${classElim1}">
                             ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${t1}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
                             <span style="${!p.home ? 'color:#999; font-size:0.85rem;' : ''}">${traducirEquipo(t1)}</span> ${badge1}
                             <span class="bracket-score ${clsW1}">${scr1}</span>

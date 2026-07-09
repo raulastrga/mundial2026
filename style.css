@@ -1344,6 +1344,20 @@ body.dark-mode .clima-badge-item {
     gap:10px;
 }
 
+.col-final {
+    justify-content: center;
+    gap: 20px;
+}
+
+#bracket-match-104 {
+    margin-top: 150px;
+}
+
+#bracket-match-103::before,
+#bracket-match-103::after {
+    display: none !important;
+}
+
 .bracket-column-title {
     text-align: center;
     font-weight: 700;
