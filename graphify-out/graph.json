@@ -4,22 +4,37 @@
   "graph": {
     "hyperedges": [
       {
-        "id": "graphify_references",
-        "label": "Graphify Reference Set",
+        "id": "ios_app_icons",
+        "label": "iOS App Icons",
         "nodes": [
-          "opencode_skills_graphify_references_add_watch",
-          "opencode_skills_graphify_references_exports",
-          "opencode_skills_graphify_references_extraction_spec",
-          "opencode_skills_graphify_references_github_and_merge",
-          "opencode_skills_graphify_references_hooks",
-          "opencode_skills_graphify_references_query",
-          "opencode_skills_graphify_references_transcribe",
-          "opencode_skills_graphify_references_update"
+          "public_icons_ios_120",
+          "public_icons_ios_128",
+          "public_icons_ios_144",
+          "public_icons_ios_152",
+          "public_icons_ios_16",
+          "public_icons_ios_167",
+          "public_icons_ios_180",
+          "public_icons_ios_192",
+          "public_icons_ios_20",
+          "public_icons_ios_256",
+          "public_icons_ios_29",
+          "public_icons_ios_32",
+          "public_icons_ios_40",
+          "public_icons_ios_50",
+          "public_icons_ios_512",
+          "public_icons_ios_57",
+          "public_icons_ios_58",
+          "public_icons_ios_60",
+          "public_icons_ios_64",
+          "public_icons_ios_72",
+          "public_icons_ios_76",
+          "public_icons_ios_80",
+          "public_icons_ios_87"
         ],
         "relation": "form",
-        "confidence": "EXTRACTED",
-        "confidence_score": 1.0,
-        "source_file": ".opencode/skills/graphify/SKILL.md"
+        "confidence": "INFERRED",
+        "confidence_score": 0.95,
+        "source_file": "public/icons/ios/120.png"
       }
     ]
   },
@@ -31,7 +46,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "opencode_opencode",
-      "community": 4,
+      "community": 3,
       "norm_label": "opencode.json"
     },
     {
@@ -41,7 +56,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "opencode_opencode_schema",
-      "community": 4,
+      "community": 3,
       "norm_label": "$schema"
     },
     {
@@ -51,7 +66,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "opencode_opencode_plugin",
-      "community": 4,
+      "community": 3,
       "norm_label": "plugin"
     },
     {
@@ -61,7 +76,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "ref_opencode_plugins_graphify_js",
-      "community": 4,
+      "community": 3,
       "norm_label": ".opencode/plugins/graphify.js"
     },
     {
@@ -71,7 +86,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "opencode_plugins_graphify",
-      "community": 5,
+      "community": 4,
       "norm_label": "graphify.js"
     },
     {
@@ -81,7 +96,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "opencode_plugins_graphify_graphifyplugin",
-      "community": 5,
+      "community": 4,
       "norm_label": "graphifyplugin()"
     },
     {
@@ -91,7 +106,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "opencode_plugins_graphify_rationale_4",
-      "community": 5,
+      "community": 4,
       "norm_label": "important: keep the reminder string free of backticks and $(...) constructs."
     },
     {
@@ -101,7 +116,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "public_manifest",
-      "community": 2,
+      "community": 1,
       "norm_label": "manifest.json"
     },
     {
@@ -111,7 +126,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "public_manifest_name",
-      "community": 2,
+      "community": 1,
       "norm_label": "name"
     },
     {
@@ -121,7 +136,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "public_manifest_short_name",
-      "community": 2,
+      "community": 1,
       "norm_label": "short_name"
     },
     {
@@ -131,7 +146,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "public_manifest_description",
-      "community": 2,
+      "community": 1,
       "norm_label": "description"
     },
     {
@@ -141,7 +156,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "public_manifest_start_url",
-      "community": 2,
+      "community": 1,
       "norm_label": "start_url"
     },
     {
@@ -151,7 +166,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "public_manifest_display",
-      "community": 2,
+      "community": 1,
       "norm_label": "display"
     },
     {
@@ -161,7 +176,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "public_manifest_theme_color",
-      "community": 2,
+      "community": 1,
       "norm_label": "theme_color"
     },
     {
@@ -171,7 +186,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "public_manifest_background_color",
-      "community": 2,
+      "community": 1,
       "norm_label": "background_color"
     },
     {
@@ -181,7 +196,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "public_manifest_icons",
-      "community": 2,
+      "community": 1,
       "norm_label": "icons"
     },
     {
@@ -191,7 +206,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_basedatosh2h",
-      "community": 7,
+      "community": 5,
       "norm_label": "basedatosh2h.js"
     },
     {
@@ -201,7 +216,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_basedatosh2h_basedatosh2h",
-      "community": 7,
+      "community": 5,
       "norm_label": "basedatosh2h"
     },
     {
@@ -211,7 +226,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_dic",
-      "community": 8,
+      "community": 6,
       "norm_label": "dic.js"
     },
     {
@@ -221,7 +236,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_dic_dic",
-      "community": 8,
+      "community": 6,
       "norm_label": "dic"
     },
     {
@@ -231,7 +246,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_equiposdatos",
-      "community": 9,
+      "community": 7,
       "norm_label": "equiposdatos.js"
     },
     {
@@ -241,7 +256,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_equiposdatos_equiposdatos",
-      "community": 9,
+      "community": 7,
       "norm_label": "equiposdatos"
     },
     {
@@ -251,7 +266,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_services_rawcalendario",
-      "community": 10,
+      "community": 8,
       "norm_label": "rawcalendario.js"
     },
     {
@@ -261,7 +276,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_services_rawcalendario_rawschedule",
-      "community": 10,
+      "community": 8,
       "norm_label": "rawschedule"
     },
     {
@@ -271,7 +286,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_utils_firebase_messaging_sw",
-      "community": 3,
+      "community": 2,
       "norm_label": "firebase-messaging-sw.js"
     },
     {
@@ -281,7 +296,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_utils_firebase_messaging_sw_xordecrypt",
-      "community": 3,
+      "community": 2,
       "norm_label": "xordecrypt()"
     },
     {
@@ -291,7 +306,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_utils_firebase_messaging_sw_getfirebaseconfig",
-      "community": 3,
+      "community": 2,
       "norm_label": "getfirebaseconfig()"
     },
     {
@@ -301,7 +316,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_utils_firebase_messaging_sw_firebaseconfig",
-      "community": 3,
+      "community": 2,
       "norm_label": "firebaseconfig"
     },
     {
@@ -311,12 +326,12 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_utils_firebase_messaging_sw_messaging",
-      "community": 3,
+      "community": 2,
       "norm_label": "messaging"
     },
     {
-      "label": "Frontend Design Skill",
-      "file_type": "document",
+      "label": "frontend-design Skill",
+      "file_type": "concept",
       "source_file": ".agents/skills/frontend-design/SKILL.md",
       "source_location": null,
       "source_url": null,
@@ -324,12 +339,12 @@
       "author": null,
       "contributor": null,
       "id": "agents_skills_frontend_design_skill",
-      "community": 11,
-      "norm_label": "frontend design skill"
+      "community": 9,
+      "norm_label": "frontend-design skill"
     },
     {
-      "label": "Graphify Skill",
-      "file_type": "document",
+      "label": "graphify Skill",
+      "file_type": "concept",
       "source_file": ".opencode/skills/graphify/SKILL.md",
       "source_location": null,
       "source_url": null,
@@ -337,112 +352,8 @@
       "author": null,
       "contributor": null,
       "id": "opencode_skills_graphify_skill",
-      "community": 1,
+      "community": 0,
       "norm_label": "graphify skill"
-    },
-    {
-      "label": "Add and Watch Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/add-watch.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_add_watch",
-      "community": 1,
-      "norm_label": "add and watch reference"
-    },
-    {
-      "label": "Exports Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/exports.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_exports",
-      "community": 1,
-      "norm_label": "exports reference"
-    },
-    {
-      "label": "Extraction Specification Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/extraction-spec.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_extraction_spec",
-      "community": 1,
-      "norm_label": "extraction specification reference"
-    },
-    {
-      "label": "GitHub and Merge Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_github_and_merge",
-      "community": 1,
-      "norm_label": "github and merge reference"
-    },
-    {
-      "label": "Hooks Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/hooks.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_hooks",
-      "community": 1,
-      "norm_label": "hooks reference"
-    },
-    {
-      "label": "Query Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/query.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_query",
-      "community": 1,
-      "norm_label": "query reference"
-    },
-    {
-      "label": "Transcribe Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/transcribe.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_transcribe",
-      "community": 1,
-      "norm_label": "transcribe reference"
-    },
-    {
-      "label": "Update Reference",
-      "file_type": "document",
-      "source_file": ".opencode/skills/graphify/references/update.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_update",
-      "community": 1,
-      "norm_label": "update reference"
     },
     {
       "label": "AGENTS.md",
@@ -453,12 +364,12 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "agents",
-      "community": 1,
+      "id": "agents_md",
+      "community": 0,
       "norm_label": "agents.md"
     },
     {
-      "label": "Index Page",
+      "label": "Quiniela Mundial 2026 Main Page",
       "file_type": "code",
       "source_file": "index.html",
       "source_location": null,
@@ -466,12 +377,12 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "index",
-      "community": 6,
-      "norm_label": "index page"
+      "id": "index_html",
+      "community": 10,
+      "norm_label": "quiniela mundial 2026 main page"
     },
     {
-      "label": "Sorteo Page",
+      "label": "Sorteo Mundial 2026 Page",
       "file_type": "code",
       "source_file": "sorteo.html",
       "source_location": null,
@@ -479,22 +390,113 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "sorteo",
-      "community": 6,
-      "norm_label": "sorteo page"
+      "id": "sorteo_html",
+      "community": 34,
+      "norm_label": "sorteo mundial 2026 page"
     },
     {
-      "label": "iOS Icons",
+      "label": "graphify query flow",
       "file_type": "concept",
-      "source_file": null,
+      "source_file": ".opencode/skills/graphify/references/query.md",
       "source_location": null,
       "source_url": null,
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "concept_ios_icons",
+      "id": "opencode_skills_graphify_references_query",
       "community": 0,
-      "norm_label": "ios icons"
+      "norm_label": "graphify query flow"
+    },
+    {
+      "label": "graphify update flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_update",
+      "community": 0,
+      "norm_label": "graphify update flow"
+    },
+    {
+      "label": "graphify add/watch flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_add_watch",
+      "community": 0,
+      "norm_label": "graphify add/watch flow"
+    },
+    {
+      "label": "graphify exports flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_exports",
+      "community": 0,
+      "norm_label": "graphify exports flow"
+    },
+    {
+      "label": "graphify hooks flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_hooks",
+      "community": 0,
+      "norm_label": "graphify hooks flow"
+    },
+    {
+      "label": "graphify transcribe flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/transcribe.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_transcribe",
+      "community": 0,
+      "norm_label": "graphify transcribe flow"
+    },
+    {
+      "label": "graphify extraction specification",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/extraction-spec.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_extraction_spec",
+      "community": 0,
+      "norm_label": "graphify extraction specification"
+    },
+    {
+      "label": "graphify github and merge flow",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "opencode_skills_graphify_references_github_and_merge",
+      "community": 0,
+      "norm_label": "graphify github and merge flow"
     },
     {
       "label": "120.png",
@@ -505,8 +507,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_120_image",
-      "community": 0,
+      "id": "public_icons_ios_120",
+      "community": 11,
       "norm_label": "120.png"
     },
     {
@@ -518,8 +520,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_128_image",
-      "community": 0,
+      "id": "public_icons_ios_128",
+      "community": 12,
       "norm_label": "128.png"
     },
     {
@@ -531,8 +533,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_144_image",
-      "community": 0,
+      "id": "public_icons_ios_144",
+      "community": 13,
       "norm_label": "144.png"
     },
     {
@@ -544,8 +546,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_152_image",
-      "community": 0,
+      "id": "public_icons_ios_152",
+      "community": 14,
       "norm_label": "152.png"
     },
     {
@@ -557,8 +559,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_16_image",
-      "community": 0,
+      "id": "public_icons_ios_16",
+      "community": 15,
       "norm_label": "16.png"
     },
     {
@@ -570,8 +572,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_167_image",
-      "community": 0,
+      "id": "public_icons_ios_167",
+      "community": 16,
       "norm_label": "167.png"
     },
     {
@@ -583,8 +585,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_180_image",
-      "community": 0,
+      "id": "public_icons_ios_180",
+      "community": 17,
       "norm_label": "180.png"
     },
     {
@@ -596,8 +598,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_192_image",
-      "community": 0,
+      "id": "public_icons_ios_192",
+      "community": 18,
       "norm_label": "192.png"
     },
     {
@@ -609,8 +611,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_20_image",
-      "community": 0,
+      "id": "public_icons_ios_20",
+      "community": 19,
       "norm_label": "20.png"
     },
     {
@@ -622,8 +624,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_256_image",
-      "community": 0,
+      "id": "public_icons_ios_256",
+      "community": 20,
       "norm_label": "256.png"
     },
     {
@@ -635,8 +637,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_29_image",
-      "community": 0,
+      "id": "public_icons_ios_29",
+      "community": 21,
       "norm_label": "29.png"
     },
     {
@@ -648,8 +650,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_32_image",
-      "community": 0,
+      "id": "public_icons_ios_32",
+      "community": 22,
       "norm_label": "32.png"
     },
     {
@@ -661,8 +663,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_40_image",
-      "community": 0,
+      "id": "public_icons_ios_40",
+      "community": 23,
       "norm_label": "40.png"
     },
     {
@@ -674,8 +676,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_50_image",
-      "community": 0,
+      "id": "public_icons_ios_50",
+      "community": 24,
       "norm_label": "50.png"
     },
     {
@@ -687,8 +689,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_512_image",
-      "community": 0,
+      "id": "public_icons_ios_512",
+      "community": 25,
       "norm_label": "512.png"
     },
     {
@@ -700,8 +702,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_57_image",
-      "community": 0,
+      "id": "public_icons_ios_57",
+      "community": 26,
       "norm_label": "57.png"
     },
     {
@@ -713,8 +715,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_58_image",
-      "community": 0,
+      "id": "public_icons_ios_58",
+      "community": 27,
       "norm_label": "58.png"
     },
     {
@@ -726,8 +728,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_60_image",
-      "community": 0,
+      "id": "public_icons_ios_60",
+      "community": 28,
       "norm_label": "60.png"
     },
     {
@@ -739,8 +741,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_64_image",
-      "community": 0,
+      "id": "public_icons_ios_64",
+      "community": 29,
       "norm_label": "64.png"
     },
     {
@@ -752,8 +754,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_72_image",
-      "community": 0,
+      "id": "public_icons_ios_72",
+      "community": 30,
       "norm_label": "72.png"
     },
     {
@@ -765,8 +767,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_76_image",
-      "community": 0,
+      "id": "public_icons_ios_76",
+      "community": 31,
       "norm_label": "76.png"
     },
     {
@@ -778,8 +780,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_80_image",
-      "community": 0,
+      "id": "public_icons_ios_80",
+      "community": 32,
       "norm_label": "80.png"
     },
     {
@@ -791,8 +793,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_87_image",
-      "community": 0,
+      "id": "public_icons_ios_87",
+      "community": 33,
       "norm_label": "87.png"
     }
   ],
@@ -1021,12 +1023,12 @@
     },
     {
       "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "AGENTS.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "agents",
+      "source": "agents_md",
       "target": "opencode_skills_graphify_skill"
     },
     {
@@ -1108,267 +1110,42 @@
       "weight": 1.0,
       "source": "opencode_skills_graphify_skill",
       "target": "opencode_skills_graphify_references_update"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "index",
-      "target": "sorteo"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/120.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_120_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/128.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_128_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/144.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_144_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/152.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_152_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/167.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_167_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/16.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_16_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/180.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_180_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/192.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_192_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/20.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_20_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/256.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_256_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/29.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_29_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/32.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_32_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/40.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_40_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/50.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_50_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/512.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_512_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/57.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_57_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/58.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_58_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/60.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_60_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/64.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_64_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/72.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_72_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/76.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_76_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/80.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_80_image",
-      "target": "concept_ios_icons"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "public/icons/ios/87.png",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "public_icons_ios_87_image",
-      "target": "concept_ios_icons"
     }
   ],
   "hyperedges": [
     {
-      "id": "graphify_references",
-      "label": "Graphify Reference Set",
+      "id": "ios_app_icons",
+      "label": "iOS App Icons",
       "nodes": [
-        "opencode_skills_graphify_references_add_watch",
-        "opencode_skills_graphify_references_exports",
-        "opencode_skills_graphify_references_extraction_spec",
-        "opencode_skills_graphify_references_github_and_merge",
-        "opencode_skills_graphify_references_hooks",
-        "opencode_skills_graphify_references_query",
-        "opencode_skills_graphify_references_transcribe",
-        "opencode_skills_graphify_references_update"
+        "public_icons_ios_120",
+        "public_icons_ios_128",
+        "public_icons_ios_144",
+        "public_icons_ios_152",
+        "public_icons_ios_16",
+        "public_icons_ios_167",
+        "public_icons_ios_180",
+        "public_icons_ios_192",
+        "public_icons_ios_20",
+        "public_icons_ios_256",
+        "public_icons_ios_29",
+        "public_icons_ios_32",
+        "public_icons_ios_40",
+        "public_icons_ios_50",
+        "public_icons_ios_512",
+        "public_icons_ios_57",
+        "public_icons_ios_58",
+        "public_icons_ios_60",
+        "public_icons_ios_64",
+        "public_icons_ios_72",
+        "public_icons_ios_76",
+        "public_icons_ios_80",
+        "public_icons_ios_87"
       ],
       "relation": "form",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md"
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "public/icons/ios/120.png"
     }
   ],
-  "built_at_commit": "d5d68abcfa69363f56bd9922a685ea56edb8bc79"
+  "built_at_commit": "08f07ff1a894597a70e1639d728e7377a309bd01"
 }

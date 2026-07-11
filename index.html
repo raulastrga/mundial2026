@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="style.css">
     
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="public/manifest.json">
     <meta name="theme-color" content="#f1f5f9">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -172,10 +172,10 @@
     <!-- Antigua vista Mi Jornada ya no se usa como principal, la reemplazamos por cal-mijornada -->
 </div>
 
-<script src="basedatosH2H.js"></script>
-<script src="dic.js"></script>
-<script src="equiposdatos.js"></script>
-<script src="rawcalendario.js"></script>
+<script src="src/data/basedatosH2H.js"></script>
+<script src="src/data/dic.js"></script>
+<script src="src/data/equiposdatos.js"></script>
+<script src="src/services/rawcalendario.js"></script>
 <script>
     // ==================== LÓGICA PRINCIPAL ====================
     let resultadosEnVivo = {};
@@ -671,7 +671,7 @@
     function traducirEquipo(nombreIngles) {
         if (!nombreIngles) return null;
         if (dic[nombreIngles]) return dic[nombreIngles];
-        console.warn(`Nombre de equipo no traducido: ${nombreIngles}`);
+        /* console.warn(`Nombre de equipo no traducido: ${nombreIngles}`); */
         return nombreIngles;
     }
 

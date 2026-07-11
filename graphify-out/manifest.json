@@ -10,7 +10,7 @@
     "semantic_hash": "3ea725724bc8ebe483c9f13d6aa1124f"
   },
   "public/manifest.json": {
-    "mtime": 1781313423.4638267,
+    "mtime": 1783744455.3866262,
     "ast_hash": "953026de2bddf30e8132298553fd9f27",
     "semantic_hash": "953026de2bddf30e8132298553fd9f27"
   },
@@ -20,37 +20,37 @@
     "semantic_hash": "6e6606081ab2e15dc9d675d07268510d"
   },
   "src/data/basedatosH2H.js": {
-    "mtime": 1781333569.1585805,
+    "mtime": 1783744433.2841847,
     "ast_hash": "eff7ff5e7669bd093c24c14e81f4cb55",
     "semantic_hash": "eff7ff5e7669bd093c24c14e81f4cb55"
   },
   "src/data/dic.js": {
-    "mtime": 1782864585.23669,
+    "mtime": 1783744455.38356,
     "ast_hash": "ee76d65e5e179020c89940aae45702fb",
     "semantic_hash": "ee76d65e5e179020c89940aae45702fb"
   },
   "src/data/equiposdatos.js": {
-    "mtime": 1781333588.7194057,
+    "mtime": 1783744455.3842435,
     "ast_hash": "33eeab2f3e72c9fff454157486175e26",
     "semantic_hash": "33eeab2f3e72c9fff454157486175e26"
   },
   "src/data/rounds.json": {
-    "mtime": 1782429220.7713804,
+    "mtime": 1783744455.3875148,
     "ast_hash": "ae81419d500b03a3a5ba4ad4171fdd94",
     "semantic_hash": "ae81419d500b03a3a5ba4ad4171fdd94"
   },
   "src/data/rounds_knockout.json": {
-    "mtime": 1782429262.6854227,
+    "mtime": 1783744455.387754,
     "ast_hash": "ccb8cdd8a550eada0fcc2bb045a1b2d4",
     "semantic_hash": "ccb8cdd8a550eada0fcc2bb045a1b2d4"
   },
   "src/services/rawcalendario.js": {
-    "mtime": 1781333625.2602909,
+    "mtime": 1783744455.3870857,
     "ast_hash": "bd97aed6316bce4a14e0c8964e8d82a0",
     "semantic_hash": "bd97aed6316bce4a14e0c8964e8d82a0"
   },
   "src/utils/firebase-messaging-sw.js": {
-    "mtime": 1781565956.7061014,
+    "mtime": 1783744455.384664,
     "ast_hash": "9bce90b2f339dfd64731581002c17445",
     "semantic_hash": "9bce90b2f339dfd64731581002c17445"
   },
@@ -115,9 +115,9 @@
     "semantic_hash": "6a47d64fcc136324ca395065a707ef76"
   },
   "index.html": {
-    "mtime": 1783740078.8156052,
-    "ast_hash": "fb07a73186e9fe69889f322f40c01746",
-    "semantic_hash": "fb07a73186e9fe69889f322f40c01746"
+    "mtime": 1783744455.3861763,
+    "ast_hash": "650060aad4483e3228b0d4c2ce647501",
+    "semantic_hash": "650060aad4483e3228b0d4c2ce647501"
   },
   "sorteo.html": {
     "mtime": 1781219130.0787766,
@@ -125,162 +125,162 @@
     "semantic_hash": "0cfca6704c2b6c85b58cfab736539a7b"
   },
   "public/icons/android/launchericon-144x144.png": {
-    "mtime": 1781312220.4494379,
+    "mtime": 1783744478.6603765,
     "ast_hash": "f117f3a34add3d67249c0014d4ecca7f",
     "semantic_hash": "f117f3a34add3d67249c0014d4ecca7f"
   },
   "public/icons/android/launchericon-192x192.png": {
-    "mtime": 1781312220.4501698,
+    "mtime": 1783744478.661491,
     "ast_hash": "6a3105ce6419ac8b8ba17bcd64572c3b",
     "semantic_hash": "6a3105ce6419ac8b8ba17bcd64572c3b"
   },
   "public/icons/android/launchericon-48x48.png": {
-    "mtime": 1781312220.450792,
+    "mtime": 1783744478.6616755,
     "ast_hash": "29ecc82a07bb0a11703dfa89b85bc46d",
     "semantic_hash": "29ecc82a07bb0a11703dfa89b85bc46d"
   },
   "public/icons/android/launchericon-512x512.png": {
-    "mtime": 1781312220.4519918,
+    "mtime": 1783744478.6631887,
     "ast_hash": "74bdf865a88e48a5abc26f8529071641",
     "semantic_hash": "74bdf865a88e48a5abc26f8529071641"
   },
   "public/icons/android/launchericon-72x72.png": {
-    "mtime": 1781312220.4525826,
+    "mtime": 1783744478.6638098,
     "ast_hash": "1abb9aa08d127b30a871ae476fcd950c",
     "semantic_hash": "1abb9aa08d127b30a871ae476fcd950c"
   },
   "public/icons/android/launchericon-96x96.png": {
-    "mtime": 1781312220.4531178,
+    "mtime": 1783744478.6642935,
     "ast_hash": "e841d86a387a854ef99399ccb4b13bfc",
     "semantic_hash": "e841d86a387a854ef99399ccb4b13bfc"
   },
   "public/icons/ios/100.png": {
-    "mtime": 1781312220.453901,
+    "mtime": 1783744478.6652608,
     "ast_hash": "c18d3fa17d76fc35c55521af3fe17ed0",
     "semantic_hash": "c18d3fa17d76fc35c55521af3fe17ed0"
   },
   "public/icons/ios/1024.png": {
-    "mtime": 1781312220.4548337,
+    "mtime": 1783744478.6662984,
     "ast_hash": "2155bf0c963f95d9f6377c5a3fef290b",
     "semantic_hash": "2155bf0c963f95d9f6377c5a3fef290b"
   },
   "public/icons/ios/114.png": {
-    "mtime": 1781312220.4553137,
+    "mtime": 1783744478.6666586,
     "ast_hash": "3036dafe4aa91cc3e6e56803fe288ea4",
     "semantic_hash": "3036dafe4aa91cc3e6e56803fe288ea4"
   },
   "public/icons/ios/120.png": {
-    "mtime": 1781312220.4557753,
+    "mtime": 1783744478.6669204,
     "ast_hash": "9eb365287fd6ceaa963695b4a5e0bbd8",
     "semantic_hash": "9eb365287fd6ceaa963695b4a5e0bbd8"
   },
   "public/icons/ios/128.png": {
-    "mtime": 1781312220.4569175,
+    "mtime": 1783744478.667591,
     "ast_hash": "6d00f79d5a507a5d93ea9c224de068b9",
     "semantic_hash": "6d00f79d5a507a5d93ea9c224de068b9"
   },
   "public/icons/ios/144.png": {
-    "mtime": 1781312220.457397,
+    "mtime": 1783744478.6682873,
     "ast_hash": "fc0bcdb1c5c1a0ce4854e586515aca8a",
     "semantic_hash": "fc0bcdb1c5c1a0ce4854e586515aca8a"
   },
   "public/icons/ios/152.png": {
-    "mtime": 1781312220.4578295,
+    "mtime": 1783744478.6689208,
     "ast_hash": "a4d5b407c11f743fbc394141eb502542",
     "semantic_hash": "a4d5b407c11f743fbc394141eb502542"
   },
   "public/icons/ios/16.png": {
-    "mtime": 1781312220.4582064,
+    "mtime": 1783744478.6693628,
     "ast_hash": "c15693daf55f86b79a34e4f2bbb42bfc",
     "semantic_hash": "c15693daf55f86b79a34e4f2bbb42bfc"
   },
   "public/icons/ios/167.png": {
-    "mtime": 1781312220.4586253,
+    "mtime": 1783744478.6703029,
     "ast_hash": "2635f211a1554afa92cb6286ea434479",
     "semantic_hash": "2635f211a1554afa92cb6286ea434479"
   },
   "public/icons/ios/180.png": {
-    "mtime": 1781312220.4590337,
+    "mtime": 1783744478.6711102,
     "ast_hash": "f11b9279079b26658a88fbd19589fb1f",
     "semantic_hash": "f11b9279079b26658a88fbd19589fb1f"
   },
   "public/icons/ios/192.png": {
-    "mtime": 1781312220.4594476,
+    "mtime": 1783744478.67163,
     "ast_hash": "d97f7b8cc1ea57b1da7dca56fd1f684a",
     "semantic_hash": "d97f7b8cc1ea57b1da7dca56fd1f684a"
   },
   "public/icons/ios/20.png": {
-    "mtime": 1781312220.4598258,
+    "mtime": 1783744478.6719701,
     "ast_hash": "6d81c87aeccd7233c80a066398184cf2",
     "semantic_hash": "6d81c87aeccd7233c80a066398184cf2"
   },
   "public/icons/ios/256.png": {
-    "mtime": 1781312220.4603555,
+    "mtime": 1783744478.672371,
     "ast_hash": "1378abfd08c7bbd7b9f88fd8da76ac1f",
     "semantic_hash": "1378abfd08c7bbd7b9f88fd8da76ac1f"
   },
   "public/icons/ios/29.png": {
-    "mtime": 1781312220.4607158,
+    "mtime": 1783744478.6727617,
     "ast_hash": "be41f45b1d51b26428f431f0c3295871",
     "semantic_hash": "be41f45b1d51b26428f431f0c3295871"
   },
   "public/icons/ios/32.png": {
-    "mtime": 1781312220.4610507,
+    "mtime": 1783744478.673564,
     "ast_hash": "a75ed70537c4a4e034f23b1f8daf0056",
     "semantic_hash": "a75ed70537c4a4e034f23b1f8daf0056"
   },
   "public/icons/ios/40.png": {
-    "mtime": 1781312220.4614148,
+    "mtime": 1783744478.6737876,
     "ast_hash": "3dd4e42c08b306d3db00d17c800b84ce",
     "semantic_hash": "3dd4e42c08b306d3db00d17c800b84ce"
   },
   "public/icons/ios/50.png": {
-    "mtime": 1781312220.4617636,
+    "mtime": 1783744478.6741426,
     "ast_hash": "8bd8729e930828d0f2270907f8bba4e2",
     "semantic_hash": "8bd8729e930828d0f2270907f8bba4e2"
   },
   "public/icons/ios/512.png": {
-    "mtime": 1781312220.4629219,
+    "mtime": 1783744478.675313,
     "ast_hash": "10a9294fef57304603083cc405b5b208",
     "semantic_hash": "10a9294fef57304603083cc405b5b208"
   },
   "public/icons/ios/57.png": {
-    "mtime": 1781312220.4633148,
+    "mtime": 1783744478.675618,
     "ast_hash": "dccdb049d894ef96cdfdd82d1d3e7818",
     "semantic_hash": "dccdb049d894ef96cdfdd82d1d3e7818"
   },
   "public/icons/ios/58.png": {
-    "mtime": 1781312220.4636314,
+    "mtime": 1783744478.6758664,
     "ast_hash": "4a7500a48f53804b04e6ce4cc23315bb",
     "semantic_hash": "4a7500a48f53804b04e6ce4cc23315bb"
   },
   "public/icons/ios/60.png": {
-    "mtime": 1781312220.463947,
+    "mtime": 1783744478.676094,
     "ast_hash": "520e273593e734a2cc80083e6a887014",
     "semantic_hash": "520e273593e734a2cc80083e6a887014"
   },
   "public/icons/ios/64.png": {
-    "mtime": 1781312220.464285,
+    "mtime": 1783744478.676397,
     "ast_hash": "4c85d4bca89f59ac74e41a3f85d04378",
     "semantic_hash": "4c85d4bca89f59ac74e41a3f85d04378"
   },
   "public/icons/ios/72.png": {
-    "mtime": 1781312220.4647002,
+    "mtime": 1783744478.6766407,
     "ast_hash": "f419d89cd138add7e7672f5dd176ca98",
     "semantic_hash": "f419d89cd138add7e7672f5dd176ca98"
   },
   "public/icons/ios/76.png": {
-    "mtime": 1781312220.4650586,
+    "mtime": 1783744478.6768792,
     "ast_hash": "999a69f18ab5817e2594dcee76e93bdb",
     "semantic_hash": "999a69f18ab5817e2594dcee76e93bdb"
   },
   "public/icons/ios/80.png": {
-    "mtime": 1781312220.465544,
+    "mtime": 1783744478.6772645,
     "ast_hash": "a9b8a982bde7be6ed27f9519af63911d",
     "semantic_hash": "a9b8a982bde7be6ed27f9519af63911d"
   },
   "public/icons/ios/87.png": {
-    "mtime": 1781312220.4659107,
+    "mtime": 1783744478.677569,
     "ast_hash": "a4237822542dca7eea37511ae456313e",
     "semantic_hash": "a4237822542dca7eea37511ae456313e"
   }
