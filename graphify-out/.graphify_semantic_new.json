@@ -1,0 +1,765 @@
+{
+  "nodes": [
+    {
+      "id": "agents_skills_frontend_design_skill",
+      "label": "Frontend Design Skill",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.agents/skills/frontend-design/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_skill",
+      "label": "Graphify Skill",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_add_watch",
+      "label": "Add and Watch Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/add-watch.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_exports",
+      "label": "Exports Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/exports.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_extraction_spec",
+      "label": "Extraction Specification Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/extraction-spec.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_github_and_merge",
+      "label": "GitHub and Merge Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_hooks",
+      "label": "Hooks Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/hooks.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_query",
+      "label": "Query Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/query.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_transcribe",
+      "label": "Transcribe Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/transcribe.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "opencode_skills_graphify_references_update",
+      "label": "Update Reference",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/references/update.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents",
+      "label": "AGENTS.md",
+      "file_type": "document",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "index",
+      "label": "Index Page",
+      "file_type": "code",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sorteo",
+      "label": "Sorteo Page",
+      "file_type": "code",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/sorteo.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_ios_icons",
+      "label": "iOS Icons",
+      "file_type": "concept",
+      "source_file": null,
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_120_image",
+      "label": "120.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/120.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_128_image",
+      "label": "128.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/128.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_144_image",
+      "label": "144.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/144.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_152_image",
+      "label": "152.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/152.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_16_image",
+      "label": "16.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/16.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_167_image",
+      "label": "167.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/167.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_180_image",
+      "label": "180.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/180.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_192_image",
+      "label": "192.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/192.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_20_image",
+      "label": "20.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/20.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_256_image",
+      "label": "256.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/256.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_29_image",
+      "label": "29.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/29.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_32_image",
+      "label": "32.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/32.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_40_image",
+      "label": "40.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/40.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_50_image",
+      "label": "50.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/50.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_512_image",
+      "label": "512.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/512.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_57_image",
+      "label": "57.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/57.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_58_image",
+      "label": "58.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/58.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_60_image",
+      "label": "60.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/60.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_64_image",
+      "label": "64.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/64.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_72_image",
+      "label": "72.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/72.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_76_image",
+      "label": "76.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/76.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_80_image",
+      "label": "80.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/80.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_icons_ios_87_image",
+      "label": "87.png",
+      "file_type": "image",
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/87.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_github_and_merge",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_transcribe",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_extraction_spec",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_query",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_update",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_exports",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_add_watch",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_references_hooks",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents",
+      "target": "opencode_skills_graphify_skill",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "index",
+      "target": "sorteo",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_120_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/120.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_128_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/128.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_144_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/144.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_152_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/152.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_16_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/16.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_167_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/167.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_180_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/180.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_192_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/192.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_20_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/20.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_256_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/256.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_29_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/29.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_32_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/32.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_40_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/40.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_50_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/50.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_512_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/512.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_57_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/57.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_58_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/58.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_60_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/60.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_64_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/64.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_72_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/72.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_76_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/76.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_80_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/80.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_icons_ios_87_image",
+      "target": "concept_ios_icons",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/public/icons/ios/87.png",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "graphify_references",
+      "label": "Graphify Reference Set",
+      "nodes": [
+        "opencode_skills_graphify_references_add_watch",
+        "opencode_skills_graphify_references_exports",
+        "opencode_skills_graphify_references_extraction_spec",
+        "opencode_skills_graphify_references_github_and_merge",
+        "opencode_skills_graphify_references_hooks",
+        "opencode_skills_graphify_references_query",
+        "opencode_skills_graphify_references_transcribe",
+        "opencode_skills_graphify_references_update"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/raulastrga/Sites/Projects/mundial2026/.opencode/skills/graphify/SKILL.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
