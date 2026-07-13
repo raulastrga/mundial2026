@@ -62,23 +62,23 @@
 <div class="nav-container">
     <div class="main-tabs">
         <div class="tabs-principales">
-            <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')">📅 Calendarios</button>
-            <button class="m-tab" id="m-eliminatorias" onclick="setMain('eliminatorias')">🏆 Eliminatorias</button>
-            <button class="m-tab" id="m-resultados" onclick="setMain('resultados')">📊 Resultados</button>
+            <button class="m-tab active" id="m-calendarios" onclick="setMain('calendarios')" data-cuelume-press="sparkle">📅 Calendarios</button>
+            <button class="m-tab" id="m-eliminatorias" onclick="setMain('eliminatorias')" data-cuelume-press="sparkle">🏆 Eliminatorias</button>
+            <button class="m-tab" id="m-resultados" onclick="setMain('resultados')" data-cuelume-press="sparkle">📊 Resultados</button>
         </div>
     </div>
     
     <!-- Sub-tabs para Calendarios (incluye General, Por Chango y Mi Jornada) -->
     <div class="sub-tabs" id="sub-calendarios">
-        <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')">🌎 General</button>
-        <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')">🐵 Por Chango</button>
-        <button class="s-tab" id="s-cal-mijornada" onclick="setSub('cal-mijornada')">📅 Mi Jornada</button>
+        <button class="s-tab active" id="s-cal-general" onclick="setSub('cal-general')" data-cuelume-press="bloom">🌎 General</button>
+        <button class="s-tab" id="s-cal-chango" onclick="setSub('cal-chango')" data-cuelume-press="bloom">🐵 Por Chango</button>
+        <button class="s-tab" id="s-cal-mijornada" onclick="setSub('cal-mijornada')" data-cuelume-press="bloom">📅 Mi Jornada</button>
     </div>
     
     <!-- Sub-tabs para Resultados -->
     <div class="sub-tabs" id="sub-resultados" style="display: none;">
-        <button class="s-tab active" id="s-res-grupos" onclick="setSub('res-grupos')">🎯 Grupos</button>
-        <button class="s-tab" id="s-res-chango" onclick="setSub('res-chango')">📈 Por Chango</button>
+        <button class="s-tab active" id="s-res-grupos" onclick="setSub('res-grupos')" data-cuelume-press="bloom">🎯 Grupos</button>
+        <button class="s-tab" id="s-res-chango" onclick="setSub('res-chango')" data-cuelume-press="bloom">📈 Por Chango</button>
     </div>
 </div>
 
@@ -182,6 +182,11 @@
 <script src="src/services/notifications.js"></script>
 <script src="src/services/renderizado.js"></script>
 <script src="src/utils/utils.js"></script>
+<script type="module">
+    import { bind } from 'https://cdn.jsdelivr.net/npm/cuelume/+esm';
+    window.cuelumeBind = bind;
+    bind();
+</script>
 <script>
     // ==================== LÓGICA PRINCIPAL ====================
     let resultadosEnVivo = {};

@@ -98,13 +98,13 @@ function renderizarBracketDefinitivo() {
                 const classElim1 = equiposEliminadosGlobal.has(t1Normal) ? 'equipo-eliminado' : '';
                 const classElim2 = equiposEliminadosGlobal.has(t2Normal) ? 'equipo-eliminado' : '';
 
-                  html += `
-                  <div class="bracket-match" id="bracket-match-${matchNum}">
-                      <div class="bracket-team ${classElim1}">
-                        ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${t1}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
-                        <span style="${!p.home ? 'color:#999; font-size:0.85rem;' : ''}">${traducirEquipo(t1)}</span> ${badge1}
-                        <span class="bracket-score ${clsW1}">${scr1}</span>
-                    </div>
+                     html += `
+                     <div class="bracket-match" id="bracket-match-${matchNum}" data-cuelume-press="tick">
+                         <div class="bracket-team ${classElim1}">
+                            ${b1 ? `<img src="https://flagcdn.com/w40/${b1}.png" class="bracket-flag" alt="${t1}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
+                            <span style="${!p.home ? 'color:#999; font-size:0.85rem;' : ''}">${traducirEquipo(t1)}</span> ${badge1}
+                            <span class="bracket-score ${clsW1}">${scr1}</span>
+                        </div>
                     <div class="bracket-team ${classElim2}">
                         ${b2 ? `<img src="https://flagcdn.com/w40/${b2}.png" class="bracket-flag" alt="${t2}">` : '<div class="bracket-flag" style="background:#eee"></div>'}
                         <span style="${!p.away ? 'color:#999; font-size:0.85rem;' : ''}">${traducirEquipo(t2)}</span> ${badge2}
@@ -129,6 +129,8 @@ function renderizarBracketDefinitivo() {
     
     // Centramos el scroll hacia la Gran Final automáticamente
     setTimeout(() => wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2, 100);
+    
+    if (window.cuelumeBind) window.cuelumeBind();
 }
 
 // ========== ESTADÍSTICAS DE ELIMINATORIAS POR CHANGO ==========
@@ -969,9 +971,10 @@ function renderizarMiJornada(changoSeleccionado) {
             </div>
             ${h2hHtml}
         </div>`;
+        }
+        container.innerHTML = html;
+        if (window.cuelumeBind) window.cuelumeBind();
     }
-    container.innerHTML = html;
-}
 
 function seleccionarChango(chango) {
     document.querySelectorAll('.btn-chango').forEach(btn => btn.classList.remove('active'));
@@ -1128,7 +1131,7 @@ function construirInterfaz() {
             let badge = (clsAd === 'proximo-partido') ? '<div class="badge-proximo">👉 Siguiente Partido</div>' : '';
             let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
             let grLabel = pt.gr.length > 1 ? pt.gr : `Grupo ${pt.gr}`;
-            gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>${grLabel}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${sedeHtml}${h2hHtml}</div>`;
+            gridHTML += `<div class="partido-card ${clsAd}" onclick="alternarTarjetaPartido(this)" data-cuelume-press="tick">${badge}<div class="p-info"><span>⏰ ${pt.hora}</span><span>${grLabel}</span></div><div class="p-teams"><div class="team"><img src="https://flagcdn.com/w160/${pt.c1}.png" class="img-bandera"><span class="t-nombre">${pt.t1}</span><span class="t-dueño d-${pt.d1}">${pt.d1}</span></div><div style="display:flex;flex-direction:column;align-items:center;">${scoreHtml}${estadoInsignia}</div><div class="team"><img src="https://flagcdn.com/w160/${pt.c2}.png" class="img-bandera"><span class="t-nombre">${pt.t2}</span><span class="t-dueño d-${pt.d2}">${pt.d2}</span></div></div>${sedeHtml}${h2hHtml}</div>`;
         }
         gridHTML += '</div>';
         let header = `<div class="fecha-header">🗓️ ${dia} 2026</div>`;
@@ -1151,7 +1154,7 @@ function construirInterfaz() {
                 let scoreCenter = (res && (res.status === 'FINISHED' || res.status === 'LIVE')) ? `<div style="font-weight:900; font-size:1.1rem; background:#eef2f5; padding:2px 8px; border-radius:6px;">${esLocal ? res.g1 : res.g2} - ${esLocal ? res.g2 : res.g1}</div>` : `<span style="color:#aaa; font-weight:bold;">VS</span>`;
                 let clasePasado = pt.finalizado ? 'partido-pasado' : '';
                 let h2hHtml = obtenerHtmlHistorial(pt.t1, pt.t2);
-                html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c1 : pt.c2}.png"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div>${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c2 : pt.c1}.png"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
+                html += `<div class="p-mini ${clasePasado}" onclick="alternarTarjetaPartido(this)" data-cuelume-press="tick"><div class="p-mini-fecha">${pt.fecha} - ${pt.hora} hrs</div><div class="p-mini-equipos"><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c1 : pt.c2}.png"><span>${esLocal ? pt.t1 : pt.t2}</span><span class="t-dueño d-${c}" style="font-size:0.65rem;">Tu equipo</span></div><div>${scoreCenter}${estado}</div><div class="p-mini-col"><img src="https://flagcdn.com/w160/${esLocal ? pt.c2 : pt.c1}.png"><span>${esLocal ? pt.t2 : pt.t1}</span><span class="t-dueño d-${esLocal ? pt.d2 : pt.d1}" style="font-size:0.65rem;">Rival: ${esLocal ? pt.d2 : pt.d1}</span></div></div>${h2hHtml}</div>`;
             }
             div.innerHTML = html;
         }
@@ -1188,6 +1191,8 @@ function construirInterfaz() {
         document.getElementById('stats-avanzadas-container').innerHTML = generarHtmlEstadisticas(estadisticasChangos, avanzadas, gruposStats);
         document.getElementById('curiosidades-container').innerHTML = generarCuriosidades(estadisticasChangos, avanzadas);
         renderizarGraficas(resultadosFinalizados, equiposDatos);
+        
+        if (window.cuelumeBind) window.cuelumeBind();
     }, 100);
 
     const changoActivo = document.querySelector('.btn-chango.active')?.getAttribute('data-chango') || 'Jona';
