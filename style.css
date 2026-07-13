@@ -2,30 +2,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    /* Paleta Principal (World Cup) */
-    --primary: #1e1b4b;       /* Indigo Oscuro (Títulos) */
-    --primary-light: #4f46e5; /* Indigo Brillante (Activos) */
-    --secondary: #f43f5e;     /* Rosa Deportivo */
-    --accent: #0ea5e9;        /* Azul Claro */
+    /* Paleta Principal (World Cup) - Basada en theme.css */
+    --primary-color: var(--primary);       /* Usando la variable de theme.css */
+    --primary-light: var(--primary);       /* Usando la variable de theme.css */
+    --accent-color: var(--accent);         /* Variable que definiremos abajo */
+    --accent: #0ea5e9;
     
-    /* Variables de Changos */
-    --jona: #ef4444;    /* Rojo vibrante */
-    --david: #10b981;   /* Esmeralda */
-    --raul: #3b82f6;    /* Azul fuerte */
-    --sergio: #f59e0b;  /* Ámbar */
+    /* Variables de Changos (ahora en theme.css) */
     
     /* Configuración de Cristal (Glassmorphism) */
-    --bg-page: #f1f5f9;
+    --bg-page: var(--bg-body);
     --card-bg: rgba(255, 255, 255, 0.65);
     --card-border: rgba(255, 255, 255, 0.8);
     --glass-blur: blur(16px);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* ========== RESET Y BASE ========== */
 body {
-    font-family: 'Outfit', sans-serif;
-    background-color: var(--bg-page);
-    color: #334155;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
     padding: 16px;
     padding-top: env(safe-area-inset-top, 20px);
@@ -43,18 +40,18 @@ body {
     top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: -2;
     overflow: hidden;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, var(--bg-body) 0%, var(--bg-card) 100%);
 }
 .orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(90px);
-    opacity: 0.5;
+    opacity: 0.3;
     animation: float 12s infinite alternate ease-in-out;
 }
-.orb-1 { width: 350px; height: 350px; background: #c7d2fe; top: -50px; left: -100px; }
-.orb-2 { width: 450px; height: 450px; background: #fecdd3; bottom: -100px; right: -50px; animation-delay: -3s; }
-.orb-3 { width: 250px; height: 250px; background: #bae6fd; top: 35%; left: 40%; animation-delay: -6s; }
+.orb-1 { width: 350px; height: 350px; background: var(--primary); top: -50px; left: -100px; }
+.orb-2 { width: 450px; height: 450px; background: var(--danger); bottom: -100px; right: -50px; animation-delay: -3s; }
+.orb-3 { width: 250px; height: 250px; background: var(--accent); top: 35%; left: 40%; animation-delay: -6s; }
 
 @keyframes float {
     0% { transform: translate(0, 0) scale(1); }
@@ -73,78 +70,75 @@ h1 {
     text-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 .subtitle {
-    color: #64748b;
+    color: var(--text-muted);
     margin-bottom: 10px;
     font-size: 0.95rem;
     font-weight: 500;
 }
 
 /* ========== NAVEGACIÓN Y TABS ========== */
-.nav-container { width: 100%; max-width: 800px; margin-bottom: 25px; }
-.contenedor-vistas { width: 100%; max-width: 1000px; }
+.nav-container { width: 100%; max-width: 800px; margin: 0 auto 25px auto; }
+.contenedor-vistas { width: 100%; max-width: 1000px; margin: 0 auto; }
 .vista { display: none; }
 .vista.active { display: block; animation: fadeIn 0.4s ease-in-out; }
 
 .tabs-principales {
     display: flex;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(var(--bg-card-rgb), 0.5);
     backdrop-filter: var(--glass-blur);
     padding: 6px;
     border-radius: 18px;
     border: 1px solid var(--card-border);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
-}
-.m-tab {
-    flex: 1;
-    background: transparent;
-    border: none;
-    padding: 12px 5px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: #64748b;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.m-tab.active {
-    background: white;
-    color: var(--primary-light);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .sub-tabs {
     display: flex;
     gap: 12px;
     justify-content: center;
-    margin: 18px 0;
+    margin: 18px auto;
+    width: fit-content;
 }
+.m-tab {
+    background: transparent;
+    border: none;
+    padding: 12px 20px; /* Padding fijo para mejor aspecto */
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.m-tab.active {
+    background: var(--bg-card);
+    color: var(--primary);
+    box-shadow: var(--shadow-md);
+    transform: scale(1.02);
+}
+
 .s-tab {
     background-color: transparent;
-    border: 2px solid #cbd5e1;
-    padding: 8px 20px;          /* Ajuste de padding */
-    border-radius: 40px;        /* Más redondeado */
+    border: 2px solid var(--text-muted);
+    padding: 8px 20px;
+    border-radius: 40px;
     font-weight: 700;
-    font-size: 0.85rem;         /* Reducido para móvil */
+    font-size: 0.85rem;
     cursor: pointer;
-    color: #64748b;
+    color: var(--text-muted);
     transition: all 0.3s;
-    flex: 0 1 auto;             /* En lugar de flex:1, que se adapte al contenido */
+    flex: 0 1 auto;
     text-align: center;
     white-space: nowrap;
 }
-@media (max-width: 480px) {
-    .s-tab {
-        padding: 6px 16px;
-        font-size: 0.75rem;
-    }
-}
 .s-tab.active {
-    border-color: var(--primary-light);
-    background-color: var(--primary-light);
+    border-color: var(--primary);
+    background-color: var(--primary);
     color: white;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    box-shadow: 0 4px 12px rgba(var(--primary), 0.25);
 }
 
 /* ========== CALENDARIO Y TARJETAS DE PARTIDO ========== */

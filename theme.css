@@ -1,0 +1,48 @@
+:root {
+    /* Paleta de Colores */
+    --bg-body-rgb: 248, 250, 252;
+    --bg-card-rgb: 255, 255, 255;
+    --bg-body: rgb(var(--bg-body-rgb));
+    --bg-card: rgb(var(--bg-card-rgb));
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    
+    --primary: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    
+    /* Variables de integrantes */
+    --jona: #ef4444;
+    --david: #10b981;
+    --raul: #3b82f6;
+    --sergio: #f59e0b;
+}
+
+body.dark-mode {
+    --bg-body-rgb: 15, 23, 42;
+    --bg-card-rgb: 30, 41, 59;
+    --bg-body: rgb(var(--bg-body-rgb));
+    --bg-card: rgb(var(--bg-card-rgb));
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+}
+
+/* Base */
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tarjetas */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+}
