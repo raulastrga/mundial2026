@@ -260,6 +260,96 @@
       "norm_label": "equiposdatos"
     },
     {
+      "label": "firebase-init.js",
+      "file_type": "code",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_services_firebase_init",
+      "community": 41,
+      "norm_label": "firebase-init.js"
+    },
+    {
+      "label": "xorDecrypt()",
+      "file_type": "code",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_services_firebase_init_xordecrypt",
+      "community": 41,
+      "norm_label": "xordecrypt()"
+    },
+    {
+      "label": "getFirebaseConfig()",
+      "file_type": "code",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_services_firebase_init_getfirebaseconfig",
+      "community": 41,
+      "norm_label": "getfirebaseconfig()"
+    },
+    {
+      "label": "firebaseConfig",
+      "file_type": "code",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "src_services_firebase_init_firebaseconfig",
+      "community": 41,
+      "norm_label": "firebaseconfig"
+    },
+    {
+      "label": "messaging",
+      "file_type": "code",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "src_services_firebase_init_messaging",
+      "community": 41,
+      "norm_label": "messaging"
+    },
+    {
+      "label": "notifications.js",
+      "file_type": "code",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_services_notifications",
+      "community": 45,
+      "norm_label": "notifications.js"
+    },
+    {
+      "label": "registrarServiceWorker()",
+      "file_type": "code",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_services_notifications_registrarserviceworker",
+      "community": 45,
+      "norm_label": "registrarserviceworker()"
+    },
+    {
+      "label": "solicitarPermisoFCM()",
+      "file_type": "code",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "src_services_notifications_solicitarpermisofcm",
+      "community": 45,
+      "norm_label": "solicitarpermisofcm()"
+    },
+    {
+      "label": "enviarNotificacionLocal()",
+      "file_type": "code",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "src_services_notifications_enviarnotificacionlocal",
+      "community": 45,
+      "norm_label": "enviarnotificacionlocal()"
+    },
+    {
       "label": "rawcalendario.js",
       "file_type": "code",
       "source_file": "src/services/rawcalendario.js",
@@ -278,6 +368,326 @@
       "id": "src_services_rawcalendario_rawschedule",
       "community": 8,
       "norm_label": "rawschedule"
+    },
+    {
+      "label": "renderizado.js",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_services_renderizado",
+      "community": 35,
+      "norm_label": "renderizado.js"
+    },
+    {
+      "label": "calcularEquiposEliminados()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_services_renderizado_calcularequiposeliminados",
+      "community": 35,
+      "norm_label": "calcularequiposeliminados()"
+    },
+    {
+      "label": "renderizarBracketDefinitivo()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "src_services_renderizado_renderizarbracketdefinitivo",
+      "community": 35,
+      "norm_label": "renderizarbracketdefinitivo()"
+    },
+    {
+      "label": "renderizarEstadisticasEliminatorias()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L137",
+      "_origin": "ast",
+      "id": "src_services_renderizado_renderizarestadisticaseliminatorias",
+      "community": 35,
+      "norm_label": "renderizarestadisticaseliminatorias()"
+    },
+    {
+      "label": "ultimoPartidoDelDia",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L239",
+      "_origin": "ast",
+      "id": "src_services_renderizado_ultimopartidodeldia",
+      "community": 35,
+      "norm_label": "ultimopartidodeldia"
+    },
+    {
+      "label": "renderizarGraficas()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L241",
+      "_origin": "ast",
+      "id": "src_services_renderizado_renderizargraficas",
+      "community": 35,
+      "norm_label": "renderizargraficas()"
+    },
+    {
+      "label": "actualizarResultados()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L343",
+      "_origin": "ast",
+      "id": "src_services_renderizado_actualizarresultados",
+      "community": 35,
+      "norm_label": "actualizarresultados()"
+    },
+    {
+      "label": "eliminatoriasPorMatchNumber",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L531",
+      "_origin": "ast",
+      "id": "src_services_renderizado_eliminatoriaspormatchnumber",
+      "community": 35,
+      "norm_label": "eliminatoriaspormatchnumber"
+    },
+    {
+      "label": "cargarBracketOficial()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L533",
+      "_origin": "ast",
+      "id": "src_services_renderizado_cargarbracketoficial",
+      "community": 35,
+      "norm_label": "cargarbracketoficial()"
+    },
+    {
+      "label": "getResult()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L572",
+      "_origin": "ast",
+      "id": "src_services_renderizado_getresult",
+      "community": 35,
+      "norm_label": "getresult()"
+    },
+    {
+      "label": "getHorario()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L584",
+      "_origin": "ast",
+      "id": "src_services_renderizado_gethorario",
+      "community": 35,
+      "norm_label": "gethorario()"
+    },
+    {
+      "label": "calcularStatsDesdeResultados()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L592",
+      "_origin": "ast",
+      "id": "src_services_renderizado_calcularstatsdesderesultados",
+      "community": 35,
+      "norm_label": "calcularstatsdesderesultados()"
+    },
+    {
+      "label": "renderizarInsigniaEstado()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L626",
+      "_origin": "ast",
+      "id": "src_services_renderizado_renderizarinsigniaestado",
+      "community": 35,
+      "norm_label": "renderizarinsigniaestado()"
+    },
+    {
+      "label": "esFechaPasada()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L655",
+      "_origin": "ast",
+      "id": "src_services_renderizado_esfechapasada",
+      "community": 35,
+      "norm_label": "esfechapasada()"
+    },
+    {
+      "label": "obtenerHtmlHistorial()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L664",
+      "_origin": "ast",
+      "id": "src_services_renderizado_obtenerhtmlhistorial",
+      "community": 35,
+      "norm_label": "obtenerhtmlhistorial()"
+    },
+    {
+      "label": "alternarTarjetaPartido()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L685",
+      "_origin": "ast",
+      "id": "src_services_renderizado_alternartarjetapartido",
+      "community": 35,
+      "norm_label": "alternartarjetapartido()"
+    },
+    {
+      "label": "calcularEstadisticasAvanzadas()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L691",
+      "_origin": "ast",
+      "id": "src_services_renderizado_calcularestadisticasavanzadas",
+      "community": 35,
+      "norm_label": "calcularestadisticasavanzadas()"
+    },
+    {
+      "label": "generarHtmlEstadisticas()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L754",
+      "_origin": "ast",
+      "id": "src_services_renderizado_generarhtmlestadisticas",
+      "community": 35,
+      "norm_label": "generarhtmlestadisticas()"
+    },
+    {
+      "label": "generarCuriosidades()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L782",
+      "_origin": "ast",
+      "id": "src_services_renderizado_generarcuriosidades",
+      "community": 35,
+      "norm_label": "generarcuriosidades()"
+    },
+    {
+      "label": "compartirWhatsApp()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L897",
+      "_origin": "ast",
+      "id": "src_services_renderizado_compartirwhatsapp",
+      "community": 35,
+      "norm_label": "compartirwhatsapp()"
+    },
+    {
+      "label": "renderizarMiJornada()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L940",
+      "_origin": "ast",
+      "id": "src_services_renderizado_renderizarmijornada",
+      "community": 35,
+      "norm_label": "renderizarmijornada()"
+    },
+    {
+      "label": "seleccionarChango()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L979",
+      "_origin": "ast",
+      "id": "src_services_renderizado_seleccionarchango",
+      "community": 35,
+      "norm_label": "seleccionarchango()"
+    },
+    {
+      "label": "construirInterfaz()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L985",
+      "_origin": "ast",
+      "id": "src_services_renderizado_construirinterfaz",
+      "community": 35,
+      "norm_label": "construirinterfaz()"
+    },
+    {
+      "label": "setMain()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1203",
+      "_origin": "ast",
+      "id": "src_services_renderizado_setmain",
+      "community": 35,
+      "norm_label": "setmain()"
+    },
+    {
+      "label": "setSub()",
+      "file_type": "code",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1234",
+      "_origin": "ast",
+      "id": "src_services_renderizado_setsub",
+      "community": 35,
+      "norm_label": "setsub()"
+    },
+    {
+      "label": "weather.js",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_services_weather",
+      "community": 38,
+      "norm_label": "weather.js"
+    },
+    {
+      "label": "coordenadasCiudades",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_services_weather_coordenadasciudades",
+      "community": 38,
+      "norm_label": "coordenadasciudades"
+    },
+    {
+      "label": "buscarCoordenadas()",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "src_services_weather_buscarcoordenadas",
+      "community": 38,
+      "norm_label": "buscarcoordenadas()"
+    },
+    {
+      "label": "obtenerClimaParaSede()",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "src_services_weather_obtenerclimaparasede",
+      "community": 38,
+      "norm_label": "obtenerclimaparasede()"
+    },
+    {
+      "label": "obtenerIconoClima()",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "src_services_weather_obtenericonoclima",
+      "community": 38,
+      "norm_label": "obtenericonoclima()"
+    },
+    {
+      "label": "cargarClimaSedes()",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "src_services_weather_cargarclimasedes",
+      "community": 38,
+      "norm_label": "cargarclimasedes()"
+    },
+    {
+      "label": "actualizarBadgesClima()",
+      "file_type": "code",
+      "source_file": "src/services/weather.js",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "src_services_weather_actualizarbadgesclima",
+      "community": 38,
+      "norm_label": "actualizarbadgesclima()"
     },
     {
       "label": "firebase-messaging-sw.js",
@@ -330,43 +740,714 @@
       "norm_label": "messaging"
     },
     {
-      "label": "frontend-design Skill",
-      "file_type": "concept",
-      "source_file": ".agents/skills/frontend-design/SKILL.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "agents_skills_frontend_design_skill",
-      "community": 9,
-      "norm_label": "frontend-design skill"
+      "label": "utils.js",
+      "file_type": "code",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_utils_utils",
+      "community": 40,
+      "norm_label": "utils.js"
     },
     {
-      "label": "graphify Skill",
-      "file_type": "concept",
+      "label": "toggleDarkMode()",
+      "file_type": "code",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "src_utils_utils_toggledarkmode",
+      "community": 40,
+      "norm_label": "toggledarkmode()"
+    },
+    {
+      "label": "mostrarLoaderParcial()",
+      "file_type": "code",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "src_utils_utils_mostrarloaderparcial",
+      "community": 40,
+      "norm_label": "mostrarloaderparcial()"
+    },
+    {
+      "label": "traducirEquipo()",
+      "file_type": "code",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "src_utils_utils_traducirequipo",
+      "community": 40,
+      "norm_label": "traducirequipo()"
+    },
+    {
+      "label": "formatearHoraLocal()",
+      "file_type": "code",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "src_utils_utils_formatearhoralocal",
+      "community": 40,
+      "norm_label": "formatearhoralocal()"
+    },
+    {
+      "label": "formatearFechaLocal()",
+      "file_type": "code",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "src_utils_utils_formatearfechalocal",
+      "community": 40,
+      "norm_label": "formatearfechalocal()"
+    },
+    {
+      "label": "SKILL.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/frontend-design/SKILL.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "agents_skills_frontend_design_skill",
+      "community": 9,
+      "norm_label": "skill.md"
+    },
+    {
+      "label": "Design Thinking",
+      "file_type": "document",
+      "source_file": ".agents/skills/frontend-design/SKILL.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "agents_skills_frontend_design_skill_design_thinking",
+      "community": 9,
+      "norm_label": "design thinking"
+    },
+    {
+      "label": "Frontend Aesthetics Guidelines",
+      "file_type": "document",
+      "source_file": ".agents/skills/frontend-design/SKILL.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "agents_skills_frontend_design_skill_frontend_aesthetics_guidelines",
+      "community": 9,
+      "norm_label": "frontend aesthetics guidelines"
+    },
+    {
+      "label": "SKILL.md",
+      "file_type": "document",
       "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
+      "source_location": "L1",
+      "_origin": "ast",
       "id": "opencode_skills_graphify_skill",
       "community": 0,
-      "norm_label": "graphify skill"
+      "norm_label": "skill.md"
+    },
+    {
+      "label": "/graphify",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_graphify",
+      "community": 0,
+      "norm_label": "/graphify"
+    },
+    {
+      "label": "Usage",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_usage",
+      "community": 0,
+      "norm_label": "usage"
+    },
+    {
+      "label": "What graphify is for",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_what_graphify_is_for",
+      "community": 0,
+      "norm_label": "what graphify is for"
+    },
+    {
+      "label": "What You Must Do When Invoked",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "community": 36,
+      "norm_label": "what you must do when invoked"
+    },
+    {
+      "label": "Step 0 - GitHub repos and multi-path merge (only if a URL or several paths)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_0_github_repos_and_multi_path_merge_only_if_a_url_or_several_paths",
+      "community": 36,
+      "norm_label": "step 0 - github repos and multi-path merge (only if a url or several paths)"
+    },
+    {
+      "label": "Step 1 - Ensure graphify is installed",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_1_ensure_graphify_is_installed",
+      "community": 36,
+      "norm_label": "step 1 - ensure graphify is installed"
+    },
+    {
+      "label": "Step 2 - Detect files",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_2_detect_files",
+      "community": 36,
+      "norm_label": "step 2 - detect files"
+    },
+    {
+      "label": "Step 2.5 - Video and audio (only if video files detected)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L144",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_2_5_video_and_audio_only_if_video_files_detected",
+      "community": 36,
+      "norm_label": "step 2.5 - video and audio (only if video files detected)"
+    },
+    {
+      "label": "Step 3 - Extract entities and relationships",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L148",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_3_extract_entities_and_relationships",
+      "community": 36,
+      "norm_label": "step 3 - extract entities and relationships"
+    },
+    {
+      "label": "Part A - Structural extraction for code files",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L167",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_part_a_structural_extraction_for_code_files",
+      "community": 36,
+      "norm_label": "part a - structural extraction for code files"
+    },
+    {
+      "label": "Part B - Semantic extraction (parallel subagents)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L193",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_part_b_semantic_extraction_parallel_subagents",
+      "community": 36,
+      "norm_label": "part b - semantic extraction (parallel subagents)"
+    },
+    {
+      "label": "Part C - Merge AST + semantic into final extraction",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L345",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_part_c_merge_ast_semantic_into_final_extraction",
+      "community": 36,
+      "norm_label": "part c - merge ast + semantic into final extraction"
+    },
+    {
+      "label": "Step 4 - Build graph, cluster, analyze, generate outputs",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L379",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_4_build_graph_cluster_analyze_generate_outputs",
+      "community": 36,
+      "norm_label": "step 4 - build graph, cluster, analyze, generate outputs"
+    },
+    {
+      "label": "Step 4.5 - Graph health check (read-only integrity gate)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L442",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_4_5_graph_health_check_read_only_integrity_gate",
+      "community": 36,
+      "norm_label": "step 4.5 - graph health check (read-only integrity gate)"
+    },
+    {
+      "label": "Step 5 - Label communities",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L468",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_5_label_communities",
+      "community": 36,
+      "norm_label": "step 5 - label communities"
+    },
+    {
+      "label": "Step 6 - Generate Obsidian vault (opt-in) + HTML",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L509",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_6_generate_obsidian_vault_opt_in_html",
+      "community": 36,
+      "norm_label": "step 6 - generate obsidian vault (opt-in) + html"
+    },
+    {
+      "label": "Steps 6b-8 - Wiki, Neo4j, FalkorDB, SVG, GraphML, MCP, benchmark (only on their flags)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L529",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_steps_6b_8_wiki_neo4j_falkordb_svg_graphml_mcp_benchmark_only_on_their_flags",
+      "community": 36,
+      "norm_label": "steps 6b-8 - wiki, neo4j, falkordb, svg, graphml, mcp, benchmark (only on their flags)"
+    },
+    {
+      "label": "Step 9 - Save manifest, update cost tracker, clean up, and report",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L535",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_step_9_save_manifest_update_cost_tracker_clean_up_and_report",
+      "community": 36,
+      "norm_label": "step 9 - save manifest, update cost tracker, clean up, and report"
+    },
+    {
+      "label": "Interpreter guard for subcommands",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L615",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_interpreter_guard_for_subcommands",
+      "community": 0,
+      "norm_label": "interpreter guard for subcommands"
+    },
+    {
+      "label": "For --update and --cluster-only",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L633",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_for_update_and_cluster_only",
+      "community": 0,
+      "norm_label": "for --update and --cluster-only"
+    },
+    {
+      "label": "For /graphify query",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L639",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_for_graphify_query",
+      "community": 0,
+      "norm_label": "for /graphify query"
+    },
+    {
+      "label": "For /graphify add and --watch",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L651",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_for_graphify_add_and_watch",
+      "community": 0,
+      "norm_label": "for /graphify add and --watch"
+    },
+    {
+      "label": "For the commit hook and native CLAUDE.md integration",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L657",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_for_the_commit_hook_and_native_claude_md_integration",
+      "community": 0,
+      "norm_label": "for the commit hook and native claude.md integration"
+    },
+    {
+      "label": "Honesty Rules",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L663",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_skill_honesty_rules",
+      "community": 0,
+      "norm_label": "honesty rules"
+    },
+    {
+      "label": "add-watch.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_add_watch",
+      "community": 42,
+      "norm_label": "add-watch.md"
+    },
+    {
+      "label": "graphify reference: add a URL and watch a folder",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_add_watch_graphify_reference_add_a_url_and_watch_a_folder",
+      "community": 42,
+      "norm_label": "graphify reference: add a url and watch a folder"
+    },
+    {
+      "label": "For /graphify add",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_add_watch_for_graphify_add",
+      "community": 42,
+      "norm_label": "for /graphify add"
+    },
+    {
+      "label": "For --watch",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_add_watch_for_watch",
+      "community": 42,
+      "norm_label": "for --watch"
+    },
+    {
+      "label": "exports.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports",
+      "community": 37,
+      "norm_label": "exports.md"
+    },
+    {
+      "label": "graphify reference: extra exports and benchmark",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "community": 37,
+      "norm_label": "graphify reference: extra exports and benchmark"
+    },
+    {
+      "label": "Step 6b - Wiki (only if --wiki flag)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_6b_wiki_only_if_wiki_flag",
+      "community": 37,
+      "norm_label": "step 6b - wiki (only if --wiki flag)"
+    },
+    {
+      "label": "Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_7_neo4j_export_only_if_neo4j_or_neo4j_push_flag",
+      "community": 37,
+      "norm_label": "step 7 - neo4j export (only if --neo4j or --neo4j-push flag)"
+    },
+    {
+      "label": "Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_7a_falkordb_export_only_if_falkordb_or_falkordb_push_flag",
+      "community": 37,
+      "norm_label": "step 7a - falkordb export (only if --falkordb or --falkordb-push flag)"
+    },
+    {
+      "label": "Step 7b - SVG export (only if --svg flag)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_7b_svg_export_only_if_svg_flag",
+      "community": 37,
+      "norm_label": "step 7b - svg export (only if --svg flag)"
+    },
+    {
+      "label": "Step 7c - GraphML export (only if --graphml flag)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_7c_graphml_export_only_if_graphml_flag",
+      "community": 37,
+      "norm_label": "step 7c - graphml export (only if --graphml flag)"
+    },
+    {
+      "label": "Step 7d - MCP server (only if --mcp flag)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_7d_mcp_server_only_if_mcp_flag",
+      "community": 37,
+      "norm_label": "step 7d - mcp server (only if --mcp flag)"
+    },
+    {
+      "label": "Step 8 - Token reduction benchmark (only if total_words > 5000)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_exports_step_8_token_reduction_benchmark_only_if_total_words_5000",
+      "community": 37,
+      "norm_label": "step 8 - token reduction benchmark (only if total_words > 5000)"
+    },
+    {
+      "label": "extraction-spec.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/extraction-spec.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_extraction_spec",
+      "community": 49,
+      "norm_label": "extraction-spec.md"
+    },
+    {
+      "label": "graphify reference: extraction subagent prompt",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/extraction-spec.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_extraction_spec_graphify_reference_extraction_subagent_prompt",
+      "community": 49,
+      "norm_label": "graphify reference: extraction subagent prompt"
+    },
+    {
+      "label": "github-and-merge.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_github_and_merge",
+      "community": 46,
+      "norm_label": "github-and-merge.md"
+    },
+    {
+      "label": "graphify reference: GitHub clone and cross-repo merge",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_github_and_merge_graphify_reference_github_clone_and_cross_repo_merge",
+      "community": 46,
+      "norm_label": "graphify reference: github clone and cross-repo merge"
+    },
+    {
+      "label": "Step 0 - Clone GitHub repo(s) (only if a GitHub URL was given)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_github_and_merge_step_0_clone_github_repo_s_only_if_a_github_url_was_given",
+      "community": 46,
+      "norm_label": "step 0 - clone github repo(s) (only if a github url was given)"
+    },
+    {
+      "label": "hooks.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_hooks",
+      "community": 43,
+      "norm_label": "hooks.md"
+    },
+    {
+      "label": "graphify reference: commit hook and native CLAUDE.md integration",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_hooks_graphify_reference_commit_hook_and_native_claude_md_integration",
+      "community": 43,
+      "norm_label": "graphify reference: commit hook and native claude.md integration"
+    },
+    {
+      "label": "For git commit hook",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_hooks_for_git_commit_hook",
+      "community": 43,
+      "norm_label": "for git commit hook"
+    },
+    {
+      "label": "For native CLAUDE.md integration",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_hooks_for_native_claude_md_integration",
+      "community": 43,
+      "norm_label": "for native claude.md integration"
+    },
+    {
+      "label": "query.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_query",
+      "community": 39,
+      "norm_label": "query.md"
+    },
+    {
+      "label": "graphify reference: query, path, explain",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "community": 39,
+      "norm_label": "graphify reference: query, path, explain"
+    },
+    {
+      "label": "Step 0 \u2014 Constrained query expansion (REQUIRED before traversal)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_query_step_0_constrained_query_expansion_required_before_traversal",
+      "community": 39,
+      "norm_label": "step 0 \u2014 constrained query expansion (required before traversal)"
+    },
+    {
+      "label": "Step 1 \u2014 Traversal",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_query_step_1_traversal",
+      "community": 39,
+      "norm_label": "step 1 \u2014 traversal"
+    },
+    {
+      "label": "For /graphify path",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L186",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_query_for_graphify_path",
+      "community": 39,
+      "norm_label": "for /graphify path"
+    },
+    {
+      "label": "For /graphify explain",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L254",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_query_for_graphify_explain",
+      "community": 39,
+      "norm_label": "for /graphify explain"
+    },
+    {
+      "label": "transcribe.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/transcribe.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_transcribe",
+      "community": 47,
+      "norm_label": "transcribe.md"
+    },
+    {
+      "label": "graphify reference: transcribe video and audio",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/transcribe.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_transcribe_graphify_reference_transcribe_video_and_audio",
+      "community": 47,
+      "norm_label": "graphify reference: transcribe video and audio"
+    },
+    {
+      "label": "Step 2.5 - Transcribe video / audio files (only if video files detected)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/transcribe.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_transcribe_step_2_5_transcribe_video_audio_files_only_if_video_files_detected",
+      "community": 47,
+      "norm_label": "step 2.5 - transcribe video / audio files (only if video files detected)"
+    },
+    {
+      "label": "update.md",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_update",
+      "community": 44,
+      "norm_label": "update.md"
+    },
+    {
+      "label": "graphify reference: incremental update and cluster-only",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_update_graphify_reference_incremental_update_and_cluster_only",
+      "community": 44,
+      "norm_label": "graphify reference: incremental update and cluster-only"
+    },
+    {
+      "label": "For --update (incremental re-extraction)",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_update_for_update_incremental_re_extraction",
+      "community": 44,
+      "norm_label": "for --update (incremental re-extraction)"
+    },
+    {
+      "label": "For --cluster-only",
+      "file_type": "document",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L184",
+      "_origin": "ast",
+      "id": "opencode_skills_graphify_references_update_for_cluster_only",
+      "community": 44,
+      "norm_label": "for --cluster-only"
     },
     {
       "label": "AGENTS.md",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "agents_md",
-      "community": 0,
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "agents",
+      "community": 48,
       "norm_label": "agents.md"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "agents_graphify",
+      "community": 48,
+      "norm_label": "graphify"
     },
     {
       "label": "Quiniela Mundial 2026 Main Page",
@@ -377,9 +1458,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "index_html",
       "community": 10,
-      "norm_label": "quiniela mundial 2026 main page"
+      "norm_label": "quiniela mundial 2026 main page",
+      "id": "index_html"
     },
     {
       "label": "Sorteo Mundial 2026 Page",
@@ -390,113 +1471,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "sorteo_html",
       "community": 34,
-      "norm_label": "sorteo mundial 2026 page"
-    },
-    {
-      "label": "graphify query flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/query.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_query",
-      "community": 0,
-      "norm_label": "graphify query flow"
-    },
-    {
-      "label": "graphify update flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/update.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_update",
-      "community": 0,
-      "norm_label": "graphify update flow"
-    },
-    {
-      "label": "graphify add/watch flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/add-watch.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_add_watch",
-      "community": 0,
-      "norm_label": "graphify add/watch flow"
-    },
-    {
-      "label": "graphify exports flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/exports.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_exports",
-      "community": 0,
-      "norm_label": "graphify exports flow"
-    },
-    {
-      "label": "graphify hooks flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/hooks.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_hooks",
-      "community": 0,
-      "norm_label": "graphify hooks flow"
-    },
-    {
-      "label": "graphify transcribe flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/transcribe.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_transcribe",
-      "community": 0,
-      "norm_label": "graphify transcribe flow"
-    },
-    {
-      "label": "graphify extraction specification",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/extraction-spec.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_extraction_spec",
-      "community": 0,
-      "norm_label": "graphify extraction specification"
-    },
-    {
-      "label": "graphify github and merge flow",
-      "file_type": "concept",
-      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "opencode_skills_graphify_references_github_and_merge",
-      "community": 0,
-      "norm_label": "graphify github and merge flow"
+      "norm_label": "sorteo mundial 2026 page",
+      "id": "sorteo_html"
     },
     {
       "label": "120.png",
@@ -507,9 +1484,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_120",
       "community": 11,
-      "norm_label": "120.png"
+      "norm_label": "120.png",
+      "id": "public_icons_ios_120"
     },
     {
       "label": "128.png",
@@ -520,9 +1497,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_128",
       "community": 12,
-      "norm_label": "128.png"
+      "norm_label": "128.png",
+      "id": "public_icons_ios_128"
     },
     {
       "label": "144.png",
@@ -533,9 +1510,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_144",
       "community": 13,
-      "norm_label": "144.png"
+      "norm_label": "144.png",
+      "id": "public_icons_ios_144"
     },
     {
       "label": "152.png",
@@ -546,9 +1523,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_152",
       "community": 14,
-      "norm_label": "152.png"
+      "norm_label": "152.png",
+      "id": "public_icons_ios_152"
     },
     {
       "label": "16.png",
@@ -559,9 +1536,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_16",
       "community": 15,
-      "norm_label": "16.png"
+      "norm_label": "16.png",
+      "id": "public_icons_ios_16"
     },
     {
       "label": "167.png",
@@ -572,9 +1549,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_167",
       "community": 16,
-      "norm_label": "167.png"
+      "norm_label": "167.png",
+      "id": "public_icons_ios_167"
     },
     {
       "label": "180.png",
@@ -585,9 +1562,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_180",
       "community": 17,
-      "norm_label": "180.png"
+      "norm_label": "180.png",
+      "id": "public_icons_ios_180"
     },
     {
       "label": "192.png",
@@ -598,9 +1575,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_192",
       "community": 18,
-      "norm_label": "192.png"
+      "norm_label": "192.png",
+      "id": "public_icons_ios_192"
     },
     {
       "label": "20.png",
@@ -611,9 +1588,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_20",
       "community": 19,
-      "norm_label": "20.png"
+      "norm_label": "20.png",
+      "id": "public_icons_ios_20"
     },
     {
       "label": "256.png",
@@ -624,9 +1601,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_256",
       "community": 20,
-      "norm_label": "256.png"
+      "norm_label": "256.png",
+      "id": "public_icons_ios_256"
     },
     {
       "label": "29.png",
@@ -637,9 +1614,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_29",
       "community": 21,
-      "norm_label": "29.png"
+      "norm_label": "29.png",
+      "id": "public_icons_ios_29"
     },
     {
       "label": "32.png",
@@ -650,9 +1627,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_32",
       "community": 22,
-      "norm_label": "32.png"
+      "norm_label": "32.png",
+      "id": "public_icons_ios_32"
     },
     {
       "label": "40.png",
@@ -663,9 +1640,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_40",
       "community": 23,
-      "norm_label": "40.png"
+      "norm_label": "40.png",
+      "id": "public_icons_ios_40"
     },
     {
       "label": "50.png",
@@ -676,9 +1653,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_50",
       "community": 24,
-      "norm_label": "50.png"
+      "norm_label": "50.png",
+      "id": "public_icons_ios_50"
     },
     {
       "label": "512.png",
@@ -689,9 +1666,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_512",
       "community": 25,
-      "norm_label": "512.png"
+      "norm_label": "512.png",
+      "id": "public_icons_ios_512"
     },
     {
       "label": "57.png",
@@ -702,9 +1679,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_57",
       "community": 26,
-      "norm_label": "57.png"
+      "norm_label": "57.png",
+      "id": "public_icons_ios_57"
     },
     {
       "label": "58.png",
@@ -715,9 +1692,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_58",
       "community": 27,
-      "norm_label": "58.png"
+      "norm_label": "58.png",
+      "id": "public_icons_ios_58"
     },
     {
       "label": "60.png",
@@ -728,9 +1705,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_60",
       "community": 28,
-      "norm_label": "60.png"
+      "norm_label": "60.png",
+      "id": "public_icons_ios_60"
     },
     {
       "label": "64.png",
@@ -741,9 +1718,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_64",
       "community": 29,
-      "norm_label": "64.png"
+      "norm_label": "64.png",
+      "id": "public_icons_ios_64"
     },
     {
       "label": "72.png",
@@ -754,9 +1731,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_72",
       "community": 30,
-      "norm_label": "72.png"
+      "norm_label": "72.png",
+      "id": "public_icons_ios_72"
     },
     {
       "label": "76.png",
@@ -767,9 +1744,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_76",
       "community": 31,
-      "norm_label": "76.png"
+      "norm_label": "76.png",
+      "id": "public_icons_ios_76"
     },
     {
       "label": "80.png",
@@ -780,9 +1757,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_80",
       "community": 32,
-      "norm_label": "80.png"
+      "norm_label": "80.png",
+      "id": "public_icons_ios_80"
     },
     {
       "label": "87.png",
@@ -793,9 +1770,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "public_icons_ios_87",
       "community": 33,
-      "norm_label": "87.png"
+      "norm_label": "87.png",
+      "id": "public_icons_ios_87"
     }
   ],
   "links": [
@@ -963,11 +1940,678 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_services_firebase_init",
+      "target": "src_services_firebase_init_firebaseconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_services_firebase_init",
+      "target": "src_services_firebase_init_getfirebaseconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "src_services_firebase_init",
+      "target": "src_services_firebase_init_messaging",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_services_firebase_init",
+      "target": "src_services_firebase_init_xordecrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/firebase-init.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_services_firebase_init_getfirebaseconfig",
+      "target": "src_services_firebase_init_xordecrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "src_services_notifications",
+      "target": "src_services_notifications_enviarnotificacionlocal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_services_notifications",
+      "target": "src_services_notifications_registrarserviceworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/notifications.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_services_notifications",
+      "target": "src_services_notifications_solicitarpermisofcm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/services/rawcalendario.js",
       "source_location": "L1",
       "weight": 1.0,
       "source": "src_services_rawcalendario",
       "target": "src_services_rawcalendario_rawschedule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L343",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_actualizarresultados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L685",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_alternartarjetapartido",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_calcularequiposeliminados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L691",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_calcularestadisticasavanzadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L592",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_calcularstatsdesderesultados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L533",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_cargarbracketoficial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L897",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_compartirwhatsapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L985",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_construirinterfaz",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L531",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_eliminatoriaspormatchnumber",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L655",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_esfechapasada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L782",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_generarcuriosidades",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L754",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_generarhtmlestadisticas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L584",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_gethorario",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L572",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_getresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L664",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_obtenerhtmlhistorial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_renderizarbracketdefinitivo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_renderizarestadisticaseliminatorias",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L241",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_renderizargraficas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L626",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_renderizarinsigniaestado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L940",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_renderizarmijornada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L979",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_seleccionarchango",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1203",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_setmain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1234",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_setsub",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L239",
+      "weight": 1.0,
+      "source": "src_services_renderizado",
+      "target": "src_services_renderizado_ultimopartidodeldia",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L565",
+      "weight": 1.0,
+      "source": "src_services_renderizado_cargarbracketoficial",
+      "target": "src_services_renderizado_calcularequiposeliminados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L521",
+      "weight": 1.0,
+      "source": "src_services_renderizado_actualizarresultados",
+      "target": "src_services_renderizado_renderizarbracketdefinitivo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L566",
+      "weight": 1.0,
+      "source": "src_services_renderizado_cargarbracketoficial",
+      "target": "src_services_renderizado_renderizarbracketdefinitivo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L522",
+      "weight": 1.0,
+      "source": "src_services_renderizado_actualizarresultados",
+      "target": "src_services_renderizado_renderizarestadisticaseliminatorias",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1193",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_renderizargraficas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L436",
+      "weight": 1.0,
+      "source": "src_services_renderizado_actualizarresultados",
+      "target": "src_services_renderizado_calcularstatsdesderesultados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L520",
+      "weight": 1.0,
+      "source": "src_services_renderizado_actualizarresultados",
+      "target": "src_services_renderizado_construirinterfaz",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L493",
+      "weight": 1.0,
+      "source": "src_services_renderizado_actualizarresultados",
+      "target": "src_services_renderizado_gethorario",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1068",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_getresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L959",
+      "weight": 1.0,
+      "source": "src_services_renderizado_renderizarmijornada",
+      "target": "src_services_renderizado_getresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1007",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_gethorario",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1112",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_renderizarinsigniaestado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L960",
+      "weight": 1.0,
+      "source": "src_services_renderizado_renderizarmijornada",
+      "target": "src_services_renderizado_renderizarinsigniaestado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1012",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_esfechapasada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1132",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_obtenerhtmlhistorial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L964",
+      "weight": 1.0,
+      "source": "src_services_renderizado_renderizarmijornada",
+      "target": "src_services_renderizado_obtenerhtmlhistorial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1190",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_calcularestadisticasavanzadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1191",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_generarhtmlestadisticas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1192",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_generarcuriosidades",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1199",
+      "weight": 1.0,
+      "source": "src_services_renderizado_construirinterfaz",
+      "target": "src_services_renderizado_renderizarmijornada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L982",
+      "weight": 1.0,
+      "source": "src_services_renderizado_seleccionarchango",
+      "target": "src_services_renderizado_renderizarmijornada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/renderizado.js",
+      "source_location": "L1212",
+      "weight": 1.0,
+      "source": "src_services_renderizado_setmain",
+      "target": "src_services_renderizado_setsub",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "src_services_weather",
+      "target": "src_services_weather_actualizarbadgesclima",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "src_services_weather",
+      "target": "src_services_weather_buscarcoordenadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "src_services_weather",
+      "target": "src_services_weather_cargarclimasedes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_services_weather",
+      "target": "src_services_weather_coordenadasciudades",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "src_services_weather",
+      "target": "src_services_weather_obtenerclimaparasede",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "src_services_weather",
+      "target": "src_services_weather_obtenericonoclima",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "src_services_weather_obtenerclimaparasede",
+      "target": "src_services_weather_buscarcoordenadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "src_services_weather_actualizarbadgesclima",
+      "target": "src_services_weather_obtenerclimaparasede",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "src_services_weather_cargarclimasedes",
+      "target": "src_services_weather_obtenericonoclima",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/weather.js",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "src_services_weather_cargarclimasedes",
+      "target": "src_services_weather_actualizarbadgesclima",
       "confidence_score": 1.0
     },
     {
@@ -1022,94 +2666,594 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "references",
+      "relation": "contains",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "source_file": "src/utils/utils.js",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "src_utils_utils",
+      "target": "src_utils_utils_formatearfechalocal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "src_utils_utils",
+      "target": "src_utils_utils_formatearhoralocal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_utils_utils",
+      "target": "src_utils_utils_mostrarloaderparcial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_utils_utils",
+      "target": "src_utils_utils_toggledarkmode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/utils.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "src_utils_utils",
+      "target": "src_utils_utils_traducirequipo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/frontend-design/SKILL.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "agents_skills_frontend_design_skill",
+      "target": "agents_skills_frontend_design_skill_design_thinking",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/frontend-design/SKILL.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "agents_skills_frontend_design_skill",
+      "target": "agents_skills_frontend_design_skill_frontend_aesthetics_guidelines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill",
+      "target": "opencode_skills_graphify_skill_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L651",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_for_graphify_add_and_watch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L639",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_for_graphify_query",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L657",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_for_the_commit_hook_and_native_claude_md_integration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L633",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_for_update_and_cluster_only",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L663",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_honesty_rules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L615",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_interpreter_guard_for_subcommands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_usage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_what_graphify_is_for",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_graphify",
+      "target": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_0_github_repos_and_multi_path_merge_only_if_a_url_or_several_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_1_ensure_graphify_is_installed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L144",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_2_5_video_and_audio_only_if_video_files_detected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_2_detect_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L148",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_3_extract_entities_and_relationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L442",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_4_5_graph_health_check_read_only_integrity_gate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L379",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_4_build_graph_cluster_analyze_generate_outputs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L468",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_5_label_communities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L509",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_6_generate_obsidian_vault_opt_in_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L535",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_step_9_save_manifest_update_cost_tracker_clean_up_and_report",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L529",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_what_you_must_do_when_invoked",
+      "target": "opencode_skills_graphify_skill_steps_6b_8_wiki_neo4j_falkordb_svg_graphml_mcp_benchmark_only_on_their_flags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_step_3_extract_entities_and_relationships",
+      "target": "opencode_skills_graphify_skill_part_a_structural_extraction_for_code_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L193",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_step_3_extract_entities_and_relationships",
+      "target": "opencode_skills_graphify_skill_part_b_semantic_extraction_parallel_subagents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/SKILL.md",
+      "source_location": "L345",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_skill_step_3_extract_entities_and_relationships",
+      "target": "opencode_skills_graphify_skill_part_c_merge_ast_semantic_into_final_extraction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_add_watch",
+      "target": "opencode_skills_graphify_references_add_watch_graphify_reference_add_a_url_and_watch_a_folder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_add_watch_graphify_reference_add_a_url_and_watch_a_folder",
+      "target": "opencode_skills_graphify_references_add_watch_for_graphify_add",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/add-watch.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_add_watch_graphify_reference_add_a_url_and_watch_a_folder",
+      "target": "opencode_skills_graphify_references_add_watch_for_watch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports",
+      "target": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_6b_wiki_only_if_wiki_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_7_neo4j_export_only_if_neo4j_or_neo4j_push_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_7a_falkordb_export_only_if_falkordb_or_falkordb_push_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_7b_svg_export_only_if_svg_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_7c_graphml_export_only_if_graphml_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_7d_mcp_server_only_if_mcp_flag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/exports.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "target": "opencode_skills_graphify_references_exports_step_8_token_reduction_benchmark_only_if_total_words_5000",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/extraction-spec.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_extraction_spec",
+      "target": "opencode_skills_graphify_references_extraction_spec_graphify_reference_extraction_subagent_prompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_github_and_merge",
+      "target": "opencode_skills_graphify_references_github_and_merge_graphify_reference_github_clone_and_cross_repo_merge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/github-and-merge.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_github_and_merge_graphify_reference_github_clone_and_cross_repo_merge",
+      "target": "opencode_skills_graphify_references_github_and_merge_step_0_clone_github_repo_s_only_if_a_github_url_was_given",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_hooks",
+      "target": "opencode_skills_graphify_references_hooks_graphify_reference_commit_hook_and_native_claude_md_integration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_hooks_graphify_reference_commit_hook_and_native_claude_md_integration",
+      "target": "opencode_skills_graphify_references_hooks_for_git_commit_hook",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/hooks.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_hooks_graphify_reference_commit_hook_and_native_claude_md_integration",
+      "target": "opencode_skills_graphify_references_hooks_for_native_claude_md_integration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_query",
+      "target": "opencode_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L254",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "target": "opencode_skills_graphify_references_query_for_graphify_explain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "target": "opencode_skills_graphify_references_query_for_graphify_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "target": "opencode_skills_graphify_references_query_step_0_constrained_query_expansion_required_before_traversal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/query.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "target": "opencode_skills_graphify_references_query_step_1_traversal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/transcribe.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_transcribe",
+      "target": "opencode_skills_graphify_references_transcribe_graphify_reference_transcribe_video_and_audio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/transcribe.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_transcribe_graphify_reference_transcribe_video_and_audio",
+      "target": "opencode_skills_graphify_references_transcribe_step_2_5_transcribe_video_audio_files_only_if_video_files_detected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_update",
+      "target": "opencode_skills_graphify_references_update_graphify_reference_incremental_update_and_cluster_only",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L184",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_update_graphify_reference_incremental_update_and_cluster_only",
+      "target": "opencode_skills_graphify_references_update_for_cluster_only",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".opencode/skills/graphify/references/update.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "opencode_skills_graphify_references_update_graphify_reference_incremental_update_and_cluster_only",
+      "target": "opencode_skills_graphify_references_update_for_update_incremental_re_extraction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": null,
+      "source_location": "L1",
       "weight": 1.0,
-      "source": "agents_md",
-      "target": "opencode_skills_graphify_skill"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_add_watch"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_exports"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_extraction_spec"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_github_and_merge"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_hooks"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_query"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_transcribe"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".opencode/skills/graphify/SKILL.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "opencode_skills_graphify_skill",
-      "target": "opencode_skills_graphify_references_update"
+      "source": "agents",
+      "target": "agents_graphify",
+      "confidence_score": 1.0
     }
   ],
   "hyperedges": [
@@ -1147,5 +3291,5 @@
       "source_file": "public/icons/ios/120.png"
     }
   ],
-  "built_at_commit": "08f07ff1a894597a70e1639d728e7377a309bd01"
+  "built_at_commit": "88c0b1e32b0de678b96682883ae887049f264991"
 }

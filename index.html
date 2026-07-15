@@ -314,7 +314,8 @@
                 'Argentina': { tituloTexto: '¡VAMOS ARGENTINA!', tituloEmoji: '🇦🇷', msj: '¡Felicidades Messi! La Albiceleste avanza.', animacion: 'confetti-arg', sticker: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2w1d3NsZTdqaWoydWI3YW44Y2gxcTJxMGIyb2g5cW9oZGF6Y25reSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5rGM5Z4TycwJ7ba1kP/giphy.gif' },
                 'Francia': { tituloTexto: '¡ALLEZ LES BLEUS!', tituloEmoji: '🇫🇷', msj: '¡El Dictador Mbappé da la orden de avanzar!', animacion: 'confetti-fra', sticker: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExajRqYjI3NXN5MGRsa3g4empkMzhzbTI5OW93MHVyMWwwNGVuamZoZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5Y4RoHHNkHXt1lCQup/giphy.gif' },
                 'España': { tituloTexto: '¡VIVA ESPAÑA VIVA EL REY!', tituloEmoji: '🇪🇸', msj: '¡Felicidades Lamine! España avanza', animacion: 'confetti-esp', sticker: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWxyODBhdThwZ2Y5YXhqZ3Q1eWx5b2l4aWl6ZmdwZHRtODdxcjVsNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/luNlX7DgEpcIqMOQWU/giphy.gif' },
-                'Noruega': { tituloTexto: '¡VAMOS NORUEGA!', tituloEmoji: '🇳🇴', msj: '¡El Buu de Haaland arrasa! Noruega avanza.', animacion: 'confetti-nor', sticker: 'https://media1.tenor.com/m/DzMFGHCkdBkAAAAd/haaland-dragon-ball.gif' }
+                'Noruega': { tituloTexto: '¡VAMOS NORUEGA!', tituloEmoji: '🇳🇴', msj: '¡El Buu de Haaland arrasa! Noruega avanza.', animacion: 'confetti-nor', sticker: 'https://media1.tenor.com/m/DzMFGHCkdBkAAAAd/haaland-dragon-ball.gif' },
+                'Inglaterra': { tituloTexto: 'IT\'S COMING HOME!', tituloEmoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', msj: '¡Inglaterra avanza a la siguiente fase!', animacion: 'confetti-eng', sticker: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExajV3azJ5b25xZjN1MXhxN2c0OWl2bTN6aHVncG44MDRrbDNrODZvbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/H3HgKWMvVsM4S2vOt0/giphy.gif' }
             };
 
             for (let matchNum in eliminatoriasPorMatchNumber) {
@@ -395,7 +396,7 @@
             stickerImg.style.display = 'none';
         }
 
-        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro', 'grad-fra', 'grad-esp', 'grad-nor', 'modal-esperanza');
+        modal.classList.remove('grad-mex', 'grad-por', 'grad-arg', 'grad-oro', 'grad-fra', 'grad-esp', 'grad-nor', 'grad-eng', 'modal-esperanza');
         
         if (cel.tipo === 'esperanza') {
             modal.classList.add('modal-esperanza');
@@ -444,6 +445,9 @@
         } else if (cel.animacion === 'confetti-nor') {
             colors = ['#BA0C2F', '#FFFFFF', '#0066CC'];
             modal.classList.add('grad-nor');
+        } else if (cel.animacion === 'confetti-eng') {
+            colors = ['#cf142b', '#ffffff', '#002040'];
+            modal.classList.add('grad-eng');
         }
 
         modal.classList.add('show');

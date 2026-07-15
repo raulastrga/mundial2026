@@ -115,9 +115,9 @@
     "semantic_hash": "6a47d64fcc136324ca395065a707ef76"
   },
   "index.html": {
-    "mtime": 1784074810.0833652,
-    "ast_hash": "e78474ce7ae4040dbb62291c3d7d2692",
-    "semantic_hash": ""
+    "mtime": 1783744455.3861763,
+    "ast_hash": "650060aad4483e3228b0d4c2ce647501",
+    "semantic_hash": "650060aad4483e3228b0d4c2ce647501"
   },
   "sorteo.html": {
     "mtime": 1781219130.0787766,
@@ -283,30 +283,5 @@
     "mtime": 1783744478.677569,
     "ast_hash": "a4237822542dca7eea37511ae456313e",
     "semantic_hash": "a4237822542dca7eea37511ae456313e"
-  },
-  "src/services/firebase-init.js": {
-    "mtime": 1783745874.1925797,
-    "ast_hash": "30cdca3676b1d03aee868bbb9060ddbb",
-    "semantic_hash": ""
-  },
-  "src/services/notifications.js": {
-    "mtime": 1783745878.594834,
-    "ast_hash": "e5b7c387752add5f3c235d07e24d4222",
-    "semantic_hash": ""
-  },
-  "src/services/renderizado.js": {
-    "mtime": 1783920178.9469275,
-    "ast_hash": "4477c58a0f7d000129c77b94fedad9a9",
-    "semantic_hash": ""
-  },
-  "src/services/weather.js": {
-    "mtime": 1783745685.2168384,
-    "ast_hash": "934548e334469d7be0a1717d404493fa",
-    "semantic_hash": ""
-  },
-  "src/utils/utils.js": {
-    "mtime": 1783792128.7028635,
-    "ast_hash": "4e5f217308aa531ef44de3f88d0c26fb",
-    "semantic_hash": ""
   }
 }

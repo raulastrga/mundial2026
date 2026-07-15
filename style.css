@@ -1839,6 +1839,12 @@ body.dark-mode .eliminatorias-count .total {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.grad-eng .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #cf142b, #cbd5e1, #002040);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .celebracion-content p {
     font-size: 1.3rem;
     color: #334155;
@@ -1919,6 +1925,11 @@ body.dark-mode .grad-oro .celebracion-content h2 #cel-titulo-texto {
 }
 body.dark-mode .grad-nor .celebracion-content h2 #cel-titulo-texto {
     background: linear-gradient(45deg, #FF69B4, #FFB6C1, #FF1493);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+body.dark-mode .grad-eng .celebracion-content h2 #cel-titulo-texto {
+    background: linear-gradient(45deg, #cf142b, #cbd5e1, #002040);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
